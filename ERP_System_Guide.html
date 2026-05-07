@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IndustrialERP — Complete User Guide</title>
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --blue:#2563eb; --blue-light:#eff6ff; --blue-dark:#1e3a8a;
+  --green:#16a34a; --green-light:#f0fdf4;
+  --purple:#7c3aed; --purple-light:#f5f3ff;
+  --orange:#ea580c; --orange-light:#fff7ed;
+  --pink:#db2777; --pink-light:#fdf2f8;
+  --teal:#0d9488; --teal-light:#f0fdfa;
+  --gray:#f8fafc; --border:#e2e8f0;
+  --text:#1e293b; --muted:#64748b; --hint:#94a3b8;
+  --radius:12px; --radius-sm:8px;
+}
+
+body {
+  font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  background:#f0f4f8; color:var(--text); line-height:1.6;
+  font-size:15px;
+}
+
+/* ── COVER ── */
+.cover {
+  background:linear-gradient(145deg,#0f172a 0%,#1e3a8a 50%,#4f46e5 100%);
+  color:#fff; text-align:center; padding:48px 20px 56px;
+  position:relative; overflow:hidden;
+}
+.cover::before {
+  content:''; position:absolute; inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+.cover-inner { position:relative; z-index:1; max-width:700px; margin:0 auto; }
+.badge {
+  display:inline-block;
+  background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25);
+  border-radius:50px; padding:6px 22px; font-size:11px; letter-spacing:2.5px;
+  text-transform:uppercase; margin-bottom:24px;
+}
+.cover h1 {
+  font-size:clamp(32px,8vw,68px); font-weight:800; line-height:1.1;
+  margin-bottom:16px;
+  background:linear-gradient(135deg,#fff,#93c5fd);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+}
+.cover > .cover-inner > p {
+  font-size:clamp(14px,3.5vw,18px); color:rgba(255,255,255,0.7);
+  max-width:520px; margin:0 auto 36px;
+}
+.cover-meta {
+  display:grid; grid-template-columns:repeat(2,1fr); gap:12px;
+  max-width:400px; margin:0 auto 36px;
+}
+@media(min-width:480px){ .cover-meta{ grid-template-columns:repeat(4,1fr); max-width:600px; } }
+.cover-meta-item {
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);
+  border-radius:var(--radius); padding:16px 10px; text-align:center;
+}
+.cover-meta-item span { display:block; font-size:clamp(20px,5vw,28px); font-weight:700; color:#60a5fa; }
+.cover-meta-item p { font-size:12px; color:rgba(255,255,255,0.6); margin:0; }
+.demo-box {
+  display:inline-block;
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2);
+  border-radius:var(--radius); padding:16px 24px;
+}
+.demo-box p:first-child { color:rgba(255,255,255,0.55); font-size:12px; }
+.demo-box p:last-child { color:#fff; font-size:15px; font-family:monospace; margin-top:4px; }
+
+/* ── SECTION HEADER ── */
+.section-header {
+  background:linear-gradient(135deg,var(--blue-dark),#4f46e5);
+  color:#fff; padding:32px 20px;
+  display:flex; align-items:center; gap:16px;
+}
+.section-num {
+  width:52px; height:52px; flex-shrink:0; border-radius:50%;
+  background:rgba(255,255,255,0.15); border:2px solid rgba(255,255,255,0.3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; font-weight:800;
+}
+.section-header h2 { font-size:clamp(20px,5vw,32px); font-weight:700; }
+.section-header p { color:rgba(255,255,255,0.72); font-size:14px; margin-top:3px; }
+
+/* ── SLIDE ── */
+.slide { background:#fff; padding:28px 20px 36px; }
+.slide.alt { background:#f8fafc; }
+@media(min-width:600px){ .slide { padding:40px 40px 48px; } }
+@media(min-width:900px){ .slide { padding:52px 72px 64px; } }
+
+.slide-title {
+  font-size:clamp(18px,4vw,26px); font-weight:700; color:var(--text);
+  padding-bottom:12px; border-bottom:3px solid var(--blue);
+  display:inline-block; margin-bottom:6px;
+}
+.slide-subtitle { color:var(--muted); font-size:13px; margin-bottom:28px; }
+
+/* ── FOOTER ── */
+.slide-footer {
+  display:flex; justify-content:space-between; align-items:center;
+  font-size:11px; color:var(--hint);
+  border-top:1px solid var(--border); padding-top:14px; margin-top:32px;
+  flex-wrap:wrap; gap:4px;
+}
+
+/* ── TOC ── */
+.toc-grid {
+  display:grid; grid-template-columns:1fr; gap:12px; margin-top:20px;
+}
+@media(min-width:520px){ .toc-grid{ grid-template-columns:1fr 1fr; } }
+.toc-item {
+  display:flex; align-items:center; gap:14px;
+  background:var(--gray); border:1px solid var(--border);
+  border-radius:var(--radius); padding:14px 16px;
+}
+.toc-num {
+  width:34px; height:34px; flex-shrink:0; border-radius:var(--radius-sm);
+  background:var(--blue); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:13px;
+}
+.toc-item strong { display:block; font-size:14px; color:var(--text); }
+.toc-item span { font-size:12px; color:var(--hint); }
+
+/* ── CARDS ── */
+.cards {
+  display:grid; grid-template-columns:1fr; gap:16px;
+}
+@media(min-width:480px){ .cards{ grid-template-columns:1fr 1fr; } }
+@media(min-width:900px){ .cards{ grid-template-columns:repeat(3,1fr); } }
+.card {
+  background:#fff; border:1px solid var(--border);
+  border-radius:var(--radius); padding:20px; position:relative; overflow:hidden;
+}
+.card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:4px;
+}
+.card.blue::before { background:var(--blue); }
+.card.green::before { background:var(--green); }
+.card.purple::before { background:var(--purple); }
+.card.orange::before { background:var(--orange); }
+.card.pink::before { background:var(--pink); }
+.card.teal::before { background:var(--teal); }
+.card-icon { font-size:28px; margin-bottom:10px; }
+.card h3 { font-size:15px; font-weight:700; color:var(--text); margin-bottom:7px; }
+.card p { font-size:13px; color:var(--muted); line-height:1.6; }
+.card .tag {
+  display:inline-block; background:var(--blue-light); color:var(--blue);
+  border-radius:50px; padding:3px 11px; font-size:11px; font-weight:600; margin-top:10px;
+}
+
+/* ── STEPS ── */
+.steps { display:flex; flex-direction:column; gap:14px; }
+.step {
+  display:flex; gap:14px; align-items:flex-start;
+  background:var(--gray); border:1px solid var(--border);
+  border-radius:var(--radius); padding:16px 18px; border-left:4px solid var(--blue);
+}
+.step-num {
+  width:32px; height:32px; flex-shrink:0; border-radius:50%;
+  background:var(--blue); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:13px;
+}
+.step-content strong { display:block; font-size:14px; color:var(--text); margin-bottom:3px; }
+.step-content p { font-size:12px; color:var(--muted); }
+.step-content code {
+  background:#e0e7ff; color:#3730a3; padding:2px 7px;
+  border-radius:4px; font-size:12px; font-family:monospace;
+}
+
+/* ── TWO COL ── */
+.two-col { display:grid; grid-template-columns:1fr; gap:28px; }
+@media(min-width:700px){ .two-col{ grid-template-columns:1fr 1fr; } }
+
+/* ── INFO BOX ── */
+.info-box {
+  border-radius:var(--radius); padding:14px 18px; margin:14px 0;
+  display:flex; gap:12px; align-items:flex-start;
+}
+.info-box.blue { background:var(--blue-light); border:1px solid #bfdbfe; }
+.info-box.green { background:var(--green-light); border:1px solid #bbf7d0; }
+.info-box.yellow { background:#fffbeb; border:1px solid #fde68a; }
+.info-box.red { background:#fef2f2; border:1px solid #fecaca; }
+.info-box .icon { font-size:18px; flex-shrink:0; margin-top:2px; }
+.info-box strong { display:block; font-size:13px; margin-bottom:4px; }
+.info-box p { font-size:12px; color:#475569; }
+
+/* ── CREDENTIAL BOX ── */
+.cred-box {
+  background:#0f172a; border-radius:var(--radius);
+  padding:18px 20px; font-family:monospace; margin:14px 0;
+  overflow-x:auto;
+}
+.cred-label { color:#94a3b8; font-size:12px; }
+.cred-value { color:#34d399; font-size:12px; font-weight:600; }
+.cred-row { display:flex; flex-wrap:wrap; gap:8px; margin:5px 0; }
+
+/* ── ROLE TABLE ── */
+.table-wrap { overflow-x:auto; margin-top:16px; -webkit-overflow-scrolling:touch; }
+.role-table { width:100%; border-collapse:collapse; min-width:480px; }
+.role-table th {
+  background:#1e293b; color:#fff; padding:11px 14px;
+  text-align:left; font-size:12px; font-weight:600;
+}
+.role-table th:first-child { border-radius:8px 0 0 0; }
+.role-table th:last-child { border-radius:0 8px 0 0; }
+.role-table td { padding:10px 14px; font-size:12px; border-bottom:1px solid #f1f5f9; }
+.role-table tr:nth-child(even) td { background:#f8fafc; }
+.role-table tr:hover td { background:#eff6ff; }
+.role-badge {
+  display:inline-block; padding:2px 10px; border-radius:50px;
+  font-size:10px; font-weight:700; white-space:nowrap;
+}
+.role-sa { background:#fef2f2; color:#dc2626; }
+.role-ca { background:#f0fdf4; color:#16a34a; }
+.role-du { background:var(--blue-light); color:var(--blue); }
+.role-ro { background:var(--purple-light); color:var(--purple); }
+.check { color:#16a34a; font-weight:700; }
+.cross { color:#dc2626; }
+.partial { color:#d97706; font-size:13px; }
+
+/* ── FLOW ── */
+.flow {
+  display:flex; align-items:center; flex-wrap:wrap;
+  justify-content:center; gap:4px; margin:24px 0;
+}
+.flow-box {
+  background:#fff; border:2px solid var(--blue); border-radius:var(--radius);
+  padding:10px 14px; text-align:center;
+  min-width:80px; font-size:12px;
+}
+.flow-box strong { display:block; font-size:12px; color:var(--text); font-weight:700; }
+.flow-box span { font-size:10px; color:var(--muted); }
+.flow-arrow { font-size:18px; color:var(--hint); padding:0 2px; }
+
+/* ── FIELD LIST ── */
+.field-list { display:grid; grid-template-columns:1fr; gap:9px; margin-top:14px; }
+@media(min-width:480px){ .field-list{ grid-template-columns:1fr 1fr; } }
+.field-item {
+  background:var(--gray); border:1px solid var(--border); border-radius:var(--radius-sm);
+  padding:10px 13px; display:flex; gap:10px; align-items:center;
+}
+.field-dot { width:8px; height:8px; border-radius:50%; background:var(--blue); flex-shrink:0; }
+.field-item strong { font-size:13px; color:var(--text); display:block; }
+.field-item span { font-size:11px; color:var(--hint); display:block; }
+
+/* ── PROBLEM TABLE ── */
+.prob-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+.prob-table { width:100%; border-collapse:collapse; min-width:380px; }
+.prob-table tr { border-bottom:1px solid #f1f5f9; }
+.prob-table td { padding:12px 14px; font-size:13px; vertical-align:top; }
+.prob-table td:first-child { color:#dc2626; font-weight:600; width:38%; }
+.prob-table td:last-child { color:#475569; }
+
+/* ── CHECKLIST ── */
+.checklist { list-style:none; }
+.checklist li {
+  display:flex; gap:12px; padding:9px 0;
+  border-bottom:1px solid #f1f5f9; font-size:13px; align-items:flex-start;
+}
+.checklist li .icon { color:#16a34a; font-size:16px; flex-shrink:0; }
+.checklist li strong { color:var(--text); font-size:13px; }
+.checklist li span { color:var(--muted); font-size:12px; display:block; margin-top:1px; }
+
+/* ── GST BOX ── */
+.gst-box {
+  background:var(--gray); border:1px solid var(--border);
+  border-radius:var(--radius); padding:18px; margin-bottom:14px;
+}
+.gst-row {
+  display:flex; justify-content:space-between;
+  font-size:13px; padding:7px 0; border-bottom:1px solid #f1f5f9;
+}
+.gst-row:last-child { font-weight:700; font-size:14px; border:none; padding-top:10px; }
+
+/* ── DISPATCH STATUS ── */
+.status-list { display:flex; flex-direction:column; gap:9px; }
+.status-item {
+  display:flex; align-items:center; gap:12px;
+  background:var(--gray); border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:11px 14px; font-size:13px;
+}
+.status-dot { width:11px; height:11px; border-radius:50%; flex-shrink:0; }
+
+/* ── NUMBER PREFIX ── */
+.prefix-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:14px;
+}
+.prefix-card {
+  text-align:center; padding:14px 10px; border-radius:var(--radius-sm);
+}
+.prefix-card .prefix-label { font-size:11px; color:var(--muted); margin-bottom:4px; }
+.prefix-card .prefix-value { font-size:22px; font-weight:800; font-family:monospace; }
+.prefix-card .prefix-eg { font-size:10px; color:var(--hint); margin-top:4px; }
+
+/* ── SECTION TITLE INSIDE SLIDE ── */
+.section-inner-title {
+  font-size:14px; font-weight:700; color:var(--text);
+  margin-bottom:14px; margin-top:4px;
+}
+
+/* ── ARCH STEPS ── */
+.arch-step {
+  display:flex; gap:14px; align-items:flex-start;
+  background:var(--gray); border:1px solid var(--border);
+  border-radius:var(--radius); padding:14px 16px; margin-bottom:12px;
+}
+.arch-badge {
+  width:36px; height:36px; flex-shrink:0; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:12px; color:#fff;
+}
+
+/* ── TECH STACK CARD ── */
+.tech-card {
+  background:#fff; border:1px solid var(--border);
+  border-radius:var(--radius); padding:14px 16px; margin-bottom:10px;
+}
+.tech-card strong { font-size:13px; color:var(--text); }
+.tech-card p { font-size:12px; color:var(--muted); margin-top:4px; }
+
+/* ── DEV TERMINAL ── */
+.terminal {
+  background:#0f172a; border-radius:var(--radius);
+  padding:18px 20px; font-family:monospace; margin:12px 0;
+  overflow-x:auto;
+}
+.terminal .t-label { color:#60a5fa; font-size:11px; letter-spacing:1px; margin-bottom:10px; }
+.terminal .t-row { display:flex; flex-wrap:wrap; gap:10px; margin:5px 0; }
+.terminal .t-cmd { color:#e2e8f0; font-size:13px; }
+.terminal .t-comment { color:#475569; font-size:13px; }
+.terminal .t-ok { color:#34d399; font-size:12px; margin-top:8px; }
+
+/* ── FINAL SLIDE ── */
+.final {
+  background:linear-gradient(145deg,#0f172a,#1e3a8a,#4f46e5);
+  color:#fff; text-align:center; padding:60px 20px;
+}
+.final-inner { max-width:520px; margin:0 auto; }
+.final h1 { font-size:clamp(26px,6vw,44px); font-weight:800; margin-bottom:14px; }
+.final > .final-inner > p { font-size:16px; color:rgba(255,255,255,0.7); margin-bottom:36px; }
+.final-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:32px; }
+.final-card {
+  background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);
+  border-radius:var(--radius); padding:18px 14px;
+}
+.final-card .fi { font-size:22px; margin-bottom:8px; }
+.final-card p { color:#93c5fd; font-size:13px; font-weight:600; }
+.final-card span { color:rgba(255,255,255,0.6); font-size:11px; display:block; margin-top:4px; }
+
+/* ── SECTION DIVIDER ── */
+.quick-header {
+  background:linear-gradient(135deg,#064e3b,#059669);
+  color:#fff; padding:32px 20px;
+  display:flex; align-items:center; gap:16px;
+}
+.quick-num {
+  width:52px; height:52px; flex-shrink:0; border-radius:50%;
+  background:rgba(255,255,255,0.2); border:2px solid rgba(255,255,255,0.4);
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; font-weight:800;
+}
+
+/* scrollbar */
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:#cbd5e1; border-radius:10px; }
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="badge">Complete User Guide — v1.0</div>
+    <h1>IndustrialERP</h1>
+    <p>Multi-Company SaaS ERP System — Registration, Setup aur Daily Operations ka step-by-step guide</p>
+
+    <div class="cover-meta">
+      <div class="cover-meta-item"><span>10</span><p>Modules</p></div>
+      <div class="cover-meta-item"><span>4</span><p>User Roles</p></div>
+      <div class="cover-meta-item"><span>∞</span><p>Companies</p></div>
+      <div class="cover-meta-item"><span>100%</span><p>Cloud Based</p></div>
+    </div>
+
+    <div class="demo-box">
+      <p>Demo Login</p>
+      <p>admin@alphamfg.com / Admin@123</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TABLE OF CONTENTS ══ -->
+<div class="slide alt">
+  <div class="slide-title">Table of Contents</div>
+  <div class="slide-subtitle">Ye guide 10 sections mein divide hai — step by step follow karein</div>
+
+  <div class="toc-grid">
+    <div class="toc-item"><div class="toc-num">1</div><div><strong>System Overview</strong><span>Kya hai ye system aur kaise kaam karta hai</span></div></div>
+    <div class="toc-item"><div class="toc-num">2</div><div><strong>Company Registration</strong><span>Pehli baar kaise shuru karein</span></div></div>
+    <div class="toc-item"><div class="toc-num">3</div><div><strong>User Roles & Permissions</strong><span>4 roles — kon kya kar sakta hai</span></div></div>
+    <div class="toc-item"><div class="toc-num">4</div><div><strong>Users Banana</strong><span>Company mein employees add karna</span></div></div>
+    <div class="toc-item"><div class="toc-num">5</div><div><strong>Material Management</strong><span>Warehouse, Supplier, Material, GRN</span></div></div>
+    <div class="toc-item"><div class="toc-num">6</div><div><strong>Production Management</strong><span>Workflow, Orders, Stage tracking</span></div></div>
+    <div class="toc-item"><div class="toc-num">7</div><div><strong>Dispatch Management</strong><span>LR, E-way bill, Delivery tracking</span></div></div>
+    <div class="toc-item"><div class="toc-num">8</div><div><strong>Invoice & Billing</strong><span>GST invoice, Payment recording, PDF</span></div></div>
+    <div class="toc-item"><div class="toc-num">9</div><div><strong>Reports & Dashboard</strong><span>Data dekhna aur export karna</span></div></div>
+    <div class="toc-item"><div class="toc-num">10</div><div><strong>Company Settings</strong><span>Pehle din kya configure karein</span></div></div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Contents</span></div>
+</div>
+
+<!-- ══ SECTION 1 HEADER ══ -->
+<div class="section-header">
+  <div class="section-num">1</div>
+  <div><h2>System Overview</h2><p>Kya hai IndustrialERP aur ye kaise kaam karta hai</p></div>
+</div>
+
+<!-- 1A -->
+<div class="slide">
+  <div class="slide-title">System kya karta hai?</div>
+  <div class="slide-subtitle">Ek manufacturing/trading company ka poora kaam ek jagah manage karta hai</div>
+
+  <div class="cards">
+    <div class="card blue"><div class="card-icon">📦</div><h3>Material Management</h3><p>Raw material, finished goods, stock tracking. Kab kahan kitna stock hai — real time.</p><div class="tag">Inventory Control</div></div>
+    <div class="card green"><div class="card-icon">🏭</div><h3>Production</h3><p>Production orders banana, workflow stages define karna, progress track karna.</p><div class="tag">Manufacturing</div></div>
+    <div class="card orange"><div class="card-icon">🚚</div><h3>Dispatch</h3><p>Maal bhejna — LR number, e-way bill, delivery tracking, driver info.</p><div class="tag">Logistics</div></div>
+    <div class="card purple"><div class="card-icon">🧾</div><h3>Invoice & Billing</h3><p>GST invoice banana, CGST/SGST/IGST calculate karna, payment track karna, PDF download.</p><div class="tag">Finance</div></div>
+    <div class="card pink"><div class="card-icon">🏪</div><h3>Suppliers & Customers</h3><p>Supplier aur customer master maintain karna, unka history dekhna.</p><div class="tag">CRM</div></div>
+    <div class="card teal"><div class="card-icon">📊</div><h3>Reports & Dashboard</h3><p>Stock report, production report, financial summary — Excel export ke saath.</p><div class="tag">Analytics</div></div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 1 — Overview</span></div>
+</div>
+
+<!-- 1B -->
+<div class="slide alt">
+  <div class="slide-title">System Architecture — Multi-Company</div>
+  <div class="slide-subtitle">Ek hi system mein multiple companies kaam kar sakti hain</div>
+
+  <div class="two-col">
+    <div>
+      <p class="section-inner-title">🏗️ Kaise structured hai?</p>
+      <div class="arch-step">
+        <div class="arch-badge" style="background:#7c3aed;">SA</div>
+        <div><strong style="font-size:13px;color:var(--text);">Super Admin (Platform Owner)</strong><p style="font-size:12px;color:var(--muted);margin-top:3px;">Poore system ka malik. Nayi companies register/block kar sakta hai. Plan manage karta hai.</p></div>
+      </div>
+      <div class="arch-step">
+        <div class="arch-badge" style="background:var(--blue);">C1</div>
+        <div><strong style="font-size:13px;color:var(--text);">Company 1 — Alpha Manufacturing</strong><p style="font-size:12px;color:var(--muted);margin-top:3px;">Apna alag data, apne users, apna stock. Dusri company ka data nahi dekh sakta.</p></div>
+      </div>
+      <div class="arch-step">
+        <div class="arch-badge" style="background:var(--green);">C2</div>
+        <div><strong style="font-size:13px;color:var(--text);">Company 2 — Beta Traders</strong><p style="font-size:12px;color:var(--muted);margin-top:3px;">Bilkul alag account. Same system, completely isolated data.</p></div>
+      </div>
+    </div>
+    <div>
+      <p class="section-inner-title">🔗 Tech Stack</p>
+      <div class="tech-card" style="border-left:4px solid var(--blue);"><strong>Frontend</strong><p>React 18, Tailwind CSS, React Query, Zustand</p></div>
+      <div class="tech-card" style="border-left:4px solid var(--green);"><strong>Backend</strong><p>Node.js, Express, PostgreSQL (Supabase), JWT Auth</p></div>
+      <div class="tech-card" style="border-left:4px solid var(--orange);"><strong>Cloud Services</strong><p>Cloudinary (images), Socket.IO (real-time), Nodemailer (email)</p></div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 1 — Architecture</span></div>
+</div>
+
+<!-- ══ SECTION 2 HEADER ══ -->
+<div class="section-header">
+  <div class="section-num">2</div>
+  <div><h2>Company Registration</h2><p>Pehli baar system mein kaise enter karein — step by step</p></div>
+</div>
+
+<div class="slide">
+  <div class="slide-title">Pehli baar kaise shuru karein?</div>
+  <div class="slide-subtitle">2 tarike hain — Demo account ya nayi company register karna</div>
+
+  <div class="two-col">
+    <div>
+      <p class="section-inner-title">Option A — Demo Account (Testing ke liye)</p>
+      <div class="info-box blue">
+        <div class="icon">💡</div>
+        <div><strong>Seedha login kar sakte ho</strong><p>Database mein pehle se demo data dala hua hai.</p></div>
+      </div>
+      <div class="cred-box">
+        <div style="color:#60a5fa;font-size:11px;margin-bottom:10px;letter-spacing:1px;">COMPANY ADMIN</div>
+        <div class="cred-row"><span class="cred-label">URL:</span><span class="cred-value">http://localhost:3000</span></div>
+        <div class="cred-row"><span class="cred-label">Email:</span><span class="cred-value">admin@alphamfg.com</span></div>
+        <div class="cred-row"><span class="cred-label">Pass:</span><span class="cred-value">Admin@123</span></div>
+        <div style="margin:10px 0;border-top:1px solid #334155;padding-top:10px;"></div>
+        <div style="color:#60a5fa;font-size:11px;margin-bottom:10px;letter-spacing:1px;">SUPER ADMIN</div>
+        <div class="cred-row"><span class="cred-label">Email:</span><span class="cred-value">superadmin@erp.com</span></div>
+        <div class="cred-row"><span class="cred-label">Pass:</span><span class="cred-value">SuperAdmin@123</span></div>
+      </div>
+    </div>
+    <div>
+      <p class="section-inner-title">Option B — Nayi Company Register Karna</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Login page pe jao</strong><p><code>http://localhost:3000/login</code></p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>"Register your company" click karo</strong><p>Neeche link milega login form ke upar</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Company details bhar do</strong><p>Naam, Code (unique, jaise ALPHA), Industry type, Email, Phone</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Admin account banao</strong><p>First Name, Last Name, Email, Password (min 8 chars, 1 capital, 1 number)</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-content"><strong>Submit → Login karo</strong><p>Registration ke baad seedha login page pe redirect ho jaoge</p></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 2 — Registration</span></div>
+</div>
+
+<!-- ══ SECTION 3 HEADER ══ -->
+<div class="section-header">
+  <div class="section-num">3</div>
+  <div><h2>User Roles & Permissions</h2><p>4 roles hain — har role ko kya milta hai</p></div>
+</div>
+
+<div class="slide">
+  <div class="slide-title">4 User Roles — Kya farak hai?</div>
+  <div class="slide-subtitle">Role decide karta hai ki user system mein kya dekh sakta hai aur kya kar sakta hai</div>
+
+  <div class="cards" style="grid-template-columns:1fr 1fr;">
+    <div class="card" style="border-top:4px solid #dc2626;"><div class="card-icon">👑</div><h3>Super Admin</h3><p>Platform ka malik. Sabhi companies dekh sakta hai. Subscription manage karta hai.</p><div class="role-badge role-sa" style="margin-top:10px;">System Level</div></div>
+    <div class="card" style="border-top:4px solid var(--green);"><div class="card-icon">🏢</div><h3>Company Admin</h3><p>Ek company ka admin. Users manage karta hai. Sab kuch dekh aur kar sakta hai apni company mein.</p><div class="role-badge role-ca" style="margin-top:10px;">Company Level</div></div>
+    <div class="card" style="border-top:4px solid var(--blue);"><div class="card-icon">👤</div><h3>Department User</h3><p>Regular employee. Create, edit, view kar sakta hai. Delete nahi kar sakta (by default).</p><div class="role-badge role-du" style="margin-top:10px;">Department Level</div></div>
+    <div class="card" style="border-top:4px solid var(--purple);"><div class="card-icon">👁️</div><h3>Read Only</h3><p>Sirf dekh sakta hai — kuch bhi change nahi kar sakta. Auditors ke liye.</p><div class="role-badge role-ro" style="margin-top:10px;">View Only</div></div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 3 — Roles</span></div>
+</div>
+
+<div class="slide alt">
+  <div class="slide-title">Permission Matrix</div>
+  <div class="slide-subtitle">✅ = Haan | ❌ = Nahi | ⚠️ = Sirf view (scroll karein →)</div>
+
+  <div class="table-wrap">
+    <table class="role-table">
+      <thead>
+        <tr>
+          <th>Feature / Action</th>
+          <th><span class="role-badge role-sa">Super Admin</span></th>
+          <th><span class="role-badge role-ca">Company Admin</span></th>
+          <th><span class="role-badge role-du">Dept User</span></th>
+          <th><span class="role-badge role-ro">Read Only</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Dashboard dekhna</strong></td><td class="check">✅</td><td class="check">✅</td><td class="check">✅</td><td class="check">✅</td></tr>
+        <tr><td><strong>Material add/edit</strong></td><td class="check">✅</td><td class="check">✅</td><td class="check">✅</td><td class="cross">❌</td></tr>
+        <tr><td><strong>GRN banana</strong></td><td class="check">✅</td><td class="check">✅</td><td class="check">✅</td><td class="cross">❌</td></tr>
+        <tr><td><strong>Production order</strong></td><td class="check">✅</td><td class="check">✅</td><td class="check">✅</td><td class="cross">❌</td></tr>
+        <tr><td><strong>Dispatch banana</strong></td><td class="check">✅</td><td class="check">✅</td><td class="check">✅</td><td class="cross">❌</td></tr>
+        <tr><td><strong>Invoice banana</strong></td><td class="check">✅</td><td class="check">✅</td><td class="check">✅</td><td class="cross">❌</td></tr>
+        <tr><td><strong>Kuch bhi delete</strong></td><td class="check">✅</td><td class="check">✅</td><td class="cross">❌</td><td class="cross">❌</td></tr>
+        <tr><td><strong>Users manage</strong></td><td class="check">✅</td><td class="check">✅</td><td class="cross">❌</td><td class="cross">❌</td></tr>
+        <tr><td><strong>Company settings</strong></td><td class="check">✅</td><td class="check">✅</td><td class="cross">❌</td><td class="cross">❌</td></tr>
+        <tr><td><strong>Audit Logs</strong></td><td class="check">✅</td><td class="check">✅</td><td class="cross">❌</td><td class="cross">❌</td></tr>
+        <tr><td><strong>Reports export</strong></td><td class="check">✅</td><td class="check">✅</td><td class="check">✅</td><td class="partial">⚠️ View only</td></tr>
+        <tr><td><strong>Doosri companies</strong></td><td class="check">✅</td><td class="cross">❌</td><td class="cross">❌</td><td class="cross">❌</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 3 — Permissions</span></div>
+</div>
+
+<!-- ══ SECTION 4 HEADER ══ -->
+<div class="section-header">
+  <div class="section-num">4</div>
+  <div><h2>Users Banana</h2><p>Company mein employees ko system access dena</p></div>
+</div>
+
+<div class="slide">
+  <div class="slide-title">New User Kaise Banayein?</div>
+  <div class="slide-subtitle">Sirf Company Admin ya Super Admin hi users bana sakta hai</div>
+
+  <div class="two-col">
+    <div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Sidebar → "Users" click karo</strong><p>⚠️ Ye option sirf Admin ko dikhega</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>"+ Add User" button click karo</strong><p>Top right mein blue button hai</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Form bhar do</strong><p>Full Name, Email, Password, Role, Department</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Save karo</strong><p>User turant login kar sakta hai apni credentials se</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-content"><strong>Password reset karna ho toh</strong><p>User list mein user ke saamne 🔑 icon click karo</p></div></div>
+      </div>
+    </div>
+    <div>
+      <p class="section-inner-title">📋 Form Fields</p>
+      <div class="field-list" style="grid-template-columns:1fr;">
+        <div class="field-item"><div class="field-dot" style="background:#dc2626;"></div><div><strong>Full Name *</strong><span>Required — employee ka naam</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:#dc2626;"></div><div><strong>Email *</strong><span>Required — unique, login ke liye</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:#dc2626;"></div><div><strong>Password *</strong><span>Required — min 8 chars, 1 capital, 1 number</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:#dc2626;"></div><div><strong>Role *</strong><span>Required — company_admin / department_user / read_only</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:var(--hint);"></div><div><strong>Department</strong><span>Optional — Production / Accounts / Dispatch etc.</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:var(--hint);"></div><div><strong>Phone</strong><span>Optional — employee phone number</span></div></div>
+      </div>
+      <div class="info-box yellow" style="margin-top:14px;">
+        <div class="icon">⚠️</div>
+        <div><strong>Password Policy</strong><p>Kam se kam ek CAPITAL letter aur ek NUMBER hona chahiye. Example: <code style="background:#fde68a;padding:2px 6px;border-radius:4px;font-family:monospace;">Raj@2024</code></p></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 4 — Users</span></div>
+</div>
+
+<!-- ══ SECTION 5 HEADER ══ -->
+<div class="section-header">
+  <div class="section-num">5</div>
+  <div><h2>Material Management</h2><p>Stock ka complete system — Warehouse se GRN tak</p></div>
+</div>
+
+<div class="slide">
+  <div class="slide-title">Sahi order mein setup karo</div>
+  <div class="slide-subtitle">Pehle warehouse, phir supplier, phir material — is order ko follow karo</div>
+
+  <div class="flow">
+    <div class="flow-box" style="background:#dbeafe;border-color:var(--blue);"><strong>🏪 Warehouse</strong><span>Pahle banao</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="background:#dcfce7;border-color:var(--green);"><strong>👥 Supplier</strong><span>Dusra banao</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="background:#fef9c3;border-color:#ca8a04;"><strong>📦 Material</strong><span>Teesra banao</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="background:#fce7f3;border-color:var(--pink);"><strong>📋 GRN</strong><span>Stock daalo</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="background:#ede9fe;border-color:var(--purple);"><strong>🏭 Production</strong><span>Use karo</span></div>
+  </div>
+
+  <div class="two-col" style="margin-top:8px;">
+    <div>
+      <p class="section-inner-title">Step 1 — Warehouse Banana</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">→</div><div class="step-content"><strong>Sidebar → "Warehouses" → "Add Warehouse"</strong><p>Name: Main Store | Code: WH01 | City, State, Manager (optional)</p></div></div>
+        <div class="step"><div class="step-num">→</div><div class="step-content"><strong>Primary warehouse mark karo</strong><p>Ek warehouse ko "Primary" mark karo — yahi default mein select hoga</p></div></div>
+      </div>
+      <p class="section-inner-title" style="margin-top:18px;">Step 2 — Supplier Banana</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">→</div><div class="step-content"><strong>Sidebar → "Suppliers" → "Add Supplier"</strong><p>Name, Phone, GST Number, Address — baaki optional hai</p></div></div>
+      </div>
+    </div>
+    <div>
+      <p class="section-inner-title">Step 3 — Material Banana</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">→</div><div class="step-content"><strong>Sidebar → "Materials" → "Add Material"</strong><p>Code (unique), Name, Unit (kg/piece/meter/etc.)</p></div></div>
+        <div class="step"><div class="step-num">→</div><div class="step-content"><strong>HSN Code aur GST% dalo</strong><p>Invoice mein automatic calculate hoga. Example: HSN 6401, GST 18%</p></div></div>
+        <div class="step"><div class="step-num">→</div><div class="step-content"><strong>Minimum Stock level set karo</strong><p>Is se kam hone par "Low Stock" alert aayega dashboard pe</p></div></div>
+      </div>
+      <div class="info-box green" style="margin-top:12px;">
+        <div class="icon">✅</div>
+        <div><strong>Bulk Import bhi ho sakta hai</strong><p>"Template" download karo → Excel mein bhar do → "Import" se upload karo</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 5 — Materials</span></div>
+</div>
+
+<!-- GRN SLIDE -->
+<div class="slide alt">
+  <div class="slide-title">GRN — Goods Receipt Note (Stock Inward)</div>
+  <div class="slide-subtitle">Supplier se maal aaya → stock system mein daalo → GRN banao</div>
+
+  <div class="two-col">
+    <div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Sidebar → "Materials" → "GRN / Inward"</strong><p>GRN list dikhegi — saare past receipts</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>"New GRN" click karo</strong><p>Top right mein button hai</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Material aur Warehouse select karo</strong><p>Required fields hain — baaki optional</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Received Quantity dalo</strong><p>Kitna aaya? Accepted kitna? Rejected kitna?</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-content"><strong>QC Status select karo</strong><p>Pending / Approved / Rejected / Conditional</p></div></div>
+        <div class="step"><div class="step-num">6</div><div class="step-content"><strong>"Create GRN" karo</strong><p>Stock automatically add ho jaayega (agar Approved hai toh)</p></div></div>
+      </div>
+    </div>
+    <div>
+      <p class="section-inner-title">📋 GRN Form Fields</p>
+      <div class="field-list" style="grid-template-columns:1fr;">
+        <div class="field-item"><div class="field-dot" style="background:#dc2626;"></div><div><strong>Material *</strong><span>Dropdown se select karo</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:#dc2626;"></div><div><strong>Warehouse *</strong><span>Kahan store hoga</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:#dc2626;"></div><div><strong>Received Qty *</strong><span>Kitna aaya supplier se</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:var(--hint);"></div><div><strong>Supplier</strong><span>Optional — kon sa supplier</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:var(--hint);"></div><div><strong>Unit Cost</strong><span>Per unit price</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:var(--hint);"></div><div><strong>Batch Number</strong><span>Optional — tracking ke liye</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:var(--hint);"></div><div><strong>Supplier Invoice No</strong><span>Reference ke liye</span></div></div>
+      </div>
+      <div class="info-box blue" style="margin-top:14px;">
+        <div class="icon">💡</div>
+        <div><strong>GRN se Stock automatically update hota hai</strong><p>QC Status "Approved" ya "Conditional" ho toh Accepted Qty stock mein add ho jaayegi. "Rejected" mein kuch nahi hoga.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 5 — GRN</span></div>
+</div>
+
+<!-- ══ SECTION 6 HEADER ══ -->
+<div class="section-header">
+  <div class="section-num">6</div>
+  <div><h2>Production Management</h2><p>Manufacturing ka poora flow — Workflow se completed tak</p></div>
+</div>
+
+<div class="slide">
+  <div class="slide-title">Production Flow</div>
+  <div class="slide-subtitle">Pehle workflow template banao, phir production orders chalao</div>
+
+  <div class="flow" style="margin-bottom:28px;">
+    <div class="flow-box" style="background:#dbeafe;border-color:var(--blue);"><strong>🔧 Workflow</strong><span>Stages define</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="background:#dcfce7;border-color:var(--green);"><strong>📋 Order</strong><span>Order banana</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="background:#fef9c3;border-color:#ca8a04;"><strong>🔄 Stage Update</strong><span>Progress track</span></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box" style="background:#dcfce7;border-color:var(--green);"><strong>✅ Done</strong><span>Stock update</span></div>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <p class="section-inner-title">Step 1 — Workflow Template Banao</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">→</div><div class="step-content"><strong>Sidebar → Production → Workflow Builder</strong><p>Apni manufacturing process ke stages define karo</p></div></div>
+        <div class="step"><div class="step-num">→</div><div class="step-content"><strong>Stages add karo</strong><p>Example for Footwear: Cutting → Stitching → Lasting → Finishing → QC → Packing</p></div></div>
+        <div class="step"><div class="step-num">→</div><div class="step-content"><strong>Har stage mein department assign karo</strong><p>Optional — kaun sa department ye stage karega</p></div></div>
+      </div>
+    </div>
+    <div>
+      <p class="section-inner-title">Step 2 — Production Order Banao</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">→</div><div class="step-content"><strong>Production → "+ New Order"</strong><p>Product select karo (material), quantity, dates</p></div></div>
+        <div class="step"><div class="step-num">→</div><div class="step-content"><strong>Workflow select karo</strong><p>Jo template banaya tha usse link karo</p></div></div>
+        <div class="step"><div class="step-num">→</div><div class="step-content"><strong>Order detail page mein stages update karo</strong><p>Har stage complete ho toh click karke update karo — timestamp auto record hoga</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box green" style="margin-top:10px;">
+    <div class="icon">📊</div>
+    <div><strong>Production List mein kya dikhega?</strong><p>Order number, product, quantity ordered/produced, status (Pending/In Progress/Completed), planned vs actual dates, delay indicator.</p></div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 6 — Production</span></div>
+</div>
+
+<!-- ══ SECTION 7 HEADER ══ -->
+<div class="section-header">
+  <div class="section-num">7</div>
+  <div><h2>Dispatch Management</h2><p>Maal bhejna — LR, E-way bill, delivery tracking</p></div>
+</div>
+
+<div class="slide">
+  <div class="slide-title">Dispatch Kaise Banayein?</div>
+  <div class="slide-subtitle">Customer ke liye maal ready hai → dispatch banao → track karo</div>
+
+  <div class="two-col">
+    <div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Sidebar → "Dispatch" → "+ New Dispatch"</strong><p></p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Customer aur delivery address select karo</strong><p>Customer master se auto-fill hoga</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Items add karo</strong><p>Kya bhejna hai, kitna quantity, rate</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Transport details dalo</strong><p>Vehicle number, LR number, transporter name, driver phone</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-content"><strong>E-way bill number dalo</strong><p>GST portal se generate karke yahan paste karo</p></div></div>
+        <div class="step"><div class="step-num">6</div><div class="step-content"><strong>Status update karte raho</strong><p>Ready → Packed → Dispatched → Delivered</p></div></div>
+      </div>
+    </div>
+    <div>
+      <p class="section-inner-title">🚦 Dispatch Status Flow</p>
+      <div class="status-list">
+        <div class="status-item"><div class="status-dot" style="background:#f59e0b;"></div><div><strong>Ready</strong> — Maal taiyar hai, bheja nahi</div></div>
+        <div class="status-item"><div class="status-dot" style="background:#8b5cf6;"></div><div><strong>Packed</strong> — Packing ho gayi, vehicle ready</div></div>
+        <div class="status-item"><div class="status-dot" style="background:#3b82f6;"></div><div><strong>Dispatched</strong> — Truck nikal gaya</div></div>
+        <div class="status-item"><div class="status-dot" style="background:#06b6d4;"></div><div><strong>In Transit</strong> — Raste mein hai</div></div>
+        <div class="status-item" style="background:var(--green-light);border-color:#bbf7d0;"><div class="status-dot" style="background:var(--green);"></div><div><strong>Delivered ✅</strong> — Customer ko pahunch gaya</div></div>
+      </div>
+      <div class="info-box blue" style="margin-top:14px;">
+        <div class="icon">💡</div>
+        <div><strong>Dispatch se Invoice Link karo</strong><p>Invoice banate waqt dispatch ID select karne ka option milega — automatically items fill ho jaayenge.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 7 — Dispatch</span></div>
+</div>
+
+<!-- ══ SECTION 8 HEADER ══ -->
+<div class="section-header">
+  <div class="section-num">8</div>
+  <div><h2>Invoice & Billing</h2><p>GST Invoice banana, payment track karna, PDF download karna</p></div>
+</div>
+
+<div class="slide">
+  <div class="slide-title">Invoice Kaise Banayein?</div>
+  <div class="slide-subtitle">GST calculate automatic hoga — CGST+SGST (intra-state) ya IGST (inter-state)</div>
+
+  <div class="two-col">
+    <div>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Sidebar → "Invoices" → "Create Invoice"</strong><p>Ya list pe "+ Create Invoice" click karo</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>Customer select karo</strong><p>Customer master se — address auto-fill hoga</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Inter-state ya Intra-state?</strong><p>Toggle se select karo — GST automatically split ho jaayega</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-content"><strong>Items add karo</strong><p>Material, Qty, Rate, HSN Code, GST% — total calculate hoga</p></div></div>
+        <div class="step"><div class="step-num">5</div><div class="step-content"><strong>"Create Invoice" karo</strong><p>Invoice number auto generate hoga (INV-000001 format)</p></div></div>
+        <div class="step"><div class="step-num">6</div><div class="step-content"><strong>PDF download karo ya payment add karo</strong><p>Detail page mein dono options hain</p></div></div>
+      </div>
+    </div>
+    <div>
+      <p class="section-inner-title">💰 GST Calculation</p>
+
+      <div class="gst-box">
+        <p style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;">🏠 Intra-State (Same State)</p>
+        <div class="gst-row"><span>Taxable Amount</span><strong>₹10,000</strong></div>
+        <div class="gst-row" style="color:var(--blue);"><span>CGST (9%)</span><span>+ ₹900</span></div>
+        <div class="gst-row" style="color:var(--blue);"><span>SGST (9%)</span><span>+ ₹900</span></div>
+        <div class="gst-row"><span>Total</span><span>₹11,800</span></div>
+      </div>
+
+      <div class="gst-box">
+        <p style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:10px;">✈️ Inter-State (Different State)</p>
+        <div class="gst-row"><span>Taxable Amount</span><strong>₹10,000</strong></div>
+        <div class="gst-row" style="color:var(--purple);"><span>IGST (18%)</span><span>+ ₹1,800</span></div>
+        <div class="gst-row"><span>Total</span><span>₹11,800</span></div>
+      </div>
+
+      <div class="info-box green">
+        <div class="icon">✅</div>
+        <div><strong>Payment Record Karna</strong><p>Invoice detail page mein "Add Payment" click karo → amount, mode (Cash/Bank/UPI/Cheque), reference number dalo → Balance automatically update hoga.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 8 — Invoice</span></div>
+</div>
+
+<!-- ══ SECTION 9 HEADER ══ -->
+<div class="section-header">
+  <div class="section-num">9</div>
+  <div><h2>Reports & Dashboard</h2><p>Business data dekhna aur Excel mein export karna</p></div>
+</div>
+
+<div class="slide">
+  <div class="slide-title">Dashboard — Business ka Overview</div>
+  <div class="slide-subtitle">Login karte hi dashboard dikhega — sabse important numbers ek jagah</div>
+
+  <div class="cards">
+    <div class="card blue"><div class="card-icon">📦</div><h3>Stock Summary</h3><p>Total materials, low stock alerts, stock value, warehouse-wise breakdown.</p></div>
+    <div class="card green"><div class="card-icon">🏭</div><h3>Production Overview</h3><p>Pending, running, completed orders. Delayed production alerts.</p></div>
+    <div class="card orange"><div class="card-icon">💰</div><h3>Revenue Charts</h3><p>Monthly revenue trend, top customers, invoice status breakdown.</p></div>
+    <div class="card purple"><div class="card-icon">🚚</div><h3>Dispatch Status</h3><p>In transit, delivered, delayed dispatches ki count.</p></div>
+  </div>
+
+  <p class="section-inner-title" style="margin-top:24px;">📊 Reports Page — Kya kya milega?</p>
+  <div class="field-list">
+    <div class="field-item"><div class="field-dot"></div><div><strong>Stock Report</strong><span>Material-wise current stock aur value</span></div></div>
+    <div class="field-item"><div class="field-dot"></div><div><strong>Stock Transaction Report</strong><span>Kab kya aaya kya gaya — complete history</span></div></div>
+    <div class="field-item"><div class="field-dot"></div><div><strong>Production Report</strong><span>Orders, efficiency, rejection rate</span></div></div>
+    <div class="field-item"><div class="field-dot"></div><div><strong>Financial Report</strong><span>Revenue, GST summary, payment collection</span></div></div>
+    <div class="field-item"><div class="field-dot"></div><div><strong>Dispatch Report</strong><span>Customer-wise dispatch history</span></div></div>
+    <div class="field-item"><div class="field-dot"></div><div><strong>Audit Logs</strong><span>Kisne kya kab kiya — complete trail</span></div></div>
+  </div>
+
+  <div class="info-box blue" style="margin-top:14px;">
+    <div class="icon">📥</div>
+    <div><strong>Excel Export</strong><p>Materials list, Invoice list, GRN list — sabke upar "Export" button hai. Click karo, Excel file download ho jaayegi.</p></div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 9 — Reports</span></div>
+</div>
+
+<!-- ══ SECTION 10 HEADER ══ -->
+<div class="section-header">
+  <div class="section-num">10</div>
+  <div><h2>Company Settings</h2><p>Pehle din kya configure karna zaroori hai</p></div>
+</div>
+
+<div class="slide">
+  <div class="slide-title">Settings — Pehle Din Ka Checklist</div>
+  <div class="slide-subtitle">Sidebar → Settings — ye sab ek baar zaroor set karo</div>
+
+  <div class="two-col">
+    <div>
+      <p class="section-inner-title">🏢 Company Information</p>
+      <div class="field-list" style="grid-template-columns:1fr;">
+        <div class="field-item"><div class="field-dot" style="background:#dc2626;"></div><div><strong>Company Logo</strong><span>Upload karein — invoice PDF mein aayega</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:#dc2626;"></div><div><strong>GST Number</strong><span>15 digit GSTIN — invoice ke liye zaroori</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:#dc2626;"></div><div><strong>PAN Number</strong><span>Company PAN card number</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:var(--hint);"></div><div><strong>Address, City, State, Pincode</strong><span>Invoice mein print hoga</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:var(--hint);"></div><div><strong>Phone, Email, Website</strong><span>Contact details</span></div></div>
+      </div>
+      <p class="section-inner-title" style="margin-top:18px;">🏦 Bank Details</p>
+      <div class="field-list" style="grid-template-columns:1fr;">
+        <div class="field-item"><div class="field-dot" style="background:var(--hint);"></div><div><strong>Bank Name</strong><span>HDFC / SBI / ICICI etc.</span></div></div>
+        <div class="field-item"><div class="field-dot" style="background:var(--hint);"></div><div><strong>Account Number & IFSC</strong><span>Invoice ke neeche print hoga</span></div></div>
+      </div>
+    </div>
+    <div>
+      <p class="section-inner-title">📝 Number Series (Prefix)</p>
+      <div class="prefix-grid" style="background:var(--gray);border:1px solid var(--border);border-radius:var(--radius);padding:14px;">
+        <div class="prefix-card" style="background:#eff6ff;border-radius:var(--radius-sm);">
+          <div class="prefix-label">Invoice</div>
+          <div class="prefix-value" style="color:var(--blue);">INV</div>
+          <div class="prefix-eg">→ INV-000001</div>
+        </div>
+        <div class="prefix-card" style="background:var(--green-light);border-radius:var(--radius-sm);">
+          <div class="prefix-label">Dispatch</div>
+          <div class="prefix-value" style="color:var(--green);">DSP</div>
+          <div class="prefix-eg">→ DSP-000001</div>
+        </div>
+        <div class="prefix-card" style="background:#fef9c3;border-radius:var(--radius-sm);">
+          <div class="prefix-label">Production</div>
+          <div class="prefix-value" style="color:#ca8a04;">PRD</div>
+          <div class="prefix-eg">→ PRD-000001</div>
+        </div>
+      </div>
+
+      <div class="info-box yellow">
+        <div class="icon">⚠️</div>
+        <div><strong>Prefix pehle set karo</strong><p>Ek baar invoice banne ke baad prefix change karna confusing ho sakta hai. Pehle set karo phir documents banana shuru karo.</p></div>
+      </div>
+      <div class="info-box green">
+        <div class="icon">💡</div>
+        <div><strong>Profile Settings</strong><p>Top right mein apna naam click karo → Profile Settings mein apna naam, phone, password change kar sakte ho.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Section 10 — Settings</span></div>
+</div>
+
+<!-- ══ QUICK SETUP CHECKLIST ══ -->
+<div class="quick-header">
+  <div class="quick-num">✓</div>
+  <div><h2 style="font-size:clamp(18px,5vw,28px);">Quick Setup Checklist</h2><p style="color:rgba(255,255,255,0.72);font-size:14px;">Pehle din ye sab karo — system ready ho jaayega</p></div>
+</div>
+
+<div class="slide">
+  <div class="slide-title">Pehle Din Ka Complete Checklist</div>
+  <div class="slide-subtitle">Is order mein karo — kuch miss mat karo</div>
+
+  <div class="two-col">
+    <div>
+      <div style="background:var(--green-light);padding:10px 14px;border-radius:var(--radius-sm);margin-bottom:14px;font-size:13px;font-weight:700;color:var(--green);">📌 SETUP PHASE (Ek baar)</div>
+      <ul class="checklist">
+        <li><span class="icon">☐</span><div><strong>Company register / login karo</strong><span>admin@alphamfg.com se demo mein</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Company Settings → Logo, GST, Address set karo</strong><span>Invoice ke liye zaroori</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Invoice/Dispatch/Production prefix set karo</strong><span>Settings page mein</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Warehouse banao</strong><span>Warehouses → Add Warehouse</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Suppliers add karo</strong><span>Suppliers → Add Supplier</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Customers add karo</strong><span>Customers → Add Customer</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Materials banao</strong><span>Materials → Add Material (ya bulk import)</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Opening stock daalo</strong><span>GRN banao har material ke liye</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Workflow template banao</strong><span>Production → Workflow Builder</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Users add karo</strong><span>Users → Add User for team members</span></div></li>
+      </ul>
+    </div>
+    <div>
+      <div style="background:var(--blue-light);padding:10px 14px;border-radius:var(--radius-sm);margin-bottom:14px;font-size:13px;font-weight:700;color:var(--blue);">📅 DAILY OPERATIONS</div>
+      <ul class="checklist">
+        <li><span class="icon">☐</span><div><strong>Dashboard check karo</strong><span>Low stock alerts, pending orders dekho</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Maal aaya → GRN banao</strong><span>GRN / Inward → New GRN</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Production order shuru karo</strong><span>Production → New Order</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Production stages update karo</strong><span>Order detail mein stage click karo</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Maal bhejna → Dispatch banao</strong><span>Dispatch → New Dispatch</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Invoice banao</strong><span>Invoices → Create Invoice</span></div></li>
+        <li><span class="icon">☐</span><div><strong>Payment receive hua → record karo</strong><span>Invoice detail → Add Payment</span></div></li>
+        <li><span class="icon">☐</span><div><strong>PDF download karo</strong><span>Invoice detail → Download PDF</span></div></li>
+      </ul>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Quick Checklist</span></div>
+</div>
+
+<!-- ══ COMMON PROBLEMS ══ -->
+<div class="slide alt">
+  <div class="slide-title">Common Problems & Solutions</div>
+  <div class="slide-subtitle">Koi problem aaye toh ye check karo pehle</div>
+
+  <div class="prob-wrap">
+    <table class="prob-table">
+      <tbody>
+        <tr><td>❌ Login nahi ho raha</td><td>Email aur password dobara check karo. Password case-sensitive hai. Caps Lock on toh nahi hai?</td></tr>
+        <tr><td>❌ GRN banaya par stock nahi badha</td><td>QC Status "Rejected" toh stock nahi badh'ta. "Approved" ya "Conditional" select karo aur accepted quantity check karo.</td></tr>
+        <tr><td>❌ Material dropdown mein nahi</td><td>Pehle material banao (Materials → Add Material). GRN ya Production mein tab dikhega.</td></tr>
+        <tr><td>❌ Invoice PDF mein logo nahi</td><td>Settings mein company name, logo aur GST number set karo pehle.</td></tr>
+        <tr><td>❌ "Users" menu nahi dikh raha</td><td>Ye sirf Company Admin aur Super Admin ko dikhta hai. Apna role check karo.</td></tr>
+        <tr><td>❌ Production order start nahi</td><td>Pehle Workflow Template banana padega (Production → Workflow Builder). Bina workflow ke order create nahi hota.</td></tr>
+        <tr><td>❌ Backend start nahi ho raha</td><td>backend folder mein jao → <code style="background:#fef2f2;padding:2px 6px;border-radius:4px;font-family:monospace;">npm install</code> → phir <code style="background:#fef2f2;padding:2px 6px;border-radius:4px;font-family:monospace;">npm run dev</code>. Database SQL pehle run karo.</td></tr>
+        <tr><td>❌ Frontend blank aa raha hai</td><td>frontend folder mein <code style="background:#fef2f2;padding:2px 6px;border-radius:4px;font-family:monospace;">npm install</code> → <code style="background:#fef2f2;padding:2px 6px;border-radius:4px;font-family:monospace;">npm run dev</code>. Backend bhi chalu hai? http://localhost:5000/health check karo.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Troubleshooting</span></div>
+</div>
+
+<!-- ══ DEVELOPER SETUP ══ -->
+<div class="slide">
+  <div class="slide-title">🛠️ Developer — System Start Karna</div>
+  <div class="slide-subtitle">Local machine pe project kaise run karein — step by step</div>
+
+  <div class="two-col">
+    <div>
+      <p class="section-inner-title">1️⃣ Database Setup (Sirf ek baar)</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div class="step-content"><strong>Supabase dashboard kholo</strong><p>db.bksznpwjhhtybsiwvgtd.supabase.co</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-content"><strong>SQL Editor mein schema run karo</strong><p><code>database/schema.sql</code> ka content paste karo → Run karo</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-content"><strong>Seed data run karo</strong><p><code>database/seed.sql</code> run karo — demo accounts create honge</p></div></div>
+      </div>
+      <p class="section-inner-title" style="margin-top:18px;">2️⃣ Backend Start Karo</p>
+      <div class="terminal">
+        <div class="t-label">TERMINAL 1</div>
+        <div class="t-row"><span class="t-cmd">cd backend</span></div>
+        <div class="t-row"><span class="t-cmd">npm install</span><span class="t-comment"># dependencies</span></div>
+        <div class="t-row"><span class="t-cmd">npm run dev</span><span class="t-comment"># port 5000</span></div>
+        <div class="t-ok">✅ "ERP Server running on port 5000" dikhega</div>
+      </div>
+    </div>
+    <div>
+      <p class="section-inner-title">3️⃣ Frontend Start Karo</p>
+      <div class="terminal">
+        <div class="t-label">TERMINAL 2 (new window)</div>
+        <div class="t-row"><span class="t-cmd">cd frontend</span></div>
+        <div class="t-row"><span class="t-cmd">npm install</span><span class="t-comment"># dependencies</span></div>
+        <div class="t-row"><span class="t-cmd">npm run dev</span><span class="t-comment"># port 3000</span></div>
+        <div class="t-ok">✅ Browser mein http://localhost:3000 kholo</div>
+      </div>
+
+      <div class="info-box yellow" style="margin-top:14px;">
+        <div class="icon">⚠️</div>
+        <div><strong>Dono ek saath chalne chahiye</strong><p>Backend PORT 5000 pe aur Frontend PORT 3000 pe. Pehle backend start karo, phir frontend.</p></div>
+      </div>
+
+      <p class="section-inner-title" style="margin-top:18px;">🔗 URLs</p>
+      <div class="terminal">
+        <div class="cred-row"><span class="cred-label">Frontend:</span><span class="cred-value">http://localhost:3000</span></div>
+        <div class="cred-row"><span class="cred-label">Backend:</span><span class="cred-value">http://localhost:5000/api</span></div>
+        <div class="cred-row"><span class="cred-label">Health:</span><span class="cred-value">http://localhost:5000/health</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"><span>IndustrialERP — User Guide</span><span>Developer Setup</span></div>
+</div>
+
+<!-- ══ FINAL SLIDE ══ -->
+<div class="final">
+  <div class="final-inner">
+    <div style="font-size:56px;margin-bottom:20px;">🏭</div>
+    <h1>System Ready Hai!</h1>
+    <p>Ye guide pura padho, demo account se try karo, phir apni company ka data daalna shuru karo.</p>
+
+    <div class="final-grid">
+      <div class="final-card">
+        <div class="fi">👆</div>
+        <p>Kuch problem ho toh</p>
+        <span>Troubleshooting section dekho</span>
+      </div>
+      <div class="final-card">
+        <div class="fi">📋</div>
+        <p>Pehle Setup Checklist</p>
+        <span>Ek ek step follow karo</span>
+      </div>
+    </div>
+
+    <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius);padding:18px 24px;display:inline-block;">
+      <p style="color:rgba(255,255,255,0.5);font-size:12px;margin-bottom:6px;">Demo Login</p>
+      <p style="color:#fff;font-family:monospace;font-size:14px;">admin@alphamfg.com / Admin@123</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

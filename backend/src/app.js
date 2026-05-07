@@ -1,0 +1,76 @@
+require('express-async-errors');
+require('dotenv').config();
+
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const compression = require('compression');
+const hpp = require('hpp');
+
+const { globalLimiter } = require('./middleware/rateLimiter');
+const { errorHandler } = require('./middleware/errorHandler');
+const routes = require('./routes');
+const logger = require('./utils/logger');
+
+const app = express();
+
+// Security
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+}));
+
+// CORS
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Company-ID'],
+}));
+
+// HTTP parameter pollution protection
+app.use(hpp());
+
+// Compression
+app.use(compression());
+
+// Request logging
+if (process.env.NODE_ENV !== 'test') {
+  app.use(morgan('combined', {
+    stream: { write: (msg) => logger.http(msg.trim()) },
+  }));
+}
+
+// Body parsing
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Trust proxy (for rate limiting behind nginx)
+app.set('trust proxy', 1);
+
+// Global rate limiter
+app.use(globalLimiter);
+
+// Health check
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV,
+    version: '1.0.0',
+  });
+});
+
+// API routes
+app.use('/api', routes);
+
+// 404 handler
+app.use('*', (req, res) => {
+  res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found` });
+});
+
+// Error handler (must be last)
+app.use(errorHandler);
+
+module.exports = app;

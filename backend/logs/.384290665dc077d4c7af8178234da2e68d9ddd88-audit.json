@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\.384290665dc077d4c7af8178234da2e68d9ddd88-audit.json",
+    "files": [
+        {
+            "date": 1778094278889,
+            "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-05-07.log",
+            "hash": "a9e13b0709de63ce618d4e87496029065a24399181ffbb95388bbc036ab8b826"
+        }
+    ],
+    "hashType": "sha256"
+}
