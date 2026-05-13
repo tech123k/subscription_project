@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, Plus, Trash2, Save, AlertCircle, CheckCircle, GripVertical } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, Save, AlertCircle, CheckCircle } from 'lucide-react';
 import { bomAPI, materialAPI } from '../../services/api';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
@@ -29,7 +29,6 @@ const BOMBuilder = () => {
     queryFn: () => materialAPI.getAll({ limit: 500 }),
   });
 
-  // Seed form when BOM loads
   useEffect(() => {
     const bom = bomData?.data?.bom;
     if (bom) {
@@ -80,7 +79,6 @@ const BOMBuilder = () => {
     saveMutation.mutate({ items: validItems, notes });
   };
 
-  // Calculate preview quantities
   const previewQtyNum = parseFloat(previewQty) || 0;
   const previewItems = items
     .filter((i) => i.materialId && i.quantityPerUnit)
@@ -102,24 +100,33 @@ const BOMBuilder = () => {
     });
 
   return (
-    <div className="space-y-5 animate-fade-in max-w-4xl">
-      <div className="flex items-center gap-3">
-        <button onClick={() => navigate('/production/products')} className="p-2 rounded-lg hover:bg-gray-100 text-gray-500">
+    <div className="space-y-4 animate-fade-in w-full max-w-5xl">
+
+      {/* ── Header ── */}
+      <div className="flex flex-wrap items-start gap-3">
+        <button
+          onClick={() => navigate('/production/products')}
+          className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 shrink-0 mt-0.5"
+        >
           <ArrowLeft size={18} />
         </button>
-        <div className="flex-1">
-          <h1 className="text-xl font-bold text-gray-900">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-lg sm:text-xl font-bold text-gray-900 truncate">
             Bill of Materials — {product?.name || '…'}
           </h1>
-          <p className="text-sm text-gray-500">Define materials required per unit of this product</p>
+          <p className="text-xs sm:text-sm text-gray-500">Define materials required per unit of this product</p>
         </div>
-        <Button icon={Save} loading={saveMutation.isPending} onClick={handleSave}>Save BOM</Button>
+        <Button icon={Save} loading={saveMutation.isPending} onClick={handleSave} className="shrink-0">
+          Save BOM
+        </Button>
       </div>
 
-      <div className="grid grid-cols-5 gap-5">
-        {/* BOM Editor */}
-        <div className="col-span-3 space-y-4">
-          <Card className="p-5">
+      {/* ── Main layout: stacks on mobile, side-by-side on lg+ ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+
+        {/* ── BOM Editor ── */}
+        <div className="lg:col-span-3 space-y-4">
+          <Card className="p-3 sm:p-5">
             <div className="flex items-center justify-between mb-4">
               <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Materials</p>
               <Button variant="secondary" size="sm" icon={Plus} onClick={addItem}>Add Row</Button>
@@ -129,8 +136,9 @@ const BOMBuilder = () => {
               <p className="text-sm text-gray-400 py-4 text-center">Loading...</p>
             ) : (
               <div className="space-y-3">
-                {/* Header */}
-                <div className="grid grid-cols-12 gap-2 text-xs text-gray-400 font-medium px-1">
+
+                {/* Desktop column headers (hidden on mobile) */}
+                <div className="hidden sm:grid grid-cols-12 gap-2 text-xs text-gray-400 font-medium px-1">
                   <div className="col-span-5">Material</div>
                   <div className="col-span-2">Qty / unit</div>
                   <div className="col-span-2">Unit</div>
@@ -141,70 +149,144 @@ const BOMBuilder = () => {
                 {items.map((item, idx) => {
                   const mat = matList.find((m) => m.id === item.materialId);
                   return (
-                    <div key={idx} className="space-y-1">
-                      <div className="grid grid-cols-12 gap-2 items-center">
-                        <div className="col-span-5">
-                          <select
-                            value={item.materialId}
-                            onChange={(e) => setItem(idx, 'materialId', e.target.value)}
-                            className="input-field text-xs"
-                          >
-                            <option value="">Select material…</option>
-                            {matList.map((m) => (
-                              <option key={m.id} value={m.id}>
-                                {m.code} — {m.name}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="col-span-2">
-                          <input
-                            type="number"
-                            value={item.quantityPerUnit}
-                            onChange={(e) => setItem(idx, 'quantityPerUnit', e.target.value)}
-                            className="input-field text-xs"
-                            placeholder="0"
-                            min="0"
-                            step="0.0001"
-                          />
-                        </div>
-                        <div className="col-span-2">
-                          <input
-                            value={item.unit}
-                            onChange={(e) => setItem(idx, 'unit', e.target.value)}
-                            className="input-field text-xs"
-                            placeholder="unit"
-                          />
-                        </div>
-                        <div className="col-span-2">
-                          <input
-                            type="number"
-                            value={item.wastePercentage}
-                            onChange={(e) => setItem(idx, 'wastePercentage', e.target.value)}
-                            className="input-field text-xs"
-                            placeholder="0"
-                            min="0"
-                            max="99"
-                            step="0.1"
-                          />
-                        </div>
-                        <div className="col-span-1 flex justify-center">
+                    <div key={idx}>
+                      {/* ── Mobile card layout ── */}
+                      <div className="sm:hidden border border-gray-100 rounded-lg p-3 space-y-2 bg-gray-50">
+                        <div className="flex items-start gap-2">
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs text-gray-400 mb-1">Material</p>
+                            <select
+                              value={item.materialId}
+                              onChange={(e) => setItem(idx, 'materialId', e.target.value)}
+                              className="input-field text-xs w-full"
+                            >
+                              <option value="">Select material…</option>
+                              {matList.map((m) => (
+                                <option key={m.id} value={m.id}>
+                                  {m.code} — {m.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
                           {items.length > 1 && (
                             <button
                               onClick={() => removeItem(idx)}
-                              className="p-1 rounded hover:bg-red-50 text-gray-400 hover:text-red-500"
+                              className="mt-5 p-1.5 rounded hover:bg-red-50 text-gray-400 hover:text-red-500 shrink-0"
                             >
-                              <Trash2 size={13} />
+                              <Trash2 size={14} />
                             </button>
                           )}
                         </div>
+
+                        <div className="grid grid-cols-3 gap-2">
+                          <div>
+                            <p className="text-xs text-gray-400 mb-1">Qty / unit</p>
+                            <input
+                              type="number"
+                              value={item.quantityPerUnit}
+                              onChange={(e) => setItem(idx, 'quantityPerUnit', e.target.value)}
+                              className="input-field text-xs"
+                              placeholder="0"
+                              min="0"
+                              step="0.0001"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-400 mb-1">Unit</p>
+                            <input
+                              value={item.unit}
+                              onChange={(e) => setItem(idx, 'unit', e.target.value)}
+                              className="input-field text-xs"
+                              placeholder="unit"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-xs text-gray-400 mb-1">Waste %</p>
+                            <input
+                              type="number"
+                              value={item.wastePercentage}
+                              onChange={(e) => setItem(idx, 'wastePercentage', e.target.value)}
+                              className="input-field text-xs"
+                              placeholder="0"
+                              min="0"
+                              max="99"
+                              step="0.1"
+                            />
+                          </div>
+                        </div>
+
+                        {mat && (
+                          <p className="text-xs text-gray-400">
+                            Stock: {formatNumber(mat.current_stock || 0)} {mat.unit}
+                          </p>
+                        )}
                       </div>
-                      {/* Stock hint */}
-                      {mat && (
-                        <p className="text-xs text-gray-400 ml-1">
-                          Stock: {formatNumber(mat.current_stock || 0)} {mat.unit}
-                        </p>
-                      )}
+
+                      {/* ── Desktop grid row (hidden on mobile) ── */}
+                      <div className="hidden sm:block space-y-1">
+                        <div className="grid grid-cols-12 gap-2 items-center">
+                          <div className="col-span-5">
+                            <select
+                              value={item.materialId}
+                              onChange={(e) => setItem(idx, 'materialId', e.target.value)}
+                              className="input-field text-xs"
+                            >
+                              <option value="">Select material…</option>
+                              {matList.map((m) => (
+                                <option key={m.id} value={m.id}>
+                                  {m.code} — {m.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="col-span-2">
+                            <input
+                              type="number"
+                              value={item.quantityPerUnit}
+                              onChange={(e) => setItem(idx, 'quantityPerUnit', e.target.value)}
+                              className="input-field text-xs"
+                              placeholder="0"
+                              min="0"
+                              step="0.0001"
+                            />
+                          </div>
+                          <div className="col-span-2">
+                            <input
+                              value={item.unit}
+                              onChange={(e) => setItem(idx, 'unit', e.target.value)}
+                              className="input-field text-xs"
+                              placeholder="unit"
+                            />
+                          </div>
+                          <div className="col-span-2">
+                            <input
+                              type="number"
+                              value={item.wastePercentage}
+                              onChange={(e) => setItem(idx, 'wastePercentage', e.target.value)}
+                              className="input-field text-xs"
+                              placeholder="0"
+                              min="0"
+                              max="99"
+                              step="0.1"
+                            />
+                          </div>
+                          <div className="col-span-1 flex justify-center">
+                            {items.length > 1 && (
+                              <button
+                                onClick={() => removeItem(idx)}
+                                className="p-1 rounded hover:bg-red-50 text-gray-400 hover:text-red-500"
+                              >
+                                <Trash2 size={13} />
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                        {mat && (
+                          <p className="text-xs text-gray-400 ml-1">
+                            Stock: {formatNumber(mat.current_stock || 0)} {mat.unit}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
@@ -224,9 +306,9 @@ const BOMBuilder = () => {
           </Card>
         </div>
 
-        {/* Preview Panel */}
-        <div className="col-span-2 space-y-4">
-          <Card className="p-5">
+        {/* ── Preview Panel ── */}
+        <div className="lg:col-span-2 space-y-4">
+          <Card className="p-3 sm:p-5">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
               Material Preview
             </p>
@@ -249,17 +331,15 @@ const BOMBuilder = () => {
                   <div
                     key={i}
                     className={`rounded-lg px-3 py-2.5 border text-xs ${
-                      pi.short
-                        ? 'border-red-200 bg-red-50'
-                        : 'border-gray-100 bg-gray-50'
+                      pi.short ? 'border-red-200 bg-red-50' : 'border-gray-100 bg-gray-50'
                     }`}
                   >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-semibold text-gray-800">{pi.name}</span>
+                    <div className="flex items-center justify-between mb-1 gap-2">
+                      <span className="font-semibold text-gray-800 truncate">{pi.name}</span>
                       {pi.short ? (
-                        <AlertCircle size={12} className="text-red-500" />
+                        <AlertCircle size={12} className="text-red-500 shrink-0" />
                       ) : (
-                        <CheckCircle size={12} className="text-green-500" />
+                        <CheckCircle size={12} className="text-green-500 shrink-0" />
                       )}
                     </div>
                     <div className="flex justify-between text-gray-500">
