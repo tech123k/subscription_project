@@ -107,7 +107,7 @@ const SalesOrderForm = () => {
         {/* Basic info */}
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
           <h2 className="text-sm font-semibold text-gray-800 mb-4">Order Details</h2>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="col-span-2 sm:col-span-1">
               <label className={LABEL}>Customer *</label>
               <select value={form.customerId} onChange={(e) => set('customerId', e.target.value)} required className={INPUT}>

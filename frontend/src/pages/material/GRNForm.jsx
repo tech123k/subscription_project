@@ -226,7 +226,7 @@ const GRNForm = () => {
                   <Link2 size={14} />
                   Purchase Order
                 </div>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <InfoRow label="PO Number" value={po.po_number} />
                   <InfoRow label="Supplier" value={po.supplier_name} />
                   <InfoRow label="Warehouse" value={po.warehouse_name} />
@@ -259,7 +259,7 @@ const GRNForm = () => {
               /* Single item auto-selected — show as info card */
               <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Material</p>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <InfoRow label="Name" value={selectedPoItem.material_name} />
                   <InfoRow label="Code" value={selectedPoItem.material_code} />
                   <InfoRow label="Remaining" value={`${maxQty?.toFixed(2)} ${selectedPoItem.unit}`} />
@@ -274,7 +274,7 @@ const GRNForm = () => {
               <Link2 size={14} />
               Link to Purchase Order <span className="font-normal text-gray-400">(optional)</span>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="label">Purchase Order</label>
                 <select
@@ -328,7 +328,7 @@ const GRNForm = () => {
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Receipt Details</p>
 
           {/* Material + Supplier + Warehouse (only manual when direct inward without PO item) */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {!isFromPO && (
               <div className="col-span-2">
                 <label className="label">Material *</label>
@@ -437,7 +437,7 @@ const GRNForm = () => {
         {/* ── Invoice Details ── */}
         <div className="space-y-3">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Invoice Details</p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="label">Supplier Invoice No</label>
               <input value={form.invoiceNumber} onChange={f('invoiceNumber')} className="input-field" />

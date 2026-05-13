@@ -135,7 +135,7 @@ const POForm = () => {
       {/* Header Details */}
       <Card className="p-6 space-y-4">
         <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Order Details</p>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="label">Supplier *</label>
             <select value={form.supplierId} onChange={f('supplierId')} className="input-field">

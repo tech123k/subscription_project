@@ -137,21 +137,21 @@ const MaterialList = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-bold text-gray-900">Material Master</h1>
           <p className="text-sm text-gray-500 mt-0.5">{meta?.total || 0} materials</p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button onClick={() => downloadBlob(materialAPI.template, 'material_template.xlsx')} className="btn-secondary flex items-center gap-2 text-sm px-3 py-2 rounded-lg border border-gray-200">
-            <Download size={15} /> Template
+            <Download size={15} /> <span className="hidden sm:inline">Template</span>
           </button>
           <button onClick={() => downloadBlob(materialAPI.export, 'materials.xlsx')} className="btn-secondary flex items-center gap-2 text-sm px-3 py-2 rounded-lg border border-gray-200">
-            <Download size={15} /> Export
+            <Download size={15} /> <span className="hidden sm:inline">Export</span>
           </button>
           {can('import') && (
             <Button variant="secondary" icon={Upload} onClick={() => navigate('/materials/import')} size="sm">
-              Import
+              <span className="hidden sm:inline">Import</span>
             </Button>
           )}
           {can('create') && (

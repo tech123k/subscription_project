@@ -58,11 +58,11 @@ const Dashboard = () => {
   const c = charts?.data;
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Dashboard</h1>
           <p className="text-gray-500 text-sm mt-0.5">{format(new Date(), 'EEEE, MMMM d, yyyy')}</p>
         </div>
         <PeriodSelect value={period} onChange={setPeriod} />
@@ -70,8 +70,8 @@ const Dashboard = () => {
 
       {/* Alert banner for low stock */}
       {lowStock?.data?.length > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
-          <AlertTriangle size={20} className="text-red-600 flex-shrink-0" />
+        <div className="bg-red-50 border border-red-200 rounded-xl p-3 sm:p-4 flex items-start sm:items-center gap-3">
+          <AlertTriangle size={20} className="text-red-600 flex-shrink-0 mt-0.5 sm:mt-0" />
           <div className="flex-1">
             <p className="text-sm font-medium text-red-800">
               {lowStock.data.length} material{lowStock.data.length > 1 ? 's' : ''} at low stock level
@@ -80,7 +80,7 @@ const Dashboard = () => {
           </div>
           <button
             onClick={() => navigate('/materials?lowStock=true')}
-            className="text-sm text-red-700 font-medium hover:text-red-900 underline"
+            className="text-sm text-red-700 font-medium hover:text-red-900 underline flex-shrink-0"
           >
             View All
           </button>
@@ -88,7 +88,7 @@ const Dashboard = () => {
       )}
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         {statsLoading ? (
           [...Array(8)].map((_, i) => <SkeletonCard key={i} />)
         ) : (
@@ -154,16 +154,16 @@ const Dashboard = () => {
       </div>
 
       {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Revenue Chart */}
-        <div className="card p-6">
-          <div className="flex items-center justify-between mb-6">
+        <div className="card p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
             <h3 className="font-semibold text-gray-900">Revenue Trend</h3>
           </div>
           {chartsLoading ? (
-            <Skeleton className="h-48 w-full" />
+            <Skeleton className="h-40 sm:h-48 w-full" />
           ) : (
-            <ResponsiveContainer width="100%" height={200}>
+            <ResponsiveContainer width="100%" height={180}>
               <AreaChart data={c?.revenueChart || []}>
                 <defs>
                   <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
@@ -172,8 +172,8 @@ const Dashboard = () => {
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="date" tick={{ fontSize: 11 }} tickFormatter={(v) => v?.slice(5)} />
-                <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`} />
+                <XAxis dataKey="date" tick={{ fontSize: 10 }} tickFormatter={(v) => v?.slice(5)} />
+                <YAxis tick={{ fontSize: 10 }} tickFormatter={(v) => `₹${(v / 1000).toFixed(0)}K`} width={45} />
                 <Tooltip formatter={(v) => [`₹${Number(v).toLocaleString('en-IN')}`, 'Revenue']} />
                 <Area type="monotone" dataKey="revenue" stroke="#3b82f6" fill="url(#revenueGrad)" strokeWidth={2} />
               </AreaChart>
@@ -182,19 +182,19 @@ const Dashboard = () => {
         </div>
 
         {/* Production Status Pie */}
-        <div className="card p-6">
-          <h3 className="font-semibold text-gray-900 mb-6">Production Status</h3>
+        <div className="card p-4 sm:p-6">
+          <h3 className="font-semibold text-gray-900 mb-4 sm:mb-6">Production Status</h3>
           {chartsLoading ? (
-            <Skeleton className="h-48 w-full" />
+            <Skeleton className="h-40 sm:h-48 w-full" />
           ) : (
-            <ResponsiveContainer width="100%" height={200}>
+            <ResponsiveContainer width="100%" height={180}>
               <PieChart>
                 <Pie
                   data={c?.productionChart || []}
                   cx="50%"
                   cy="50%"
-                  innerRadius={60}
-                  outerRadius={90}
+                  innerRadius={50}
+                  outerRadius={75}
                   dataKey="count"
                   nameKey="status"
                   label={({ status, count }) => `${status}: ${count}`}
@@ -212,21 +212,21 @@ const Dashboard = () => {
       </div>
 
       {/* Bottom Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Low Stock Table */}
         <div className="card">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+          <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100">
             <h3 className="font-semibold text-gray-900">Low Stock Alerts</h3>
             <button onClick={() => navigate('/materials?lowStock=true')} className="text-xs text-primary-600 font-medium">View All</button>
           </div>
           <div className="divide-y divide-gray-50">
             {(lowStock?.data || []).slice(0, 6).map((item) => (
-              <div key={item.id} className="flex items-center justify-between px-6 py-3">
+              <div key={item.id} className="flex items-center justify-between px-4 sm:px-6 py-3">
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-900 truncate">{item.name}</p>
-                  <p className="text-xs text-gray-500">{item.code} • {item.warehouse_name}</p>
+                  <p className="text-xs text-gray-500 truncate">{item.code} • {item.warehouse_name}</p>
                 </div>
-                <div className="text-right ml-4">
+                <div className="text-right ml-4 flex-shrink-0">
                   <p className="text-sm font-bold text-red-600">{item.current_stock} {item.unit}</p>
                   <p className="text-xs text-gray-400">Min: {item.minimum_stock}</p>
                 </div>
@@ -243,7 +243,7 @@ const Dashboard = () => {
 
         {/* Production Timeline */}
         <div className="card">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+          <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-100">
             <h3 className="font-semibold text-gray-900">Active Production</h3>
             <button onClick={() => navigate('/production')} className="text-xs text-primary-600 font-medium">View All</button>
           </div>
@@ -252,7 +252,7 @@ const Dashboard = () => {
               <div
                 key={item.id}
                 onClick={() => navigate(`/production/${item.id}`)}
-                className="flex items-center justify-between px-6 py-3 cursor-pointer hover:bg-gray-50"
+                className="flex items-center justify-between px-4 sm:px-6 py-3 cursor-pointer hover:bg-gray-50"
               >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                   <div
@@ -264,7 +264,7 @@ const Dashboard = () => {
                     <p className="text-xs text-gray-500 truncate">{item.product_name} • {item.current_stage}</p>
                   </div>
                 </div>
-                <div className="ml-4">
+                <div className="ml-3 flex-shrink-0">
                   {item.is_delayed ? (
                     <span className="text-xs font-medium text-red-600 flex items-center gap-1">
                       <Clock size={12} /> Delayed

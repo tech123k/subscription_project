@@ -125,7 +125,7 @@ const MaterialForm = () => {
 
       <Card className="p-6 space-y-5">
         {/* Basic Info */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="col-span-2">
             <label className="label">Material Name *</label>
             <input value={form.name} onChange={f('name')} className="input-field" placeholder="e.g. Natural Rubber" />
@@ -200,7 +200,7 @@ const MaterialForm = () => {
         {/* Stock Levels */}
         <div className="border-t border-gray-100 pt-4">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Stock Settings</p>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <label className="label">Min Stock Level</label>
               <input type="number" value={form.minimumStock} onChange={f('minimumStock')} className="input-field" min="0" step="0.01" />
@@ -219,7 +219,7 @@ const MaterialForm = () => {
         {/* Tax */}
         <div className="border-t border-gray-100 pt-4">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Tax & Compliance</p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="label">HSN Code</label>
               <input value={form.hsnCode} onChange={f('hsnCode')} className="input-field" placeholder="e.g. 4001" />

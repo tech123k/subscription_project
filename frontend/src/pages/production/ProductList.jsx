@@ -121,7 +121,7 @@ const AnalyticsSection = ({ companyId }) => {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {[1, 2, 3].map((i) => (
           <div key={i} className="bg-gray-50 rounded-xl border border-gray-100 p-4 h-44 animate-pulse" />
         ))}
@@ -130,7 +130,7 @@ const AnalyticsSection = ({ companyId }) => {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
       {/* Daily production — last 30 days */}
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 col-span-2">
         <div className="flex items-center justify-between mb-3">
@@ -257,7 +257,7 @@ const ProductHistoryModal = ({ product, onClose }) => {
           </div>
 
           {/* Stock metric row */}
-          <div className="grid grid-cols-3 gap-3 mt-3 pt-3 border-t border-indigo-100">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3 pt-3 border-t border-indigo-100">
             {[
               { label: 'Total Produced', value: fmt(product.produced_qty, product.unit) },
               { label: 'Available',      value: fmt(product.available_stock, product.unit) },
@@ -369,7 +369,7 @@ const ProductHistoryModal = ({ product, onClose }) => {
                               <p className="text-[10px] font-semibold text-indigo-600 uppercase tracking-wide mb-2">
                                 Materials Consumed
                               </p>
-                              <div className="grid grid-cols-3 gap-2">
+                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                                 {o.materials_consumed.map((mat, i) => (
                                   <div key={i} className="bg-white rounded-lg px-3 py-2 border border-indigo-100 shadow-sm">
                                     <p className="font-semibold text-gray-700 text-[11px] truncate">{mat.name}</p>
@@ -511,7 +511,7 @@ const ProductList = () => {
     <div className="space-y-5 animate-fade-in">
 
       {/* ── Page header ──────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-bold text-gray-900">Product Master</h1>
           <p className="text-xs text-gray-400 mt-0.5">
@@ -520,7 +520,7 @@ const ProductList = () => {
             {summary.products_with_bom ?? '—'} with BOM
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => refetch()}
             className="p-2 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors"

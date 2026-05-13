@@ -79,7 +79,7 @@ const InventoryLedger = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-bold text-gray-900">Inventory Ledger</h1>
           <p className="text-xs text-gray-400 mt-0.5">Complete stock movement history — all materials & products</p>

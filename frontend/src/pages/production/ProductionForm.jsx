@@ -110,7 +110,7 @@ const ProductionForm = () => {
 
       <Card className="p-6 space-y-5">
         {/* Product + Qty */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="col-span-2">
             <label className="label">Product *</label>
             <select value={form.productId} onChange={f('productId')} className="input-field">
@@ -159,7 +159,7 @@ const ProductionForm = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="label">Customer</label>
             <select value={form.customerId} onChange={f('customerId')} className="input-field">
@@ -187,7 +187,7 @@ const ProductionForm = () => {
         {/* Timeline */}
         <div className="border-t border-gray-100 pt-4">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Timeline</p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="label">Planned Start Date</label>
               <input type="date" value={form.plannedStartDate} onChange={f('plannedStartDate')} className="input-field" />

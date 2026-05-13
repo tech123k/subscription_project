@@ -167,7 +167,7 @@ const CreditOutstanding = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-bold text-gray-900">Credit & Outstanding</h1>
           <p className="text-xs text-gray-400 mt-0.5">Customer receivables and credit management</p>
@@ -178,7 +178,7 @@ const CreditOutstanding = () => {
       </div>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         <SummaryCard icon={TrendingUp}    label="Total Outstanding" value={fmtMoney(summary.total_outstanding)} color="bg-amber-500" />
         <SummaryCard icon={AlertTriangle} label="Total Overdue"     value={fmtMoney(summary.total_overdue)}    color={Number(summary.total_overdue) > 0 ? 'bg-red-500' : 'bg-gray-400'} />
         <SummaryCard icon={CreditCard}    label="Overdue Customers" value={summary.overdue_customers ?? 0}     sub="need attention" color={Number(summary.overdue_customers) > 0 ? 'bg-red-500' : 'bg-gray-400'} />
@@ -292,7 +292,7 @@ const CreditOutstanding = () => {
                     {isExpanded && detail && (
                       <tr>
                         <td colSpan={8} className="bg-indigo-50/30 px-6 py-4 border-t border-indigo-100">
-                          <div className="grid grid-cols-2 gap-6">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             {/* Aging buckets */}
                             <div>
                               <p className="text-[10px] font-semibold text-indigo-700 uppercase tracking-wide mb-2">Aging Analysis</p>

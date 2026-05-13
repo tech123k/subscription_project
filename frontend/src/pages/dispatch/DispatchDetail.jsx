@@ -45,7 +45,7 @@ const DispatchDetail = () => {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <button onClick={() => navigate('/dispatches')} className="p-2 rounded-lg hover:bg-gray-100 text-gray-500">
             <ArrowLeft size={18} />
@@ -98,7 +98,7 @@ const DispatchDetail = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {/* Tracking history */}
         <div className="col-span-2 card overflow-hidden">
           <div className="px-5 py-3 border-b border-gray-100">

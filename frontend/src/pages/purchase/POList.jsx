@@ -129,7 +129,7 @@ const POList = () => {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-bold text-gray-900">Purchase Orders</h1>
           <p className="text-sm text-gray-500 mt-0.5">{meta?.total || 0} orders</p>
@@ -138,7 +138,8 @@ const POList = () => {
       </div>
 
       {/* Status tabs */}
-      <div className="flex gap-1 p-1 bg-gray-100 rounded-xl w-fit flex-wrap">
+      <div className="overflow-x-auto">
+      <div className="flex gap-1 p-1 bg-gray-100 rounded-xl min-w-max">
         {STATUSES.map((s) => (
           <button
             key={s}
@@ -148,6 +149,7 @@ const POList = () => {
             {s === '' ? 'All' : STATUS_LABELS[s] || s}
           </button>
         ))}
+      </div>
       </div>
 
       <div className="card p-4">

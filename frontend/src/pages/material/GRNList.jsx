@@ -155,7 +155,7 @@ const GRNList = () => {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-bold text-gray-900">Goods Receipt Notes</h1>
           <p className="text-sm text-gray-500 mt-0.5">{meta?.total || 0} GRNs</p>
@@ -164,13 +164,15 @@ const GRNList = () => {
       </div>
 
       {/* QC Status tabs */}
-      <div className="flex gap-1 p-1 bg-gray-100 rounded-xl w-fit">
+      <div className="flex gap-1 p-1 bg-gray-100 rounded-xl overflow-x-auto">
+        <div className="flex gap-1 min-w-max">
         {['', 'pending', 'approved', 'rejected', 'conditional'].map((s) => (
           <button key={s} onClick={() => { setQcStatus(s); setPage(1); }}
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${qcStatus === s ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>
             {s === '' ? 'All' : s.charAt(0).toUpperCase() + s.slice(1)}
           </button>
         ))}
+        </div>
       </div>
 
       <div className="card p-4">
@@ -213,7 +215,7 @@ const GRNList = () => {
               <option value="conditional">Conditional</option>
             </select>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="label">Accepted Qty</label>
               <input

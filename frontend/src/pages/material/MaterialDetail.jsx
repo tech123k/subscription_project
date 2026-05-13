@@ -38,7 +38,7 @@ const MaterialDetail = () => {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <button onClick={() => navigate('/materials')} className="p-2 rounded-lg hover:bg-gray-100 text-gray-500">
             <ArrowLeft size={18} />
@@ -69,7 +69,7 @@ const MaterialDetail = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {/* Details */}
         <div className="col-span-1 card p-5">
           <h3 className="font-semibold text-gray-900 text-sm mb-4">Details</h3>

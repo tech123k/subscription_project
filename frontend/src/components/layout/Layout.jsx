@@ -52,7 +52,7 @@ const NotificationPanel = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 300 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 h-full w-96 bg-white shadow-modal z-50 flex flex-col"
+            className="fixed right-0 top-0 h-full w-full sm:w-96 bg-white shadow-modal z-50 flex flex-col"
           >
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
               <div className="flex items-center gap-2">
@@ -113,19 +113,35 @@ const NotificationPanel = () => {
 
 const Layout = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   useSocket();
+
+  const handleMenuToggle = () => {
+    if (window.innerWidth < 1024) {
+      setMobileOpen((o) => !o);
+    } else {
+      setCollapsed((o) => !o);
+    }
+  };
 
   return (
     <div className="flex h-screen bg-gray-50 overflow-hidden">
-      <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(!collapsed)} />
+      <Sidebar
+        collapsed={collapsed}
+        onToggle={() => setCollapsed(!collapsed)}
+        mobileOpen={mobileOpen}
+        onMobileClose={() => setMobileOpen(false)}
+      />
 
       <div className={clsx(
         'flex-1 flex flex-col min-w-0 transition-all duration-300',
-        collapsed ? 'ml-16' : 'ml-64'
+        // Mobile: no margin (sidebar is an overlay)
+        // Desktop: margin based on collapsed state
+        collapsed ? 'lg:ml-16' : 'lg:ml-64'
       )}>
-        <Header onMenuToggle={() => setCollapsed(!collapsed)} />
+        <Header onMenuToggle={handleMenuToggle} />
 
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-6">
           <motion.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}

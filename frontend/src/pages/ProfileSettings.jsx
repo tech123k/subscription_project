@@ -80,7 +80,7 @@ const ProfileSettings = () => {
       {/* Profile form */}
       <Card className="p-6 space-y-4">
         <h3 className="font-semibold text-gray-900 text-sm">Personal Information</h3>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="label">First Name</label>
             <input value={form.firstName} onChange={f('firstName')} className="input-field" />

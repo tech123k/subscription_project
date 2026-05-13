@@ -108,7 +108,7 @@ const CompanySettings = () => {
       {/* Company Info */}
       <Card className="p-6 space-y-4">
         <h3 className="font-semibold text-gray-900 text-sm flex items-center gap-2"><Building2 size={16} />Company Information</h3>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="col-span-2">
             <label className="label">Company Name *</label>
             <input value={form.name} onChange={f('name')} className="input-field" />
@@ -141,7 +141,7 @@ const CompanySettings = () => {
             <input value={form.website} onChange={f('website')} className="input-field" placeholder="https://example.com" />
           </div>
         </div>
-        <div className="border-t border-gray-100 pt-4 grid grid-cols-2 gap-4">
+        <div className="border-t border-gray-100 pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="col-span-2">
             <label className="label">Address</label>
             <input value={form.address} onChange={f('address')} className="input-field" />
@@ -167,7 +167,7 @@ const CompanySettings = () => {
       {/* Bank Details */}
       <Card className="p-6 space-y-4">
         <h3 className="font-semibold text-gray-900 text-sm flex items-center gap-2"><CreditCard size={16} />Bank Details</h3>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="label">Bank Name</label>
             <input value={form.bankName} onChange={f('bankName')} className="input-field" />
@@ -190,7 +190,7 @@ const CompanySettings = () => {
       {/* Number Prefixes */}
       <Card className="p-6 space-y-4">
         <h3 className="font-semibold text-gray-900 text-sm flex items-center gap-2"><Globe size={16} />Document Numbering</h3>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
             <label className="label">Invoice Prefix</label>
             <input value={form.invoicePrefix} onChange={f('invoicePrefix')} className="input-field" placeholder="INV" />

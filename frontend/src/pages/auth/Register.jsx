@@ -224,7 +224,7 @@ const Register = () => {
                   <h2 className="text-lg font-semibold text-white">Company Information</h2>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="col-span-2">
                     <label className={LABEL}>Company Name *</label>
                     <input {...register('companyName', { required: true })} className={INPUT} placeholder="Alpha Manufacturing Pvt Ltd" />
@@ -281,7 +281,7 @@ const Register = () => {
                   <h2 className="text-lg font-semibold text-white">Admin Account</h2>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className={LABEL}>First Name *</label>
                     <input {...register('firstName', { required: true })} className={INPUT} placeholder="John" />

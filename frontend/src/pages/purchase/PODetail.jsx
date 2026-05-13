@@ -64,7 +64,7 @@ const PODetail = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <button onClick={() => navigate('/po')} className="p-2 rounded-lg hover:bg-gray-100 text-gray-500">
             <ArrowLeft size={18} />
@@ -145,7 +145,7 @@ const PODetail = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {/* Summary cards */}
         <div className="col-span-3 grid grid-cols-4 gap-4">
           {[

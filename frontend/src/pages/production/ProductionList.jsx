@@ -111,12 +111,12 @@ const ProductionList = () => {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-bold text-gray-900">Production Orders</h1>
           <p className="text-sm text-gray-500 mt-0.5">{meta?.total || 0} orders</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <a href={productionAPI.export()} download>
             <Button variant="secondary" icon={Download} size="sm">Export</Button>
           </a>

@@ -87,7 +87,7 @@ const InvoiceForm = () => {
 
       <Card className="p-6 space-y-5">
         {/* Header */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="label">Customer *</label>
             <select value={form.customerId} onChange={f('customerId')} className="input-field">
@@ -201,7 +201,7 @@ const InvoiceForm = () => {
         </div>
 
         {/* Notes & Terms */}
-        <div className="border-t border-gray-100 pt-4 grid grid-cols-2 gap-4">
+        <div className="border-t border-gray-100 pt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="label">Notes</label>
             <textarea value={form.notes} onChange={f('notes')} className="input-field resize-none" rows={3} placeholder="Thank you for your business" />

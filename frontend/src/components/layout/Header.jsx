@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, Menu, Search, User, LogOut, Settings, ChevronDown } from 'lucide-react';
+import { Bell, Menu, Search, User, LogOut, Settings, ChevronDown, X } from 'lucide-react';
 import { clsx } from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '../../store/authStore';
@@ -13,6 +13,7 @@ const Header = ({ onMenuToggle }) => {
   const { user, logout } = useAuthStore();
   const { unreadCount, setUnreadCount, toggleOpen } = useNotificationStore();
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
   const [search, setSearch] = useState('');
 
   useQuery({
@@ -26,17 +27,20 @@ const Header = ({ onMenuToggle }) => {
   });
 
   return (
-    <header className="h-16 bg-white border-b border-gray-100 flex items-center px-4 gap-4 sticky top-0 z-30">
+    <header className="h-14 sm:h-16 bg-white border-b border-gray-100 flex items-center px-3 sm:px-4 gap-2 sm:gap-4 sticky top-0 z-30">
       {/* Menu toggle */}
       <button
         onClick={onMenuToggle}
-        className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors"
+        className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors flex-shrink-0"
       >
         <Menu size={20} />
       </button>
 
-      {/* Search */}
-      <div className="relative flex-1 max-w-md">
+      {/* Search — hidden on mobile unless toggled */}
+      <div className={clsx(
+        'relative flex-1 max-w-md transition-all',
+        'hidden sm:block'
+      )}>
         <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
         <input
           value={search}
@@ -46,7 +50,39 @@ const Header = ({ onMenuToggle }) => {
         />
       </div>
 
-      <div className="flex items-center gap-2 ml-auto">
+      {/* Mobile search overlay */}
+      <AnimatePresence>
+        {showSearch && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-white z-50 flex items-center px-3 gap-2 sm:hidden"
+          >
+            <Search size={16} className="text-gray-400 flex-shrink-0" />
+            <input
+              autoFocus
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search..."
+              className="flex-1 py-2 text-sm focus:outline-none bg-transparent"
+            />
+            <button onClick={() => { setShowSearch(false); setSearch(''); }} className="p-1 text-gray-400">
+              <X size={18} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <div className="flex items-center gap-1 sm:gap-2 ml-auto">
+        {/* Mobile search toggle */}
+        <button
+          onClick={() => setShowSearch(true)}
+          className="sm:hidden p-2 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors"
+        >
+          <Search size={18} />
+        </button>
+
         {/* Notification bell */}
         <button
           onClick={toggleOpen}
@@ -70,8 +106,8 @@ const Header = ({ onMenuToggle }) => {
               {user?.firstName?.[0]}{user?.lastName?.[0]}
             </div>
             <div className="text-left hidden sm:block">
-              <p className="text-sm font-medium text-gray-900">{user?.firstName} {user?.lastName}</p>
-              <p className="text-xs text-gray-500 capitalize">{user?.role?.replace(/_/g, ' ')}</p>
+              <p className="text-sm font-medium text-gray-900 leading-tight">{user?.firstName} {user?.lastName}</p>
+              <p className="text-xs text-gray-500 capitalize leading-tight">{user?.role?.replace(/_/g, ' ')}</p>
             </div>
             <ChevronDown size={14} className="text-gray-400 hidden sm:block" />
           </button>

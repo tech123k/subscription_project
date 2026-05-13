@@ -58,7 +58,7 @@ const CompleteStageModal = ({ stage, orderId, plannedQty, onClose, onSuccess }) 
       }
     >
       <div className="space-y-4">
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label className="label">Input Quantity</label>
             <input type="number" value={form.inputQty} onChange={f('inputQty')}
@@ -375,7 +375,7 @@ const VariancePanel = ({ materials, order }) => {
         <TrendingUp size={15} className="text-gray-400" />
         Production Variance Report
       </h3>
-      <div className="grid grid-cols-3 gap-4 mb-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
         <div className="text-center p-3 rounded-xl bg-gray-50 border border-gray-100">
           <p className="text-xs text-gray-500 mb-1">Planned Output</p>
           <p className="text-xl font-bold text-gray-900">{formatNumber(order.planned_quantity)}</p>
@@ -509,7 +509,7 @@ const ProductionDetail = () => {
   return (
     <div className="space-y-5 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <button onClick={() => navigate('/production')} className="p-2 rounded-lg hover:bg-gray-100 text-gray-500">
             <ArrowLeft size={18} />
@@ -538,7 +538,7 @@ const ProductionDetail = () => {
       </div>
 
       {/* Progress cards */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="card p-5">
           <div className="flex items-center justify-between mb-2">
             <p className="text-sm font-semibold text-gray-700">Workflow Progress</p>
@@ -585,7 +585,7 @@ const ProductionDetail = () => {
       </div>
 
       {/* Main grid: Timeline + Right panel */}
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {/* Stage Timeline */}
         <div className="col-span-2 card p-5">
           <h3 className="font-semibold text-gray-900 text-sm mb-5">Workflow Stages</h3>

@@ -51,7 +51,7 @@ const StageCard = ({ stage, index, onEdit, onDelete }) => (
 
 const StageForm = ({ form, setForm, onSubmit, loading, isEdit }) => (
   <div className="space-y-4">
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div>
         <label className="label">Stage Name *</label>
         <input value={form.name} onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}

@@ -6,7 +6,7 @@ import {
   LayoutDashboard, Package, Factory, Truck, FileText, Warehouse,
   Users, Settings, BarChart3, Bell, ClipboardList, ShoppingCart,
   Building2, ChevronDown, LogOut, User, Boxes, ArrowLeftRight,
-  BookOpen, CreditCard, TrendingDown,
+  BookOpen, CreditCard, TrendingDown, X,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 
@@ -53,19 +53,20 @@ const navItems = [
   { label: 'Settings', icon: Settings, path: '/settings' },
 ];
 
-const NavItem = ({ item, collapsed }) => {
+const NavItem = ({ item, collapsed, onMobileClose }) => {
   const location = useLocation();
   const isActive = item.path
     ? location.pathname === item.path || location.pathname.startsWith(item.path + '/')
     : item.children?.some(c => location.pathname.startsWith(c.path));
 
   if (item.children) {
-    return <NavGroup item={item} isActive={isActive} collapsed={collapsed} />;
+    return <NavGroup item={item} isActive={isActive} collapsed={collapsed} onMobileClose={onMobileClose} />;
   }
 
   return (
     <NavLink
       to={item.path}
+      onClick={onMobileClose}
       className={({ isActive }) => clsx(
         'sidebar-link group',
         isActive && 'active'
@@ -77,7 +78,7 @@ const NavItem = ({ item, collapsed }) => {
   );
 };
 
-const NavGroup = ({ item, isActive, collapsed }) => {
+const NavGroup = ({ item, isActive, collapsed, onMobileClose }) => {
   const [open, setOpen] = useState(isActive);
 
   useEffect(() => {
@@ -118,6 +119,7 @@ const NavGroup = ({ item, isActive, collapsed }) => {
               <NavLink
                 key={child.path}
                 to={child.path}
+                onClick={onMobileClose}
                 className={({ isActive }) => clsx(
                   'block py-1.5 px-2 rounded-md text-xs transition-colors',
                   isActive
@@ -135,7 +137,7 @@ const NavGroup = ({ item, isActive, collapsed }) => {
   );
 };
 
-const Sidebar = ({ collapsed, onToggle }) => {
+const Sidebar = ({ collapsed, onToggle, mobileOpen, onMobileClose }) => {
   const { user, logout } = useAuthStore();
 
   const visibleItems = navItems.filter((item) => {
@@ -145,58 +147,84 @@ const Sidebar = ({ collapsed, onToggle }) => {
   });
 
   return (
-    <aside className={clsx(
-      'fixed inset-y-0 left-0 z-40 flex flex-col bg-sidebar transition-all duration-300',
-      collapsed ? 'w-16' : 'w-64'
-    )}>
-      {/* Logo */}
-      <div className="flex items-center gap-3 h-16 px-4 border-b border-white/10">
-        <div className="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center flex-shrink-0">
-          <Factory size={18} className="text-white" />
-        </div>
-        {!collapsed && (
+    <>
+      {/* Mobile backdrop */}
+      <AnimatePresence>
+        {mobileOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="overflow-hidden"
-          >
-            <p className="text-white font-bold text-sm">IndustrialERP</p>
-            <p className="text-slate-400 text-xs">{user?.companyName || 'Platform'}</p>
-          </motion.div>
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+            onClick={onMobileClose}
+          />
         )}
-      </div>
+      </AnimatePresence>
 
-      {/* Nav items */}
-      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 scrollbar-hide">
-        {visibleItems.map((item) => (
-          <NavItem key={item.label} item={item} collapsed={collapsed} />
-        ))}
-      </nav>
-
-      {/* User info at bottom */}
-      <div className="border-t border-white/10 p-3">
-        <div className={clsx('flex items-center gap-3', collapsed && 'justify-center')}>
-          <div className="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-            {user?.firstName?.[0]}{user?.lastName?.[0]}
+      <aside className={clsx(
+        'fixed inset-y-0 left-0 z-40 flex flex-col bg-sidebar transition-all duration-300',
+        // Desktop width
+        collapsed ? 'lg:w-16' : 'lg:w-64',
+        // Mobile: always full width drawer, translate based on mobileOpen
+        'w-72 sm:w-64',
+        mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+      )}>
+        {/* Logo */}
+        <div className="flex items-center gap-3 h-16 px-4 border-b border-white/10">
+          <div className="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center flex-shrink-0">
+            <Factory size={18} className="text-white" />
           </div>
           {!collapsed && (
-            <div className="flex-1 min-w-0">
-              <p className="text-white text-xs font-medium truncate">{user?.firstName} {user?.lastName}</p>
-              <p className="text-slate-400 text-xs truncate capitalize">{user?.role?.replace(/_/g, ' ')}</p>
-            </div>
-          )}
-          {!collapsed && (
-            <button
-              onClick={logout}
-              className="text-slate-400 hover:text-white transition-colors p-1"
-              title="Logout"
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="overflow-hidden flex-1"
             >
-              <LogOut size={16} />
-            </button>
+              <p className="text-white font-bold text-sm">IndustrialERP</p>
+              <p className="text-slate-400 text-xs truncate">{user?.companyName || 'Platform'}</p>
+            </motion.div>
           )}
+          {/* Mobile close button */}
+          <button
+            onClick={onMobileClose}
+            className="lg:hidden ml-auto p-1 text-slate-400 hover:text-white"
+          >
+            <X size={18} />
+          </button>
         </div>
-      </div>
-    </aside>
+
+        {/* Nav items */}
+        <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1 scrollbar-hide">
+          {visibleItems.map((item) => (
+            <NavItem key={item.label} item={item} collapsed={collapsed} onMobileClose={onMobileClose} />
+          ))}
+        </nav>
+
+        {/* User info at bottom */}
+        <div className="border-t border-white/10 p-3">
+          <div className={clsx('flex items-center gap-3', collapsed && 'justify-center')}>
+            <div className="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+              {user?.firstName?.[0]}{user?.lastName?.[0]}
+            </div>
+            {!collapsed && (
+              <div className="flex-1 min-w-0">
+                <p className="text-white text-xs font-medium truncate">{user?.firstName} {user?.lastName}</p>
+                <p className="text-slate-400 text-xs truncate capitalize">{user?.role?.replace(/_/g, ' ')}</p>
+              </div>
+            )}
+            {!collapsed && (
+              <button
+                onClick={logout}
+                className="text-slate-400 hover:text-white transition-colors p-1"
+                title="Logout"
+              >
+                <LogOut size={16} />
+              </button>
+            )}
+          </div>
+        </div>
+      </aside>
+    </>
   );
 };
 

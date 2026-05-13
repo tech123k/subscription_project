@@ -70,7 +70,7 @@ const DispatchForm = () => {
       </div>
 
       <Card className="p-6 space-y-5">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="label">Linked Invoice</label>
             <select value={form.invoiceId} onChange={handleInvoiceChange} className="input-field">
@@ -97,7 +97,7 @@ const DispatchForm = () => {
 
         <div className="border-t border-gray-100 pt-4">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Vehicle & Transport</p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="label">Vehicle Number</label>
               <input value={form.vehicleNumber} onChange={f('vehicleNumber')} className="input-field" placeholder="MH 01 AB 1234" />
@@ -123,7 +123,7 @@ const DispatchForm = () => {
 
         <div className="border-t border-gray-100 pt-4">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">LR & E-Way Bill</p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="label">LR Number</label>
               <input value={form.lrNumber} onChange={f('lrNumber')} className="input-field" />
@@ -141,7 +141,7 @@ const DispatchForm = () => {
 
         <div className="border-t border-gray-100 pt-4">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Destination</p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="col-span-2">
               <label className="label">Address</label>
               <input value={form.destinationAddress} onChange={f('destinationAddress')} className="input-field" />
@@ -166,7 +166,7 @@ const DispatchForm = () => {
 
         <div className="border-t border-gray-100 pt-4">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Freight</p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="label">Freight Amount (₹)</label>
               <input type="number" value={form.freightAmount} onChange={f('freightAmount')} className="input-field" min="0" />

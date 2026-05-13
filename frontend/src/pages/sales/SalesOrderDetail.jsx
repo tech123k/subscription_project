@@ -150,11 +150,11 @@ const SalesOrderDetail = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Order info */}
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 col-span-2">
           <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-3">Order Information</p>
-          <div className="grid grid-cols-2 gap-x-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8">
             <div>
               <InfoRow label="Customer"    value={so.customer_name} />
               <InfoRow label="Phone"       value={so.customer_phone} />

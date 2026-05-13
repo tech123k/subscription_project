@@ -129,7 +129,7 @@ const Login = () => {
         {/* Demo credentials */}
         <div className="mt-4 p-4 bg-white/5 border border-white/10 rounded-xl">
           <p className="text-slate-400 text-xs font-medium mb-2">Demo Credentials:</p>
-          <div className="grid grid-cols-2 gap-2 text-xs text-slate-500">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-500">
             <div><span className="text-slate-300">Company Admin:</span> admin@alphamfg.com / Admin@123</div>
             <div><span className="text-slate-300">Super Admin:</span> superadmin@erp.com / SuperAdmin@123</div>
           </div>

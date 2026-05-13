@@ -85,7 +85,7 @@ const ProductForm = () => {
           <input value={form.name} onChange={f('name')} className="input-field" placeholder="e.g. Casual Shoe" />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="label">Product Code</label>
             <input value={form.code} onChange={f('code')} className="input-field" placeholder="e.g. CS-001" />

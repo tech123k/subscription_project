@@ -126,7 +126,7 @@ const CustomerList = () => {
 
   return (
     <div className="space-y-5 animate-fade-in">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-bold text-gray-900">Customers</h1>
           <p className="text-sm text-gray-500 mt-0.5">{meta?.total || 0} customers</p>
@@ -158,7 +158,7 @@ const CustomerList = () => {
         }
       >
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="col-span-2">
               <label className="label">Customer Name *</label>
               <input value={form.name} onChange={f('name')} className="input-field" placeholder="e.g. XYZ Industries" />
@@ -195,7 +195,7 @@ const CustomerList = () => {
 
           <div className="border-t border-gray-100 pt-4">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Address</p>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="col-span-2">
                 <label className="label">Address</label>
                 <input value={form.address} onChange={f('address')} className="input-field" />
