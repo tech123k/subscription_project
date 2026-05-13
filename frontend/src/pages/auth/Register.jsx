@@ -51,7 +51,7 @@ const OTPInput = ({ value, onChange }) => {
   };
 
   return (
-    <div className="flex gap-3 justify-center" onPaste={handlePaste}>
+    <div className="flex gap-2 sm:gap-3 justify-center" onPaste={handlePaste}>
       {[0, 1, 2, 3, 4, 5].map((idx) => (
         <input
           key={idx}
@@ -62,7 +62,7 @@ const OTPInput = ({ value, onChange }) => {
           value={digits[idx] || ''}
           onChange={(e) => handleChange(idx, e)}
           onKeyDown={(e) => handleKey(idx, e)}
-          className="w-11 h-12 text-center text-xl font-bold bg-white/10 border-2 border-white/20 text-white rounded-xl focus:outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-400/40 transition-all"
+          className="w-10 h-11 sm:w-11 sm:h-12 text-center text-xl font-bold bg-white/10 border-2 border-white/20 text-white rounded-xl focus:outline-none focus:border-primary-400 focus:ring-2 focus:ring-primary-400/40 transition-all"
         />
       ))}
     </div>
@@ -171,23 +171,23 @@ const Register = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-primary-900 to-slate-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-primary-900 to-slate-900 flex items-start sm:items-center justify-center px-4 py-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-xl"
       >
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary-600 mb-4">
-            <Factory size={28} className="text-white" />
+        <div className="text-center mb-4 sm:mb-8">
+          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-primary-600 mb-3 sm:mb-4">
+            <Factory size={26} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-white">Register Your Company</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">Register Your Company</h1>
           <p className="text-slate-400 text-sm mt-1">Set up your ERP account in minutes</p>
         </div>
 
         {/* Step indicators */}
-        <div className="flex items-center justify-center gap-1 mb-8">
+        <div className="flex items-center justify-center gap-1 mb-4 sm:mb-8">
           {STEPS.map((s, i) => {
             const n = i + 1;
             const done = step > n;
@@ -210,7 +210,7 @@ const Register = () => {
           })}
         </div>
 
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-2xl">
+        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 sm:p-8 shadow-2xl">
           <AnimatePresence mode="wait">
 
             {/* ── STEP 1: Company Info ── */}
@@ -225,7 +225,7 @@ const Register = () => {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="col-span-2">
+                  <div className="sm:col-span-2">
                     <label className={LABEL}>Company Name *</label>
                     <input {...register('companyName', { required: true })} className={INPUT} placeholder="Alpha Manufacturing Pvt Ltd" />
                   </div>
@@ -290,11 +290,11 @@ const Register = () => {
                     <label className={LABEL}>Last Name *</label>
                     <input {...register('lastName', { required: true })} className={INPUT} placeholder="Doe" />
                   </div>
-                  <div className="col-span-2">
+                  <div className="sm:col-span-2">
                     <label className={LABEL}>Admin Email * <span className="text-xs text-slate-500">(OTP will be sent here)</span></label>
                     <input {...register('adminEmail', { required: true })} type="email" className={INPUT} placeholder="admin@company.com" />
                   </div>
-                  <div className="col-span-2">
+                  <div className="sm:col-span-2">
                     <label className={LABEL}>Password * <span className="text-xs text-slate-500">Min 8 chars, 1 uppercase, 1 number</span></label>
                     <input {...register('password', { required: true, minLength: 8 })} type="password" className={INPUT} placeholder="Admin@123" />
                   </div>
