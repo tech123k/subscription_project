@@ -4,28 +4,36 @@ const logger = require('../utils/logger');
 class EmailService {
   constructor() {
     this.transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: parseInt(process.env.SMTP_PORT) || 587,
-      secure: process.env.SMTP_PORT === '465',
+      host:       process.env.SMTP_HOST || 'smtp.gmail.com',
+      port:       parseInt(process.env.SMTP_PORT) || 587,
+      secure:     false,       // STARTTLS on 587
+      requireTLS: true,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
+      tls: { rejectUnauthorized: false },
     });
   }
 
+  // send() throws on failure — callers decide whether to swallow or propagate
   async send({ to, subject, html, text }) {
+    await this.transporter.sendMail({
+      from: `"${process.env.APP_NAME || 'IndustrialERP'}" <${process.env.SMTP_USER}>`,
+      to,
+      subject,
+      html,
+      text,
+    });
+    logger.info(`Email sent to ${to}: ${subject}`);
+  }
+
+  // silent wrapper for non-critical emails (low-stock alerts, welcome, etc.)
+  async sendSilent(opts) {
     try {
-      await this.transporter.sendMail({
-        from: `"${process.env.APP_NAME || 'IndustrialERP'}" <${process.env.SMTP_USER}>`,
-        to,
-        subject,
-        html,
-        text,
-      });
-      logger.info(`Email sent to ${to}: ${subject}`);
-    } catch (error) {
-      logger.error('Email send failed:', { to, subject, error: error.message });
+      await this.send(opts);
+    } catch (err) {
+      logger.error('Email send failed (non-critical):', { to: opts.to, error: err.message });
     }
   }
 
@@ -50,7 +58,7 @@ class EmailService {
   }
 
   async sendWelcome(email, name, companyName) {
-    await this.send({
+    await this.sendSilent({
       to: email,
       subject: `Welcome to IndustrialERP - ${companyName}`,
       html: `
@@ -74,7 +82,7 @@ class EmailService {
       .map((m) => `<li>${m.name} (${m.code}) - Current: ${m.current_stock} ${m.unit}, Min: ${m.minimum_stock} ${m.unit}</li>`)
       .join('');
 
-    await this.send({
+    await this.sendSilent({
       to: email,
       subject: `Low Stock Alert - ${companyName}`,
       html: `
@@ -92,8 +100,34 @@ class EmailService {
     });
   }
 
-  async sendNotification(email, name, title, message, actionUrl) {
+  async sendOTP(email, name, otp) {
     await this.send({
+      to: email,
+      subject: `${otp} — Your IndustrialERP Verification Code`,
+      html: `
+        <div style="font-family:Arial,sans-serif;max-width:480px;margin:0 auto;padding:32px 24px;background:#f8fafc;border-radius:12px;">
+          <div style="text-align:center;margin-bottom:24px;">
+            <div style="display:inline-block;background:#1e40af;padding:12px 20px;border-radius:8px;">
+              <span style="color:#fff;font-size:18px;font-weight:700;letter-spacing:1px;">IndustrialERP</span>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:10px;padding:28px 24px;box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+            <h2 style="margin:0 0 8px;color:#1e293b;font-size:20px;">Email Verification</h2>
+            <p style="color:#475569;margin:0 0 24px;font-size:14px;">Hello <strong>${name}</strong>, use the OTP below to complete your registration.</p>
+            <div style="background:#eff6ff;border:2px dashed #93c5fd;border-radius:10px;padding:20px;text-align:center;margin-bottom:24px;">
+              <span style="font-size:38px;font-weight:800;color:#1e40af;letter-spacing:12px;">${otp}</span>
+            </div>
+            <p style="color:#64748b;font-size:13px;margin:0;">This OTP is valid for <strong>10 minutes</strong>.<br>Do not share it with anyone.</p>
+          </div>
+          <p style="color:#94a3b8;font-size:12px;text-align:center;margin-top:20px;">If you didn't request this, you can safely ignore this email.</p>
+        </div>
+      `,
+      text: `Your IndustrialERP OTP is: ${otp}. Valid for 10 minutes.`,
+    });
+  }
+
+  async sendNotification(email, name, title, message, actionUrl) {
+    await this.sendSilent({
       to: email,
       subject: `${title} - IndustrialERP`,
       html: `

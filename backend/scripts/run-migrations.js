@@ -21,9 +21,15 @@ const ORDERED_MIGRATIONS = [
   '008_dispatch_items_product_id.sql',
   '009_production_orders_product_id.sql',
   '010_phase1_features.sql',
+  '011_phase1_complete.sql',   // idempotent fix — safe even if 010 already applied
 ];
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL, ssl: false });
+// Supabase requires SSL; local dev typically does not.
+const sslConfig = process.env.DATABASE_URL?.includes('supabase')
+  ? { rejectUnauthorized: false }
+  : false;
+
+const pool = new Pool({ connectionString: process.env.DATABASE_URL, ssl: sslConfig });
 
 async function run() {
   const client = await pool.connect();

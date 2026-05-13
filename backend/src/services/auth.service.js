@@ -5,6 +5,18 @@ const { generateToken } = require('../utils/helpers');
 const { AppError } = require('../middleware/errorHandler');
 const emailService = require('./email.service');
 
+// ── In-memory OTP store (no DB needed) ─────────────────────
+// key: email (lowercase) → { otp: string, expiresAt: number }
+const otpStore = new Map();
+
+// Purge expired entries every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [k, v] of otpStore) {
+    if (v.expiresAt < now) otpStore.delete(k);
+  }
+}, 5 * 60 * 1000);
+
 class AuthService {
   generateAccessToken(payload) {
     return jwt.sign(payload, process.env.JWT_SECRET, {
@@ -187,7 +199,40 @@ class AuthService {
     await query('UPDATE users SET password_hash = $1 WHERE id = $2', [hash, userId]);
   }
 
-  async registerCompany(companyData, adminData) {
+  // ── OTP Methods ───────────────────────────────────────────
+
+  async sendRegistrationOTP(email, firstName) {
+    const key = email.toLowerCase();
+
+    // Rate-limit: allow resend only after 60 s
+    const existing = otpStore.get(key);
+    if (existing && existing.expiresAt - Date.now() > 9 * 60 * 1000) {
+      throw new AppError('OTP already sent. Please wait 60 seconds before requesting again.', 429);
+    }
+
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    otpStore.set(key, { otp, expiresAt: Date.now() + 10 * 60 * 1000 });
+
+    await emailService.sendOTP(email, firstName || 'User', otp);
+    return true;
+  }
+
+  verifyOTP(email, otp) {
+    const key = email.toLowerCase();
+    const record = otpStore.get(key);
+    if (!record)                      throw new AppError('OTP not found. Please request a new one.', 400);
+    if (Date.now() > record.expiresAt) throw new AppError('OTP expired. Please request a new one.', 400);
+    if (record.otp !== String(otp).trim()) throw new AppError('Invalid OTP. Please check and try again.', 400);
+    otpStore.delete(key); // single-use
+    return true;
+  }
+
+  // ── Register Company (now requires OTP) ──────────────────
+
+  async registerCompany(companyData, adminData, otp) {
+    // Verify OTP first — throws if invalid/expired
+    this.verifyOTP(adminData.email, otp);
+
     return transaction(async (client) => {
       // Create company
       const companyResult = await client.query(

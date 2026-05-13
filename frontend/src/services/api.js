@@ -92,6 +92,7 @@ api.interceptors.response.use(
 // Typed API modules
 export const authAPI = {
   login: (data) => api.post('/auth/login', data),
+  sendOtp: (data) => api.post('/auth/send-otp', data),
   register: (data) => api.post('/auth/register', data),
   logout: () => api.post('/auth/logout'),
   forgotPassword: (email) => api.post('/auth/forgot-password', { email }),

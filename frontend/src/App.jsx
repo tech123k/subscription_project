@@ -28,6 +28,15 @@ const WorkflowBuilder = lazy(() => import('./pages/production/WorkflowBuilder'))
 const ProductList = lazy(() => import('./pages/production/ProductList'));
 const ProductForm = lazy(() => import('./pages/production/ProductForm'));
 const BOMBuilder = lazy(() => import('./pages/production/BOMBuilder'));
+const AttributeMaster = lazy(() => import('./pages/production/AttributeMaster'));
+const VariantBuilder = lazy(() => import('./pages/production/VariantBuilder'));
+
+const SalesOrderList   = lazy(() => import('./pages/sales/SalesOrderList'));
+const SalesOrderForm   = lazy(() => import('./pages/sales/SalesOrderForm'));
+const SalesOrderDetail = lazy(() => import('./pages/sales/SalesOrderDetail'));
+
+const InventoryLedger    = lazy(() => import('./pages/inventory/InventoryLedger'));
+const CreditOutstanding  = lazy(() => import('./pages/credit/CreditOutstanding'));
 
 const DispatchList = lazy(() => import('./pages/dispatch/DispatchList'));
 const DispatchForm = lazy(() => import('./pages/dispatch/DispatchForm'));
@@ -106,7 +115,20 @@ const App = () => (
           <Route path="/production/products/new" element={<ProductForm />} />
           <Route path="/production/products/:id/edit" element={<ProductForm />} />
           <Route path="/production/products/:productId/bom" element={<BOMBuilder />} />
+          <Route path="/production/products/:productId/variants" element={<VariantBuilder />} />
+          <Route path="/production/attributes" element={<AttributeMaster />} />
           <Route path="/production/:id" element={<ProductionDetail />} />
+
+          {/* Sales Orders (OMS) */}
+          <Route path="/sales-orders" element={<SalesOrderList />} />
+          <Route path="/sales-orders/create" element={<SalesOrderForm />} />
+          <Route path="/sales-orders/:id" element={<SalesOrderDetail />} />
+
+          {/* Inventory Ledger */}
+          <Route path="/ledger" element={<InventoryLedger />} />
+
+          {/* Credit & Outstanding */}
+          <Route path="/credit" element={<CreditOutstanding />} />
 
           {/* Dispatch */}
           <Route path="/dispatches" element={<DispatchList />} />

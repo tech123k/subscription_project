@@ -16,6 +16,7 @@ const registerValidation = [
   body('admin.password').isLength({ min: 8 }).matches(/^(?=.*[A-Z])(?=.*[0-9])/),
   body('admin.firstName').notEmpty().trim(),
   body('admin.lastName').notEmpty().trim(),
+  body('otp').notEmpty().withMessage('OTP is required'),
 ];
 
 const login = async (req, res, next) => {
@@ -34,13 +35,24 @@ const login = async (req, res, next) => {
   }
 };
 
+const sendOtp = async (req, res, next) => {
+  try {
+    const { email, firstName } = req.body;
+    if (!email) return ApiResponse.badRequest(res, 'email is required');
+    await authService.sendRegistrationOTP(email, firstName || 'User');
+    ApiResponse.success(res, null, 'OTP sent to ' + email);
+  } catch (error) {
+    next(error);
+  }
+};
+
 const register = async (req, res, next) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return ApiResponse.badRequest(res, 'Validation failed', errors.array());
 
-    const { company, admin } = req.body;
-    const result = await authService.registerCompany(company, admin);
+    const { company, admin, otp } = req.body;
+    const result = await authService.registerCompany(company, admin, otp);
     ApiResponse.created(res, result, 'Company registered successfully');
   } catch (error) {
     next(error);
@@ -139,6 +151,6 @@ const updateProfile = async (req, res, next) => {
 };
 
 module.exports = {
-  login, register, refreshToken, logout, forgotPassword, resetPassword,
+  login, register, sendOtp, refreshToken, logout, forgotPassword, resetPassword,
   changePassword, getProfile, updateProfile, loginValidation, registerValidation,
 };

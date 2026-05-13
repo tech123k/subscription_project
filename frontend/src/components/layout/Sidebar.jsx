@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { clsx } from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -5,6 +6,7 @@ import {
   LayoutDashboard, Package, Factory, Truck, FileText, Warehouse,
   Users, Settings, BarChart3, Bell, ClipboardList, ShoppingCart,
   Building2, ChevronDown, LogOut, User, Boxes, ArrowLeftRight,
+  BookOpen, CreditCard, TrendingDown,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
 
@@ -26,13 +28,24 @@ const navItems = [
     icon: Factory,
     children: [
       { label: 'Product Master', path: '/production/products' },
+      { label: 'Attribute Master', path: '/production/attributes' },
       { label: 'Production Orders', path: '/production' },
       { label: 'Workflow Builder', path: '/production/workflows' },
+    ],
+  },
+  {
+    label: 'Sales Orders',
+    icon: ShoppingCart,
+    children: [
+      { label: 'Order List', path: '/sales-orders' },
+      { label: 'New Order', path: '/sales-orders/create' },
     ],
   },
   { label: 'Dispatch', icon: Truck, path: '/dispatches' },
   { label: 'Customers', icon: ShoppingCart, path: '/customers' },
   { label: 'Invoices', icon: FileText, path: '/invoices' },
+  { label: 'Ledger', icon: BookOpen, path: '/ledger' },
+  { label: 'Credit / Outstanding', icon: CreditCard, path: '/credit' },
   { label: 'Reports', icon: BarChart3, path: '/reports' },
   { label: 'Users', icon: Users, path: '/users', adminOnly: true },
   { label: 'Audit Logs', icon: ClipboardList, path: '/audit', adminOnly: true },
@@ -121,8 +134,6 @@ const NavGroup = ({ item, isActive, collapsed }) => {
     </div>
   );
 };
-
-import { useState, useEffect } from 'react';
 
 const Sidebar = ({ collapsed, onToggle }) => {
   const { user, logout } = useAuthStore();
