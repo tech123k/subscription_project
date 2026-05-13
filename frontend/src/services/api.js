@@ -5,16 +5,66 @@ import { useAuthStore } from '../store/authStore';
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 // 90s timeout — covers Render free-tier cold starts (typically 30-60s)
+// withCredentials: true — sends the httpOnly refresh token cookie on every request
 const api = axios.create({
   baseURL: API_URL,
   timeout: 90000,
+  withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
 });
 
-// Request interceptor — attach token + mark request start time
+// ── Shared refresh state ─────────────────────────────────────────────────────
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((p) => (error ? p.reject(error) : p.resolve(token)));
+  failedQueue = [];
+};
+
+// Calls the refresh endpoint (cookie is sent automatically by the browser)
+const doRefresh = async () => {
+  const res = await axios.post(
+    `${API_URL}/auth/refresh-token`,
+    {},
+    { withCredentials: true }
+  );
+  return res.data.data.accessToken;
+};
+
+// ── Request interceptor — attach token; proactively refresh if near expiry ──
 api.interceptors.request.use(
-  (config) => {
-    const token = useAuthStore.getState().accessToken;
+  async (config) => {
+    const state = useAuthStore.getState();
+    let token = state.accessToken;
+
+    // Proactive refresh: if token expires within 90s, silently get a new one
+    // before the request is sent — avoids a 401→retry round trip mid-session
+    if (token && state.isTokenExpiringSoon() && !config._skipRefresh) {
+      if (isRefreshing) {
+        // Another concurrent request is already refreshing — wait for it
+        try {
+          token = await new Promise((resolve, reject) =>
+            failedQueue.push({ resolve, reject })
+          );
+        } catch {
+          token = state.accessToken; // fall through; response 401 will handle it
+        }
+      } else {
+        isRefreshing = true;
+        try {
+          token = await doRefresh();
+          useAuthStore.getState().setAccessToken(token);
+          processQueue(null, token);
+        } catch {
+          processQueue(null, state.accessToken);
+          token = state.accessToken;
+        } finally {
+          isRefreshing = false;
+        }
+      }
+    }
+
     if (token) config.headers.Authorization = `Bearer ${token}`;
     config._startTime = Date.now();
     return config;
@@ -22,30 +72,19 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor — handle 401, refresh token, timeout, network errors
-let isRefreshing = false;
-let failedQueue = [];
-
-const processQueue = (error, token = null) => {
-  failedQueue.forEach((prom) => {
-    if (error) prom.reject(error);
-    else prom.resolve(token);
-  });
-  failedQueue = [];
-};
-
 const isTimeoutError = (error) =>
   error.code === 'ECONNABORTED' ||
   error.code === 'ERR_NETWORK' ||
   error.message?.toLowerCase().includes('timeout') ||
   error.message?.toLowerCase().includes('network error');
 
+// ── Response interceptor — 401 reactive refresh, timeout, offline ────────────
 api.interceptors.response.use(
   (response) => response.data,
   async (error) => {
     const original = error.config;
 
-    // ── Token refresh on 401 ──────────────────────────────────
+    // ── Reactive token refresh on 401 ────────────────────────
     if (error.response?.status === 401 && !original._retry) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
@@ -59,16 +98,8 @@ api.interceptors.response.use(
       original._retry = true;
       isRefreshing = true;
 
-      const refreshToken = useAuthStore.getState().refreshToken;
-      if (!refreshToken) {
-        isRefreshing = false;
-        useAuthStore.getState().logout();
-        return Promise.reject(error);
-      }
-
       try {
-        const res = await axios.post(`${API_URL}/auth/refresh-token`, { refreshToken });
-        const { accessToken } = res.data.data;
+        const accessToken = await doRefresh();
         useAuthStore.getState().setAccessToken(accessToken);
         original.headers.Authorization = `Bearer ${accessToken}`;
         processQueue(null, accessToken);
@@ -130,6 +161,7 @@ export const authAPI = {
   sendOtp: (data) => api.post('/auth/send-otp', data),
   register: (data) => api.post('/auth/register', data),
   logout: () => api.post('/auth/logout'),
+  logoutAll: () => api.post('/auth/logout-all'),
   forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
   resetPassword: (data) => api.post('/auth/reset-password', data),
   changePassword: (data) => api.put('/auth/change-password', data),
@@ -307,12 +339,18 @@ export const notificationAPI = {
 };
 
 export const reportAPI = {
-  stock: (params) => api.get('/reports/stock', { params }),
-  production: (params) => api.get('/reports/production', { params }),
-  financial: (params) => api.get('/reports/financial', { params }),
-  dispatch: (params) => api.get('/reports/dispatch', { params }),
+  stock:             (params) => api.get('/reports/stock',              { params }),
+  production:        (params) => api.get('/reports/production',         { params }),
+  financial:         (params) => api.get('/reports/financial',          { params }),
+  dispatch:          (params) => api.get('/reports/dispatch',           { params }),
   stockTransactions: (params) => api.get('/reports/stock-transactions', { params }),
-  audit: (params) => api.get('/reports/audit', { params }),
+  audit:             (params) => api.get('/reports/audit',              { params }),
+
+  // Blob downloads — auth headers sent via axios interceptor
+  exportStock:      (params) => api.get('/reports/stock',      { params: { ...params, format: 'excel' }, responseType: 'blob' }),
+  exportProduction: (params) => api.get('/reports/production', { params: { ...params, format: 'excel' }, responseType: 'blob' }),
+  exportFinancial:  (params) => api.get('/reports/financial',  { params: { ...params, format: 'excel' }, responseType: 'blob' }),
+  exportDispatch:   (params) => api.get('/reports/dispatch',   { params: { ...params, format: 'excel' }, responseType: 'blob' }),
 };
 
 export const auditAPI = {
@@ -365,6 +403,11 @@ export const creditAPI = {
   updateCreditSettings:   (customerId, data)      => api.put(`/credit/customers/${customerId}/settings`, data),
   recordPayment:          (customerId, data)      => api.post(`/credit/customers/${customerId}/payment`, data),
   addInvoiceTransaction:  (customerId, data)      => api.post(`/credit/customers/${customerId}/transaction`, data),
+};
+
+// ─── GLOBAL SEARCH ───────────────────────────────────────────────────────────
+export const searchAPI = {
+  global: (q, limit = 5) => api.get('/search', { params: { q, limit } }),
 };
 
 export default api;

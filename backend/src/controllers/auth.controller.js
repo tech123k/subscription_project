@@ -19,6 +19,22 @@ const registerValidation = [
   body('otp').notEmpty().withMessage('OTP is required'),
 ];
 
+// Cookie configuration — cross-origin safe for Render + Vercel
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  path: '/',
+};
+
+const CLEAR_COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  path: '/',
+};
+
 const login = async (req, res, next) => {
   try {
     const errors = validationResult(req);
@@ -29,7 +45,12 @@ const login = async (req, res, next) => {
     const userAgent = req.headers['user-agent'];
 
     const result = await authService.login(email, password, ipAddress, userAgent);
-    ApiResponse.success(res, result, 'Login successful');
+
+    // Store refresh token in httpOnly cookie — never exposed to JS
+    res.cookie('erp_rt', result.refreshToken, COOKIE_OPTIONS);
+
+    // Return only the short-lived access token and user profile to the client
+    ApiResponse.success(res, { accessToken: result.accessToken, user: result.user }, 'Login successful');
   } catch (error) {
     next(error);
   }
@@ -61,19 +82,42 @@ const register = async (req, res, next) => {
 
 const refreshToken = async (req, res, next) => {
   try {
-    const { refreshToken } = req.body;
-    if (!refreshToken) return ApiResponse.badRequest(res, 'Refresh token is required');
-    const result = await authService.refreshToken(refreshToken);
-    ApiResponse.success(res, result, 'Token refreshed');
+    const token = req.cookies?.erp_rt;
+    if (!token) return ApiResponse.unauthorized(res, 'Session expired. Please log in again.');
+
+    const result = await authService.refreshToken(token);
+
+    // Rotate the cookie with the new refresh token
+    res.cookie('erp_rt', result.refreshToken, COOKIE_OPTIONS);
+
+    ApiResponse.success(res, { accessToken: result.accessToken }, 'Token refreshed');
   } catch (error) {
+    // Clear the invalid cookie so the client knows to re-login
+    res.clearCookie('erp_rt', CLEAR_COOKIE_OPTIONS);
     next(error);
   }
 };
 
 const logout = async (req, res, next) => {
   try {
-    await authService.logout(req.user.id);
+    if (req.user?.id) {
+      await authService.logout(req.user.id);
+    }
+    res.clearCookie('erp_rt', CLEAR_COOKIE_OPTIONS);
     ApiResponse.success(res, null, 'Logged out successfully');
+  } catch (error) {
+    next(error);
+  }
+};
+
+const logoutAll = async (req, res, next) => {
+  try {
+    // Invalidates the refresh token in DB — all sessions become invalid
+    if (req.user?.id) {
+      await authService.logout(req.user.id);
+    }
+    res.clearCookie('erp_rt', CLEAR_COOKIE_OPTIONS);
+    ApiResponse.success(res, null, 'Logged out from all devices');
   } catch (error) {
     next(error);
   }
@@ -107,7 +151,9 @@ const changePassword = async (req, res, next) => {
     const { currentPassword, newPassword } = req.body;
     if (!currentPassword || !newPassword) return ApiResponse.badRequest(res, 'Both passwords are required');
     await authService.changePassword(req.user.id, currentPassword, newPassword);
-    ApiResponse.success(res, null, 'Password changed successfully');
+    // Rotate refresh token after password change — invalidates other sessions
+    res.clearCookie('erp_rt', CLEAR_COOKIE_OPTIONS);
+    ApiResponse.success(res, null, 'Password changed. Please log in again.');
   } catch (error) {
     next(error);
   }
@@ -151,6 +197,7 @@ const updateProfile = async (req, res, next) => {
 };
 
 module.exports = {
-  login, register, sendOtp, refreshToken, logout, forgotPassword, resetPassword,
-  changePassword, getProfile, updateProfile, loginValidation, registerValidation,
+  login, register, sendOtp, refreshToken, logout, logoutAll,
+  forgotPassword, resetPassword, changePassword, getProfile, updateProfile,
+  loginValidation, registerValidation,
 };

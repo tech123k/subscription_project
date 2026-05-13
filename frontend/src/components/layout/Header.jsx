@@ -1,20 +1,72 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, Menu, Search, User, LogOut, Settings, ChevronDown, X } from 'lucide-react';
+import {
+  Bell, Menu, Search, User, LogOut, Settings,
+  ChevronDown, X, Command, CheckCheck, Plus,
+  LayoutDashboard, Package, ClipboardList, ShoppingCart,
+  Building2, BarChart3, Shield, HelpCircle, Keyboard,
+  ChevronRight,
+} from 'lucide-react';
 import { clsx } from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '../../store/authStore';
 import { useNotificationStore } from '../../store/notificationStore';
+import { useCommandStore } from '../../store/commandStore';
 import { useQuery } from '@tanstack/react-query';
 import { notificationAPI } from '../../services/api';
+
+/* ─── Quick-create items ──────────────────────────────────── */
+const QUICK_CREATE = [
+  { label: 'Material',         icon: Package,       path: '/materials/create' },
+  { label: 'Purchase Order',   icon: ClipboardList, path: '/po/create' },
+  { label: 'Production Order', icon: LayoutDashboard, path: '/production/create' },
+  { label: 'Sales Order',      icon: ShoppingCart,  path: '/sales-orders/create' },
+];
+
+/* ─── Menu item component ────────────────────────────────── */
+const MenuItem = ({ icon: Icon, label, hint, badge, onClick, danger }) => (
+  <button
+    onClick={onClick}
+    className={clsx(
+      'w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-100',
+      danger
+        ? 'text-red-600 hover:bg-red-50'
+        : 'text-slate-700 hover:bg-slate-50'
+    )}
+  >
+    <Icon
+      size={14}
+      className={clsx('flex-shrink-0', danger ? 'text-red-400' : 'text-slate-400')}
+    />
+    <span className="flex-1 text-left">{label}</span>
+    {hint && <span className="text-[10px] text-slate-300 font-mono">{hint}</span>}
+    {badge && (
+      <span className="px-1.5 py-0.5 bg-primary-100 text-primary-700 text-[10px] font-bold rounded-full">
+        {badge}
+      </span>
+    )}
+  </button>
+);
+
+const MenuSection = ({ title, children }) => (
+  <div className="p-1.5 border-b border-slate-100 last:border-0">
+    {title && (
+      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.08em] px-3 pt-1 pb-1.5">
+        {title}
+      </p>
+    )}
+    {children}
+  </div>
+);
 
 const Header = ({ onMenuToggle }) => {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const { unreadCount, setUnreadCount, toggleOpen } = useNotificationStore();
-  const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
-  const [search, setSearch] = useState('');
+  const { open: openCommand } = useCommandStore();
+  const [showUserMenu, setShowUserMenu]     = useState(false);
+  const [showCreate, setShowCreate]         = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
 
   useQuery({
     queryKey: ['notification-count'],
@@ -26,130 +78,233 @@ const Header = ({ onMenuToggle }) => {
     refetchInterval: 60000,
   });
 
+  const initials = `${user?.firstName?.[0] ?? ''}${user?.lastName?.[0] ?? ''}`.toUpperCase() || 'U';
+
+  const closeMenu = () => setShowUserMenu(false);
+  const go = (path) => { navigate(path); closeMenu(); };
+
   return (
-    <header className="h-14 sm:h-16 bg-white border-b border-gray-100 flex items-center px-3 sm:px-4 gap-2 sm:gap-4 sticky top-0 z-30">
+    <header className="h-14 sm:h-16 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-[0_1px_0_rgba(0,0,0,0.04)] flex items-center px-3 sm:px-5 gap-2 sm:gap-3 sticky top-0 z-30">
+
       {/* Menu toggle */}
       <button
         onClick={onMenuToggle}
-        className="p-2 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors flex-shrink-0"
+        aria-label="Toggle sidebar"
+        className="p-2 rounded-xl hover:bg-slate-100 text-slate-500 hover:text-slate-700 transition-colors flex-shrink-0"
       >
-        <Menu size={20} />
+        <Menu size={19} />
       </button>
 
-      {/* Search — hidden on mobile unless toggled */}
-      <div className={clsx(
-        'relative flex-1 max-w-md transition-all',
-        'hidden sm:block'
-      )}>
-        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-        <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search..."
-          className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:bg-white focus:border-primary-300 transition-all"
-        />
-      </div>
+      {/* ── Search button (desktop) ── */}
+      <button
+        onClick={openCommand}
+        className="relative flex-1 max-w-sm hidden sm:flex items-center gap-2.5 px-3 py-2 text-sm border border-slate-200 rounded-xl bg-slate-50 hover:bg-white hover:border-slate-300 hover:shadow-sm text-slate-400 transition-all cursor-pointer group"
+        aria-label="Open command palette (⌘K)"
+      >
+        <Search size={14} className="text-slate-400 flex-shrink-0" />
+        <span className="flex-1 text-left text-sm">Search anything...</span>
+        <div className="flex items-center gap-0.5 opacity-70 group-hover:opacity-100 transition-opacity">
+          <kbd className="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md border border-slate-200 bg-white text-slate-400 text-[10px] font-semibold">
+            <Command size={9} /> K
+          </kbd>
+        </div>
+      </button>
 
-      {/* Mobile search overlay */}
+      {/* ── Mobile search overlay ── */}
       <AnimatePresence>
-        {showSearch && (
+        {showMobileSearch && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-white z-50 flex items-center px-3 gap-2 sm:hidden"
+            className="absolute inset-0 bg-white z-50 flex items-center px-4 gap-3 sm:hidden border-b border-slate-100"
           >
-            <Search size={16} className="text-gray-400 flex-shrink-0" />
-            <input
-              autoFocus
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search..."
-              className="flex-1 py-2 text-sm focus:outline-none bg-transparent"
-            />
-            <button onClick={() => { setShowSearch(false); setSearch(''); }} className="p-1 text-gray-400">
-              <X size={18} />
+            <Search size={16} className="text-slate-400 flex-shrink-0" />
+            <button
+              className="flex-1 py-2 text-sm text-slate-400 text-left focus:outline-none"
+              onClick={() => { setShowMobileSearch(false); openCommand(); }}
+            >
+              Search anything...
+            </button>
+            <button
+              onClick={() => setShowMobileSearch(false)}
+              className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 transition-colors"
+            >
+              <X size={17} />
             </button>
           </motion.div>
         )}
       </AnimatePresence>
 
-      <div className="flex items-center gap-1 sm:gap-2 ml-auto">
-        {/* Mobile search toggle */}
+      <div className="flex items-center gap-1 sm:gap-1.5 ml-auto">
+
+        {/* Mobile search trigger */}
         <button
-          onClick={() => setShowSearch(true)}
-          className="sm:hidden p-2 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors"
+          onClick={() => setShowMobileSearch(true)}
+          aria-label="Search"
+          className="sm:hidden p-2 rounded-xl hover:bg-slate-100 text-slate-500 transition-colors"
         >
           <Search size={18} />
         </button>
 
-        {/* Notification bell */}
+        {/* ── Quick Create ── */}
+        <div className="relative hidden sm:block">
+          <button
+            onClick={() => setShowCreate(v => !v)}
+            aria-label="Quick create"
+            className={clsx(
+              'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold transition-colors',
+              showCreate
+                ? 'bg-primary-600 text-white'
+                : 'bg-slate-100 hover:bg-slate-200 text-slate-600'
+            )}
+          >
+            <Plus size={15} />
+            <span className="hidden lg:block">Create</span>
+          </button>
+
+          <AnimatePresence>
+            {showCreate && (
+              <>
+                <div className="fixed inset-0 z-10" onClick={() => setShowCreate(false)} />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                  transition={{ duration: 0.12 }}
+                  className="absolute right-0 top-full mt-2 w-52 bg-white border border-slate-100 rounded-2xl shadow-dropdown z-20 overflow-hidden p-1.5"
+                >
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 pt-2 pb-1.5">
+                    Quick Create
+                  </p>
+                  {QUICK_CREATE.map(({ label, icon: Icon, path }) => (
+                    <button
+                      key={path}
+                      onClick={() => { navigate(path); setShowCreate(false); }}
+                      className="dropdown-item w-full"
+                    >
+                      <Icon size={14} className="text-primary-500" /> {label}
+                    </button>
+                  ))}
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* ── Notifications ── */}
         <button
           onClick={toggleOpen}
-          className="relative p-2 rounded-lg hover:bg-gray-100 text-gray-500 transition-colors"
+          aria-label="Notifications"
+          className="relative p-2 rounded-xl hover:bg-slate-100 text-slate-500 hover:text-slate-700 transition-colors"
         >
-          <Bell size={20} />
+          <Bell size={18} />
           {unreadCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] bg-red-500 rounded-full text-white text-[10px] font-bold flex items-center justify-center px-1">
+            <span className="absolute -top-0.5 -right-0.5 min-w-[17px] h-[17px] bg-red-500 rounded-full text-white text-[10px] font-bold flex items-center justify-center px-1 ring-2 ring-white">
               {unreadCount > 99 ? '99+' : unreadCount}
             </span>
           )}
         </button>
 
-        {/* User menu */}
+        {/* ── User menu ── */}
         <div className="relative">
           <button
-            onClick={() => setShowUserMenu(!showUserMenu)}
-            className="flex items-center gap-2 p-1.5 pl-2 rounded-lg hover:bg-gray-100 transition-colors"
+            onClick={() => setShowUserMenu(v => !v)}
+            aria-label="User menu"
+            className={clsx(
+              'flex items-center gap-2 px-2 py-1.5 rounded-xl transition-colors',
+              showUserMenu ? 'bg-slate-100' : 'hover:bg-slate-100'
+            )}
           >
-            <div className="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center text-white text-xs font-bold">
-              {user?.firstName?.[0]}{user?.lastName?.[0]}
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-violet-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 shadow-sm select-none">
+              {initials}
             </div>
             <div className="text-left hidden sm:block">
-              <p className="text-sm font-medium text-gray-900 leading-tight">{user?.firstName} {user?.lastName}</p>
-              <p className="text-xs text-gray-500 capitalize leading-tight">{user?.role?.replace(/_/g, ' ')}</p>
+              <p className="text-sm font-semibold text-slate-800 leading-tight">
+                {user?.firstName} {user?.lastName}
+              </p>
+              <p className="text-[11px] text-slate-400 capitalize leading-tight">
+                {user?.role?.replace(/_/g, ' ')}
+              </p>
             </div>
-            <ChevronDown size={14} className="text-gray-400 hidden sm:block" />
+            <ChevronDown
+              size={14}
+              className={clsx('text-slate-400 hidden sm:block transition-transform duration-200', showUserMenu && 'rotate-180')}
+            />
           </button>
 
           <AnimatePresence>
             {showUserMenu && (
               <>
-                <div className="fixed inset-0 z-10" onClick={() => setShowUserMenu(false)} />
+                <div className="fixed inset-0 z-10" onClick={closeMenu} />
+
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: -5 }}
+                  initial={{ opacity: 0, scale: 0.95, y: -6 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -5 }}
-                  transition={{ duration: 0.1 }}
-                  className="absolute right-0 top-full mt-2 w-52 bg-white border border-gray-100 rounded-xl shadow-modal z-20"
+                  exit={{ opacity: 0, scale: 0.95, y: -6 }}
+                  transition={{ duration: 0.14, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute right-0 top-full mt-2 w-72 bg-white border border-slate-100 rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.14),0_0_0_1px_rgba(0,0,0,0.04)] z-20 overflow-hidden"
                 >
-                  <div className="p-3 border-b border-gray-100">
-                    <p className="font-semibold text-sm text-gray-900">{user?.firstName} {user?.lastName}</p>
-                    <p className="text-xs text-gray-500">{user?.email}</p>
-                    <p className="text-xs text-primary-600 mt-0.5">{user?.companyName}</p>
-                  </div>
-                  <div className="p-1">
-                    <button
-                      onClick={() => { navigate('/profile'); setShowUserMenu(false); }}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg"
-                    >
-                      <User size={15} /> My Profile
-                    </button>
-                    <button
-                      onClick={() => { navigate('/settings'); setShowUserMenu(false); }}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg"
-                    >
-                      <Settings size={15} /> Settings
-                    </button>
-                    <div className="border-t border-gray-100 mt-1 pt-1">
-                      <button
-                        onClick={logout}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg"
-                      >
-                        <LogOut size={15} /> Sign Out
-                      </button>
+                  {/* ── Profile card ── */}
+                  <div className="px-4 pt-4 pb-3 bg-gradient-to-br from-slate-50 to-indigo-50/40 border-b border-slate-100">
+                    <div className="flex items-start gap-3">
+                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary-500 to-violet-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-md select-none">
+                        {initials}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="font-bold text-[15px] text-slate-900 truncate leading-tight">
+                          {user?.firstName} {user?.lastName}
+                        </p>
+                        <p className="text-[12px] text-slate-500 truncate mt-0.5">{user?.email}</p>
+                        <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary-100 text-primary-700 capitalize">
+                            {user?.role?.replace(/_/g, ' ')}
+                          </span>
+                          {user?.companyName && (
+                            <span className="inline-flex items-center gap-1 text-[11px] text-slate-500">
+                              <Building2 size={10} />
+                              <span className="truncate max-w-[120px]">{user.companyName}</span>
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
+
+                  {/* ── Account ── */}
+                  <MenuSection title="Account">
+                    <MenuItem icon={User}     label="My Profile"       onClick={() => go('/profile')} />
+                    <MenuItem icon={Settings} label="Company Settings"  onClick={() => go('/settings')} />
+                  </MenuSection>
+
+                  {/* ── Navigate ── */}
+                  <MenuSection title="Navigate">
+                    <MenuItem icon={LayoutDashboard} label="Dashboard"    onClick={() => go('/dashboard')} />
+                    <MenuItem icon={BarChart3}        label="Reports"      onClick={() => go('/reports')} />
+                    {['super_admin', 'company_admin'].includes(user?.role) && (
+                      <MenuItem icon={Shield} label="Audit Logs" onClick={() => go('/audit')} />
+                    )}
+                  </MenuSection>
+
+                  {/* ── Tools ── */}
+                  <MenuSection title="Tools">
+                    <MenuItem
+                      icon={Command}
+                      label="Command Palette"
+                      hint="⌘K"
+                      onClick={() => { closeMenu(); openCommand(); }}
+                    />
+                    <MenuItem
+                      icon={Keyboard}
+                      label="Keyboard Shortcuts"
+                      onClick={() => { closeMenu(); openCommand(); }}
+                    />
+                  </MenuSection>
+
+                  {/* ── Sign out ── */}
+                  <MenuSection>
+                    <MenuItem icon={LogOut} label="Sign Out" danger onClick={logout} />
+                  </MenuSection>
                 </motion.div>
               </>
             )}

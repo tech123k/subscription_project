@@ -125,24 +125,46 @@ class AuthService {
     }
 
     const result = await query(
-      'SELECT id, company_id, role, refresh_token, is_active FROM users WHERE id = $1',
+      `SELECT u.id, u.company_id, u.role, u.email, u.first_name, u.last_name,
+              u.department, u.refresh_token, u.is_active,
+              c.name AS company_name
+       FROM users u
+       LEFT JOIN companies c ON u.company_id = c.id
+       WHERE u.id = $1`,
       [decoded.userId]
     );
 
     const user = result.rows[0];
     if (!user || user.refresh_token !== token) {
-      throw new AppError('Invalid refresh token', 401);
+      throw new AppError('Session expired. Please log in again.', 401);
     }
 
     if (!user.is_active) throw new AppError('Account is deactivated', 401);
 
-    const accessToken = this.generateAccessToken({
+    // Full payload (same as login) so middleware has all claims
+    const tokenPayload = {
+      userId: user.id,
+      companyId: user.company_id,
+      role: user.role,
+      email: user.email,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      fullName: `${user.first_name} ${user.last_name}`,
+      department: user.department || '',
+      companyName: user.company_name || '',
+    };
+
+    const accessToken = this.generateAccessToken(tokenPayload);
+    // Rotate refresh token — old one becomes invalid immediately
+    const newRefreshToken = this.generateRefreshToken({
       userId: user.id,
       companyId: user.company_id,
       role: user.role,
     });
 
-    return { accessToken };
+    await query('UPDATE users SET refresh_token = $1 WHERE id = $2', [newRefreshToken, user.id]);
+
+    return { accessToken, refreshToken: newRefreshToken };
   }
 
   async logout(userId) {

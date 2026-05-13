@@ -2,21 +2,21 @@ import { clsx } from 'clsx';
 import { Loader2 } from 'lucide-react';
 
 const variants = {
-  primary: 'bg-primary-600 hover:bg-primary-700 text-white focus:ring-primary-500',
-  secondary: 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 focus:ring-gray-300',
-  danger: 'bg-red-600 hover:bg-red-700 text-white focus:ring-red-500',
-  ghost: 'bg-transparent hover:bg-gray-100 text-gray-600 focus:ring-gray-300',
-  success: 'bg-green-600 hover:bg-green-700 text-white focus:ring-green-500',
-  warning: 'bg-amber-500 hover:bg-amber-600 text-white focus:ring-amber-400',
-  outline: 'border border-primary-600 text-primary-600 hover:bg-primary-50 focus:ring-primary-500',
+  primary:   'btn-primary',
+  secondary: 'btn-secondary',
+  danger:    'btn-danger',
+  ghost:     'btn-ghost',
+  success:   'btn-success',
+  warning:   'btn bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white shadow-sm px-4 py-2.5 focus:ring-amber-400/40',
+  outline:   'btn border border-primary-500 text-primary-600 hover:bg-primary-50 active:bg-primary-100 px-4 py-2.5 focus:ring-primary-500/30',
 };
 
 const sizes = {
-  xs: 'px-2.5 py-1.5 text-xs rounded',
-  sm: 'px-3 py-1.5 text-sm rounded-md',
-  md: 'px-4 py-2 text-sm rounded-lg',
-  lg: 'px-5 py-2.5 text-base rounded-lg',
-  xl: 'px-6 py-3 text-base rounded-xl',
+  xs: 'btn-xs',
+  sm: 'btn-sm',
+  md: '',
+  lg: 'btn-lg',
+  icon: 'btn-icon',
 };
 
 const Button = ({
@@ -26,7 +26,7 @@ const Button = ({
   loading = false,
   disabled = false,
   icon: Icon,
-  iconRight,
+  iconRight: IconRight,
   className,
   fullWidth = false,
   ...props
@@ -34,9 +34,7 @@ const Button = ({
   return (
     <button
       className={clsx(
-        'inline-flex items-center justify-center gap-2 font-medium transition-all duration-150',
-        'focus:outline-none focus:ring-2 focus:ring-offset-2',
-        'disabled:opacity-50 disabled:cursor-not-allowed',
+        'btn',
         variants[variant],
         sizes[size],
         fullWidth && 'w-full',
@@ -46,12 +44,12 @@ const Button = ({
       {...props}
     >
       {loading ? (
-        <Loader2 size={16} className="animate-spin" />
+        <Loader2 size={15} className="animate-spin flex-shrink-0" />
       ) : Icon ? (
-        <Icon size={16} />
+        <Icon size={15} className="flex-shrink-0" />
       ) : null}
       {children}
-      {iconRight && !loading && <iconRight.type size={16} />}
+      {IconRight && !loading && <IconRight size={15} className="flex-shrink-0" />}
     </button>
   );
 };

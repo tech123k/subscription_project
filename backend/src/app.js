@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const compression = require('compression');
 const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
 
 const path = require('path');
 const { globalLimiter } = require('./middleware/rateLimiter');
@@ -31,6 +32,9 @@ app.use(cors({
 
 // HTTP parameter pollution protection
 app.use(hpp());
+
+// Cookie parser — must come before routes so req.cookies is populated
+app.use(cookieParser());
 
 // Compression
 app.use(compression());

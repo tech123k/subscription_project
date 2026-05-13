@@ -27,6 +27,7 @@ const variantRoutes = require('./variant.routes');
 const ledgerRoutes = require('./ledger.routes');
 const salesOrderRoutes = require('./salesorder.routes');
 const creditRoutes = require('./credit.routes');
+const searchRoutes = require('./search.routes');
 
 // Public routes
 router.use('/auth', authRoutes);
@@ -64,5 +65,6 @@ router.use('/dashboard', dashboardRoutes);
 router.use('/reports', reportRoutes);
 router.use('/notifications', notificationRoutes);
 router.use('/audit', auditRoutes);
+router.use('/search', searchRoutes);
 
 module.exports = router;
