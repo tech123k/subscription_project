@@ -1,8 +1,22 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Plus, Download, Upload, Search, Filter, AlertTriangle, Eye, Edit, Trash2, BarChart2 } from 'lucide-react';
+import { Plus, Download, Upload, Search, AlertTriangle, Eye, Edit, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
+
+const downloadBlob = async (apiFn, filename) => {
+  try {
+    const blob = await apiFn();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  } catch {
+    toast.error('Download failed');
+  }
+};
 import { materialAPI } from '../../services/api';
 import Table from '../../components/ui/Table';
 import Button from '../../components/ui/Button';
@@ -38,6 +52,7 @@ const MaterialList = () => {
       queryClient.invalidateQueries({ queryKey: ['materials'] });
       setDeleteId(null);
     },
+    onError: (err) => toast.error(err?.message || 'Failed to delete material'),
   });
 
   const materials = data?.data || [];
@@ -101,16 +116,16 @@ const MaterialList = () => {
       header: 'Actions',
       cell: (row) => (
         <div className="flex items-center gap-1">
-          <button onClick={() => navigate(`/materials/${row.id}`)} className="p-1.5 rounded hover:bg-blue-50 text-gray-400 hover:text-blue-600" title="View">
+          <button onClick={(e) => { e.stopPropagation(); navigate(`/materials/${row.id}`); }} className="p-1.5 rounded hover:bg-blue-50 text-gray-400 hover:text-blue-600" title="View">
             <Eye size={15} />
           </button>
           {can('edit') && (
-            <button onClick={() => navigate(`/materials/${row.id}/edit`)} className="p-1.5 rounded hover:bg-amber-50 text-gray-400 hover:text-amber-600" title="Edit">
+            <button onClick={(e) => { e.stopPropagation(); navigate(`/materials/${row.id}/edit`); }} className="p-1.5 rounded hover:bg-amber-50 text-gray-400 hover:text-amber-600" title="Edit">
               <Edit size={15} />
             </button>
           )}
           {can('delete') && (
-            <button onClick={() => setDeleteId(row.id)} className="p-1.5 rounded hover:bg-red-50 text-gray-400 hover:text-red-600" title="Delete">
+            <button onClick={(e) => { e.stopPropagation(); setDeleteId(row.id); }} className="p-1.5 rounded hover:bg-red-50 text-gray-400 hover:text-red-600" title="Delete">
               <Trash2 size={15} />
             </button>
           )}
@@ -128,12 +143,12 @@ const MaterialList = () => {
           <p className="text-sm text-gray-500 mt-0.5">{meta?.total || 0} materials</p>
         </div>
         <div className="flex items-center gap-2">
-          <a href={materialAPI.template()} download className="btn-secondary flex items-center gap-2 text-sm px-3 py-2 rounded-lg border border-gray-200">
+          <button onClick={() => downloadBlob(materialAPI.template, 'material_template.xlsx')} className="btn-secondary flex items-center gap-2 text-sm px-3 py-2 rounded-lg border border-gray-200">
             <Download size={15} /> Template
-          </a>
-          <a href={materialAPI.export()} download className="btn-secondary flex items-center gap-2 text-sm px-3 py-2 rounded-lg border border-gray-200">
+          </button>
+          <button onClick={() => downloadBlob(materialAPI.export, 'materials.xlsx')} className="btn-secondary flex items-center gap-2 text-sm px-3 py-2 rounded-lg border border-gray-200">
             <Download size={15} /> Export
-          </a>
+          </button>
           {can('import') && (
             <Button variant="secondary" icon={Upload} onClick={() => navigate('/materials/import')} size="sm">
               Import

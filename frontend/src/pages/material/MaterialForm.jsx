@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, Upload, X, Package } from 'lucide-react';
+import { ArrowLeft, Upload, X, Package, Plus } from 'lucide-react';
 import { materialAPI, warehouseAPI } from '../../services/api';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
@@ -10,9 +10,8 @@ import toast from 'react-hot-toast';
 
 const emptyForm = {
   name: '', code: '', description: '', categoryId: '', unit: 'kg',
-  warehouseId: '', minimumStock: '0', maximumStock: '',
-  unitCost: '', hsnCode: '', gstRate: '18',
-  specifications: '',
+  warehouseId: '', minimumStock: '0', reorderLevel: '',
+  purchaseRate: '', saleRate: '', hsnCode: '', gstPercent: '18',
 };
 
 const MaterialForm = () => {
@@ -25,6 +24,8 @@ const MaterialForm = () => {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [categories, setCategories] = useState([]);
+  const [newCatName, setNewCatName] = useState('');
+  const [showNewCat, setShowNewCat] = useState(false);
 
   const { data: matData } = useQuery({
     queryKey: ['material', id],
@@ -52,13 +53,32 @@ const MaterialForm = () => {
       setForm({
         name: m.name, code: m.code, description: m.description || '',
         categoryId: m.category_id || '', unit: m.unit, warehouseId: m.warehouse_id || '',
-        minimumStock: m.minimum_stock || '0', maximumStock: m.maximum_stock || '',
-        unitCost: m.unit_cost || '', hsnCode: m.hsn_code || '', gstRate: m.gst_rate || '18',
-        specifications: m.specifications ? JSON.stringify(m.specifications, null, 2) : '',
+        minimumStock: m.minimum_stock || '0', reorderLevel: m.reorder_level || '',
+        purchaseRate: m.purchase_rate || '', saleRate: m.sale_rate || '',
+        hsnCode: m.hsn_code || '', gstPercent: m.gst_percent || '18',
       });
       if (m.image_url) setImagePreview(m.image_url);
     }
   }, [matData]);
+
+  const addCategory = useMutation({
+    mutationFn: (name) => materialAPI.createCategory({ name }),
+    onSuccess: (res) => {
+      const newCat = res.data;
+      setCategories((prev) => [...prev, newCat].sort((a, b) => a.name.localeCompare(b.name)));
+      setForm((p) => ({ ...p, categoryId: newCat.id }));
+      setNewCatName('');
+      setShowNewCat(false);
+      queryClient.invalidateQueries({ queryKey: ['material-categories'] });
+      toast.success(`Category "${newCat.name}" created`);
+    },
+    onError: () => toast.error('Failed to create category'),
+  });
+
+  const handleAddCategory = () => {
+    if (!newCatName.trim()) return;
+    addCategory.mutate(newCatName.trim());
+  };
 
   const save = useMutation({
     mutationFn: (formData) => isEdit ? materialAPI.update(id, formData) : materialAPI.create(formData),
@@ -115,11 +135,48 @@ const MaterialForm = () => {
             <input value={form.code} onChange={f('code')} className="input-field" placeholder="MAT-001" />
           </div>
           <div>
-            <label className="label">Category</label>
-            <select value={form.categoryId} onChange={f('categoryId')} className="input-field">
-              <option value="">No category</option>
-              {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-            </select>
+            <div className="flex items-center justify-between mb-1">
+              <label className="label !mb-0">Category</label>
+              <button
+                type="button"
+                onClick={() => setShowNewCat((v) => !v)}
+                className="text-xs text-primary-600 hover:text-primary-700 flex items-center gap-1 font-medium"
+              >
+                <Plus size={12} /> New Category
+              </button>
+            </div>
+            {showNewCat ? (
+              <div className="flex gap-2">
+                <input
+                  autoFocus
+                  value={newCatName}
+                  onChange={(e) => setNewCatName(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleAddCategory()}
+                  placeholder="Category name..."
+                  className="input-field flex-1"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddCategory}
+                  disabled={addCategory.isPending}
+                  className="px-3 py-2 bg-primary-600 text-white rounded-lg text-sm font-medium hover:bg-primary-700 disabled:opacity-60"
+                >
+                  {addCategory.isPending ? '...' : 'Add'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setShowNewCat(false); setNewCatName(''); }}
+                  className="px-3 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm hover:bg-gray-200"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            ) : (
+              <select value={form.categoryId} onChange={f('categoryId')} className="input-field">
+                <option value="">No category</option>
+                {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+              </select>
+            )}
           </div>
           <div>
             <label className="label">Unit *</label>
@@ -149,12 +206,12 @@ const MaterialForm = () => {
               <input type="number" value={form.minimumStock} onChange={f('minimumStock')} className="input-field" min="0" step="0.01" />
             </div>
             <div>
-              <label className="label">Max Stock Level</label>
-              <input type="number" value={form.maximumStock} onChange={f('maximumStock')} className="input-field" min="0" step="0.01" placeholder="Optional" />
+              <label className="label">Reorder Level</label>
+              <input type="number" value={form.reorderLevel} onChange={f('reorderLevel')} className="input-field" min="0" step="0.01" placeholder="Optional" />
             </div>
             <div>
-              <label className="label">Unit Cost (₹)</label>
-              <input type="number" value={form.unitCost} onChange={f('unitCost')} className="input-field" min="0" step="0.01" />
+              <label className="label">Purchase Rate (₹)</label>
+              <input type="number" value={form.purchaseRate} onChange={f('purchaseRate')} className="input-field" min="0" step="0.01" />
             </div>
           </div>
         </div>
@@ -169,7 +226,7 @@ const MaterialForm = () => {
             </div>
             <div>
               <label className="label">GST Rate (%)</label>
-              <select value={form.gstRate} onChange={f('gstRate')} className="input-field">
+              <select value={form.gstPercent} onChange={f('gstPercent')} className="input-field">
                 {[0, 5, 12, 18, 28].map((r) => <option key={r} value={r}>{r}%</option>)}
               </select>
             </div>

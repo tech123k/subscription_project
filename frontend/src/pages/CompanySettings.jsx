@@ -33,10 +33,10 @@ const CompanySettings = () => {
       const c = data.data;
       setForm({
         name: c.name || '', industryType: c.industry_type || '', gstNumber: c.gst_number || '',
-        panNumber: c.pan_number || '', address: c.address || '', city: c.city || '',
+        panNumber: c.pan_number || '', address: c.address_line1 || '', city: c.city || '',
         state: c.state || '', pincode: c.pincode || '', phone: c.phone || '',
         email: c.email || '', website: c.website || '', bankName: c.bank_name || '',
-        bankAccount: c.bank_account || '', bankIfsc: c.bank_ifsc || '', bankBranch: c.bank_branch || '',
+        bankAccount: c.bank_account_number || '', bankIfsc: c.bank_ifsc || '', bankBranch: c.bank_branch || '',
         invoicePrefix: c.invoice_prefix || 'INV', dispatchPrefix: c.dispatch_prefix || 'DSP',
         productionPrefix: c.production_prefix || 'PRD',
       });

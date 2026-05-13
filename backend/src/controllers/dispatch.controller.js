@@ -129,9 +129,9 @@ const create = async (req, res, next) => {
       if (items && items.length > 0) {
         for (const item of items) {
           await client.query(
-            `INSERT INTO dispatch_items (dispatch_id, material_id, description, quantity, unit, packages, weight, notes)
-             VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
-            [dispatchId, item.materialId || null, item.description, item.quantity, item.unit, item.packages || 1, item.weight || null, item.notes || null]
+            `INSERT INTO dispatch_items (dispatch_id, material_id, product_id, description, quantity, unit, packages, weight, notes)
+             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+            [dispatchId, item.materialId || null, item.productId || null, item.description, item.quantity, item.unit, item.packages || 1, item.weight || null, item.notes || null]
           );
 
           if (item.materialId) {
@@ -145,6 +145,26 @@ const create = async (req, res, next) => {
               `INSERT INTO stock_transactions (company_id, material_id, warehouse_id, transaction_type, stock_type, quantity, reference_type, reference_id, reference_number, performed_by)
                VALUES ($1,$2,$3,'outward','in_transit',$4,'dispatch',$5,$6,$7)`,
               [companyId, item.materialId, warehouseId || null, item.quantity, dispatchId, dispatchNumber, req.user.id]
+            );
+          }
+
+          if (item.productId) {
+            // Check stock availability
+            const stockCheck = await client.query(
+              `SELECT current_stock FROM products WHERE id = $1 AND company_id = $2`,
+              [item.productId, companyId]
+            );
+            if (!stockCheck.rows[0]) throw new Error(`Product not found: ${item.productId}`);
+            if (Number(stockCheck.rows[0].current_stock) < Number(item.quantity)) {
+              throw new Error(`Insufficient stock for product. Available: ${stockCheck.rows[0].current_stock}, Requested: ${item.quantity}`);
+            }
+
+            await client.query(
+              `UPDATE products
+               SET current_stock  = GREATEST(0, current_stock - $1),
+                   dispatched_qty = dispatched_qty + $1
+               WHERE id = $2 AND company_id = $3`,
+              [item.quantity, item.productId, companyId]
             );
           }
         }

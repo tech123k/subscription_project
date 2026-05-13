@@ -12,12 +12,12 @@ const ProfileSettings = () => {
   const user = useAuthStore((s) => s.user);
   const updateUser = useAuthStore((s) => s.updateUser);
 
-  const [form, setForm] = useState({ fullName: '', phone: '', department: '' });
+  const [form, setForm] = useState({ firstName: '', lastName: '', phone: '', designation: '' });
   const [pwForm, setPwForm] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
 
   useEffect(() => {
     if (user) {
-      setForm({ fullName: user.fullName || user.full_name || '', phone: user.phone || '', department: user.department || '' });
+      setForm({ firstName: user.firstName || '', lastName: user.lastName || '', phone: user.phone || '', designation: user.designation || '' });
     }
   }, [user]);
 
@@ -81,17 +81,21 @@ const ProfileSettings = () => {
       <Card className="p-6 space-y-4">
         <h3 className="font-semibold text-gray-900 text-sm">Personal Information</h3>
         <div className="grid grid-cols-2 gap-4">
-          <div className="col-span-2">
-            <label className="label">Full Name</label>
-            <input value={form.fullName} onChange={f('fullName')} className="input-field" />
+          <div>
+            <label className="label">First Name</label>
+            <input value={form.firstName} onChange={f('firstName')} className="input-field" />
+          </div>
+          <div>
+            <label className="label">Last Name</label>
+            <input value={form.lastName} onChange={f('lastName')} className="input-field" />
           </div>
           <div>
             <label className="label">Phone</label>
             <input value={form.phone} onChange={f('phone')} className="input-field" type="tel" />
           </div>
           <div>
-            <label className="label">Department</label>
-            <input value={form.department} onChange={f('department')} className="input-field" placeholder="e.g. Production" />
+            <label className="label">Designation</label>
+            <input value={form.designation} onChange={f('designation')} className="input-field" placeholder="e.g. Production Manager" />
           </div>
           <div className="col-span-2">
             <label className="label">Email</label>

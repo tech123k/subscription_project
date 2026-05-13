@@ -3,13 +3,64 @@ const router = express.Router();
 const { pool } = require('../config/database');
 const { v4: uuidv4 } = require('uuid');
 
-// GET /grn — list with filters
+// ─── Helper ──────────────────────────────────────────────────────────────────
+// Recalculates po_items.received_quantity from scratch using physical
+// received_quantity (not accepted_quantity) so PO completion reflects
+// what the supplier actually delivered, independent of QC outcome.
+const recalculatePOStatus = async (client, poId) => {
+  if (!poId) return;
+
+  await client.query(
+    `UPDATE po_items pi
+     SET received_quantity = (
+       SELECT COALESCE(SUM(gi.received_quantity), 0)
+       FROM grn g
+       JOIN grn_items gi ON gi.grn_id = g.id
+       WHERE g.po_id = $1
+         AND gi.material_id = pi.material_id
+         AND g.status != 'cancelled'
+         AND g.qc_status != 'rejected'
+     )
+     WHERE pi.po_id = $1`,
+    [poId]
+  );
+
+  // Fetch updated items to decide PO status
+  const { rows: items } = await client.query(
+    'SELECT quantity, received_quantity FROM po_items WHERE po_id = $1',
+    [poId]
+  );
+
+  if (!items.length) return;
+
+  const totalOrdered   = items.reduce((s, i) => s + Number(i.quantity), 0);
+  const totalReceived  = items.reduce((s, i) => s + Number(i.received_quantity), 0);
+
+  let newStatus;
+  if (totalReceived <= 0) {
+    newStatus = 'confirmed';                        // nothing received yet
+  } else if (totalReceived < totalOrdered) {
+    newStatus = 'partial';                          // Partially Received
+  } else {
+    newStatus = 'completed';                        // Completed
+  }
+
+  // Only update if PO is in a state that makes sense to auto-progress
+  await client.query(
+    `UPDATE purchase_orders
+     SET status = $1, updated_at = NOW()
+     WHERE id = $2 AND status NOT IN ('draft', 'sent', 'cancelled')`,
+    [newStatus, poId]
+  );
+};
+
+// ─── GET /grn ────────────────────────────────────────────────────────────────
 router.get('/', async (req, res) => {
   const { companyId } = req;
   const { page = 1, limit = 20, search = '', qcStatus = '' } = req.query;
   const offset = (page - 1) * limit;
 
-  let where = 'g.company_id = $1';
+  let where = "g.company_id = $1 AND g.status != 'cancelled'";
   const params = [companyId];
   let idx = 2;
 
@@ -36,7 +87,7 @@ router.get('/', async (req, res) => {
   const [{ rows: data }, { rows: [{ count }] }] = await Promise.all([
     pool.query(
       `SELECT g.id, g.grn_number, g.qc_status, g.status, g.created_at,
-              g.supplier_invoice_number, g.notes,
+              g.supplier_invoice_number, g.notes, g.po_id,
               s.name AS supplier_name, w.name AS warehouse_name,
               m.name AS material_name, m.code AS material_code, m.unit,
               gi.received_quantity, gi.accepted_quantity, gi.rejected_quantity,
@@ -56,7 +107,7 @@ router.get('/', async (req, res) => {
   });
 });
 
-// GET /grn/:id
+// ─── GET /grn/:id ────────────────────────────────────────────────────────────
 router.get('/:id', async (req, res) => {
   const { companyId } = req;
   const { rows } = await pool.query(
@@ -80,7 +131,7 @@ router.get('/:id', async (req, res) => {
   res.json({ success: true, data: { ...rows[0], items } });
 });
 
-// POST /grn
+// ─── POST /grn ───────────────────────────────────────────────────────────────
 router.post('/', async (req, res) => {
   const { companyId, user } = req;
   const {
@@ -88,47 +139,74 @@ router.post('/', async (req, res) => {
     receivedQuantity, acceptedQuantity, rejectedQuantity = 0,
     unitCost, qcStatus = 'pending',
     batchNumber, invoiceNumber, invoiceDate, notes,
+    poId,
   } = req.body;
 
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
 
+    // ── PO quantity cap validation ──────────────────────────────────────────
+    // Compute remaining from LIVE GRN data — never trust po_items.received_quantity
+    // which may be stale from before this fix was deployed.
+    if (poId && materialId) {
+      const { rows: [poItem] } = await client.query(
+        `SELECT pi.quantity,
+                COALESCE((
+                  SELECT SUM(gi2.received_quantity)
+                  FROM grn g2
+                  JOIN grn_items gi2 ON gi2.grn_id = g2.id
+                  WHERE g2.po_id = $1
+                    AND gi2.material_id = $2
+                    AND g2.status != 'cancelled'
+                    AND g2.qc_status != 'rejected'
+                ), 0) AS already_received
+         FROM po_items pi
+         WHERE pi.po_id = $1 AND pi.material_id = $2`,
+        [poId, materialId]
+      );
+      if (poItem) {
+        const remaining = Number(poItem.quantity) - Number(poItem.already_received);
+        const toReceive = Number(receivedQuantity);
+        if (toReceive > Math.max(0, remaining) + 0.001) {
+          await client.query('ROLLBACK');
+          return res.status(400).json({
+            success: false,
+            message: `Cannot receive more than ordered quantity. Remaining: ${Math.max(0, remaining).toFixed(2)}`,
+          });
+        }
+      }
+    }
+
     // Generate GRN number
-    const { rows: [{ grn_counter }] } = await client.query(
-      'UPDATE companies SET grn_counter = grn_counter + 1 WHERE id = $1 RETURNING grn_counter',
+    const { rows: [co] } = await client.query(
+      'UPDATE companies SET grn_counter = grn_counter + 1 WHERE id = $1 RETURNING grn_counter, grn_prefix',
       [companyId]
     );
-    const { rows: [{ grn_prefix }] } = await client.query(
-      'SELECT grn_prefix FROM companies WHERE id = $1', [companyId]
-    );
-    const grnNumber = `${grn_prefix || 'GRN'}-${new Date().getFullYear()}-${String(grn_counter).padStart(5, '0')}`;
+    const grnNumber = `${co.grn_prefix || 'GRN'}-${new Date().getFullYear()}-${String(co.grn_counter).padStart(5, '0')}`;
 
-    const accepted = acceptedQuantity || receivedQuantity;
+    const accepted = Number(acceptedQuantity || receivedQuantity);
 
-    // Insert GRN header
     const { rows: [grn] } = await client.query(
       `INSERT INTO grn
        (id, company_id, grn_number, supplier_id, warehouse_id,
         supplier_invoice_number, supplier_invoice_date,
-        qc_status, notes, received_by, status)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'pending')
+        qc_status, notes, received_by, status, po_id)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'pending',$11)
        RETURNING *`,
       [
         uuidv4(), companyId, grnNumber,
         supplierId || null, warehouseId || null,
-        invoiceNumber || null,
-        invoiceDate || null,
+        invoiceNumber || null, invoiceDate || null,
         qcStatus, notes || null, user.id,
+        poId || null,
       ]
     );
 
-    // Get material unit for the item
     const { rows: [mat] } = await client.query(
       'SELECT unit FROM materials WHERE id = $1', [materialId]
     );
 
-    // Insert GRN item
     await client.query(
       `INSERT INTO grn_items
        (id, grn_id, material_id, received_quantity, accepted_quantity, rejected_quantity,
@@ -136,34 +214,157 @@ router.post('/', async (req, res) => {
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
       [
         uuidv4(), grn.id, materialId,
-        receivedQuantity, accepted, rejectedQuantity,
+        receivedQuantity, accepted, Number(rejectedQuantity),
         mat?.unit || 'piece',
         unitCost || null, batchNumber || null,
       ]
     );
 
-    // Update stock and log transaction if accepted > 0 and not rejected
-    if (Number(accepted) > 0 && qcStatus !== 'rejected') {
+    // Only add accepted qty to stock when QC is approved — pending/rejected must NOT increase stock
+    if (accepted > 0 && qcStatus === 'approved') {
       await client.query(
         `UPDATE materials SET current_stock = current_stock + $1, updated_at = NOW()
          WHERE id = $2 AND company_id = $3`,
         [accepted, materialId, companyId]
       );
-
       await client.query(
         `INSERT INTO stock_transactions
          (id, company_id, material_id, warehouse_id, transaction_type, quantity,
           reference_type, reference_id, rate, notes, performed_by)
          VALUES ($1,$2,$3,$4,'inward',$5,'grn',$6,$7,$8,$9)`,
-        [
-          uuidv4(), companyId, materialId, warehouseId || null,
-          accepted, grn.id, unitCost || null, notes || null, user.id,
-        ]
+        [uuidv4(), companyId, materialId, warehouseId || null,
+         accepted, grn.id, unitCost || null, notes || null, user.id]
       );
     }
 
+    // Auto-update PO status (recalculates from scratch)
+    await recalculatePOStatus(client, poId);
+
     await client.query('COMMIT');
     res.status(201).json({ success: true, data: grn, message: 'GRN created successfully' });
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+});
+
+// ─── PUT /grn/:id ────────────────────────────────────────────────────────────
+router.put('/:id', async (req, res) => {
+  const { companyId } = req;
+  const { id } = req.params;
+  const { qcStatus, acceptedQuantity, rejectedQuantity, notes } = req.body;
+
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    const { rows } = await client.query(
+      `SELECT g.qc_status, g.po_id, g.warehouse_id,
+              gi.material_id, gi.accepted_quantity AS old_accepted, gi.received_quantity, gi.rate
+       FROM grn g
+       JOIN grn_items gi ON gi.grn_id = g.id
+       WHERE g.id = $1 AND g.company_id = $2 AND g.status != 'cancelled'`,
+      [id, companyId]
+    );
+    if (!rows[0]) return res.status(404).json({ success: false, message: 'GRN not found' });
+    const grn = rows[0];
+
+    const oldQcStatus  = grn.qc_status;
+    const oldAccepted  = Number(grn.old_accepted);
+    const newQcStatus  = qcStatus || oldQcStatus;
+    const newAccepted  = acceptedQuantity !== undefined ? Number(acceptedQuantity) : oldAccepted;
+
+    // Stock delta: only approved GRNs contribute to stock
+    const oldStockAdded = oldQcStatus === 'approved' ? oldAccepted : 0;
+    const newStockAdded = newQcStatus === 'approved' ? newAccepted : 0;
+    const stockDelta    = newStockAdded - oldStockAdded;
+
+    await client.query(
+      `UPDATE grn SET qc_status = $1, notes = COALESCE($2, notes), updated_at = NOW() WHERE id = $3`,
+      [newQcStatus, notes ?? null, id]
+    );
+
+    const newRejected = rejectedQuantity !== undefined
+      ? Number(rejectedQuantity)
+      : Math.max(0, Number(grn.received_quantity) - newAccepted);
+
+    await client.query(
+      `UPDATE grn_items SET accepted_quantity = $1, rejected_quantity = $2 WHERE grn_id = $3`,
+      [newAccepted, newRejected, id]
+    );
+
+    if (stockDelta !== 0) {
+      await client.query(
+        `UPDATE materials SET current_stock = GREATEST(0, current_stock + $1)
+         WHERE id = $2 AND company_id = $3`,
+        [stockDelta, grn.material_id, companyId]
+      );
+      // Log the stock movement (positive = inward on approval, negative = reversal)
+      const txnType = stockDelta > 0 ? 'inward' : 'outward';
+      await client.query(
+        `INSERT INTO stock_transactions
+         (id, company_id, material_id, warehouse_id, transaction_type, quantity,
+          reference_type, reference_id, rate, notes, performed_by)
+         VALUES ($1,$2,$3,$4,$5,$6,'grn',$7,$8,$9,$10)`,
+        [uuidv4(), companyId, grn.material_id, grn.warehouse_id,
+         txnType, Math.abs(stockDelta), id, grn.rate || null,
+         notes ?? null, req.user.id]
+      );
+    }
+
+    // Auto-update PO status
+    await recalculatePOStatus(client, grn.po_id);
+
+    await client.query('COMMIT');
+    res.json({ success: true, message: 'GRN updated successfully' });
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+});
+
+// ─── DELETE /grn/:id ─────────────────────────────────────────────────────────
+router.delete('/:id', async (req, res) => {
+  const { companyId } = req;
+  const { id } = req.params;
+
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    const { rows } = await client.query(
+      `SELECT g.qc_status, g.po_id, gi.material_id, gi.accepted_quantity
+       FROM grn g
+       JOIN grn_items gi ON gi.grn_id = g.id
+       WHERE g.id = $1 AND g.company_id = $2 AND g.status != 'cancelled'`,
+      [id, companyId]
+    );
+    if (!rows[0]) return res.status(404).json({ success: false, message: 'GRN not found' });
+    const grn = rows[0];
+
+    // Only reverse stock that was actually added (approved GRNs only)
+    if (grn.qc_status === 'approved' && Number(grn.accepted_quantity) > 0) {
+      await client.query(
+        `UPDATE materials SET current_stock = GREATEST(0, current_stock - $1)
+         WHERE id = $2 AND company_id = $3`,
+        [Number(grn.accepted_quantity), grn.material_id, companyId]
+      );
+    }
+
+    await client.query(
+      `UPDATE grn SET status = 'cancelled', updated_at = NOW() WHERE id = $1`,
+      [id]
+    );
+
+    // Auto-update PO status (this GRN is now excluded from totals)
+    await recalculatePOStatus(client, grn.po_id);
+
+    await client.query('COMMIT');
+    res.json({ success: true, message: 'GRN deleted successfully' });
   } catch (err) {
     await client.query('ROLLBACK');
     throw err;

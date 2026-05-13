@@ -10313,3 +10313,760 @@ Error: Connection terminated due to connection timeout
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:27:17)
     at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 16:03:58 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 16:03:58 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/dashboard/charts?period=30","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 16:03:58 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 16:03:58 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/dashboard/stats?period=30","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 16:03:58 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 16:03:58 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/dashboard/production-timeline","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 16:03:58 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 16:03:58 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/dashboard/low-stock","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 16:08:52 [ERROR]: Transaction failed:
+2026-05-07 16:08:52 [ERROR]: Error: duplicate key value violates unique constraint "users_email_key" {"url":"/api/auth/register","method":"POST"}
+error: duplicate key value violates unique constraint "users_email_key"
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\auth.service.js:200:26
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:144:20)
+    at async register (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\auth.controller.js:43:20)
+2026-05-07 16:09:19 [ERROR]: Transaction failed:
+2026-05-07 16:09:19 [ERROR]: Error: duplicate key value violates unique constraint "users_email_key" {"url":"/api/auth/register","method":"POST"}
+error: duplicate key value violates unique constraint "users_email_key"
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\auth.service.js:200:26
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:144:20)
+    at async register (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\auth.controller.js:43:20)
+2026-05-07 16:21:46 [ERROR]: Transaction failed:
+2026-05-07 16:21:46 [ERROR]: Error: duplicate key value violates unique constraint "users_email_key" {"url":"/api/auth/register","method":"POST"}
+error: duplicate key value violates unique constraint "users_email_key"
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\auth.service.js:200:26
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:144:20)
+    at async register (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\auth.controller.js:43:20)
+2026-05-07 16:39:14 [ERROR]: Error: No token provided {"url":"/api/materials/template","method":"GET"}
+Error: No token provided
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:9:13)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:47:12)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+2026-05-07 16:39:25 [ERROR]: Database query error getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 16:39:25 [ERROR]: Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"url":"/api/materials?page=1&limit=20&search=&lowStock=&categoryId=&warehouseId=","method":"GET"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 16:39:25 [ERROR]: Database query error getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 16:39:25 [ERROR]: Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"url":"/api/materials/categories","method":"GET"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 16:49:45 [ERROR]: Database connection failed: Connection terminated due to connection timeout {"cause":{}}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:163:17)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:31:5)
+2026-05-07 16:53:33 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 16:53:33 [ERROR]: Error: jwt expired {"url":"/api/materials?page=1&limit=20&search=&lowStock=&categoryId=&warehouseId=","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 16:53:33 [ERROR]: Error: jwt expired {"url":"/api/materials/categories","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 16:53:43 [ERROR]: Error: No token provided {"url":"/api/materials/template","method":"GET"}
+Error: No token provided
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:9:13)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:47:12)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+2026-05-07 17:06:46 [ERROR]: Error: No token provided {"url":"/api/materials/template","method":"GET"}
+Error: No token provided
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:9:13)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+    at Function.handle (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:175:3)
+    at router (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:47:12)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+2026-05-07 17:07:01 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 17:07:01 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/materials/categories","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 17:07:01 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 17:07:01 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/materials?page=1&limit=20&search=&lowStock=&categoryId=&warehouseId=","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 17:09:06 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 17:16:24 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 17:16:24 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 17:21:49 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 17:21:49 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 17:24:30 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 17:40:02 [ERROR]: Error: jwt expired {"url":"/api/materials/be20a2ec-91cd-4f26-8d16-d38b07f7c529","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 17:40:02 [ERROR]: Error: jwt expired {"url":"/api/materials/be20a2ec-91cd-4f26-8d16-d38b07f7c529/history?limit=50","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 17:55:53 [ERROR]: Database connection failed: Connection terminated due to connection timeout {"cause":{}}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:163:17)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:31:5)
+2026-05-07 18:08:26 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 18:08:26 [ERROR]: Error: jwt expired {"url":"/api/materials?page=1&limit=20&search=&lowStock=&categoryId=&warehouseId=","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 18:08:26 [ERROR]: Error: jwt expired {"url":"/api/materials/categories","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 18:23:37 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 18:25:23 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 18:25:23 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 18:27:09 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 18:27:09 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 18:38:52 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 18:49:40 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 18:49:40 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 18:50:23 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 18:50:23 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 18:51:05 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 18:51:05 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 18:51:48 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 18:51:48 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 18:53:58 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 19:05:26 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 19:05:26 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 19:09:20 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 19:20:19 [ERROR]: Database query error timeout exceeded when trying to connect {"query":"SELECT COUNT(*) FROM materials m WHERE m.company_id = $1 AND m.deleted_at IS NULL"}
+2026-05-07 19:20:19 [ERROR]: Error: timeout exceeded when trying to connect {"url":"/api/materials?limit=500","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: timeout exceeded when trying to connect
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:555:9)
+    at process.processTimers (node:internal/timers:529:7)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async Promise.all (index 1)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\material.controller.js:28:33)
+2026-05-07 19:49:55 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 19:49:55 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 19:50:38 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,\n              u.role, u.department, u.is_active, u.notification_preferences,\n              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,\n              c.is_active AS company_active\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.id = $1 AND u.deleted_at IS NULL"}
+2026-05-07 19:50:38 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:15:20)
+2026-05-07 19:51:19 [ERROR]: Database connection failed: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"db.bksznpwjhhtybsiwvgtd.supabase.co"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:163:17)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:31:5)
+2026-05-07 19:51:43 [ERROR]: Database connection failed: Connection terminated due to connection timeout {"cause":{}}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:163:17)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:31:5)
+2026-05-07 19:57:46 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 20:14:54 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 20:28:51 [ERROR]: Error: relation "purchase_orders" does not exist {"url":"/api/po?status=confirmed&limit=100","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: relation "purchase_orders" does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Promise.all (index 1)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\po.routes.js:39:51
+2026-05-07 20:28:52 [ERROR]: Error: relation "purchase_orders" does not exist {"url":"/api/po?status=confirmed&limit=100","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: relation "purchase_orders" does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Promise.all (index 0)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\po.routes.js:39:51
+2026-05-07 20:28:56 [ERROR]: Error: relation "purchase_orders" does not exist {"url":"/api/po?page=1&limit=20&search=&status=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: relation "purchase_orders" does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Promise.all (index 0)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\po.routes.js:39:51
+2026-05-07 20:28:58 [ERROR]: Error: relation "purchase_orders" does not exist {"url":"/api/po?page=1&limit=20&search=&status=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: relation "purchase_orders" does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Promise.all (index 0)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\po.routes.js:39:51
+2026-05-07 20:30:23 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:13:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 20:30:33 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT id, company_id, role, refresh_token, is_active FROM users WHERE id = $1"}
+2026-05-07 20:30:33 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/auth/refresh-token","method":"POST"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async AuthService.refreshToken (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\auth.service.js:105:20)
+    at async refreshToken (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\auth.controller.js:54:20)
+2026-05-07 20:36:40 [ERROR]: Error: relation "purchase_orders" does not exist {"url":"/api/po?page=1&limit=20&search=&status=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: relation "purchase_orders" does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Promise.all (index 0)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\po.routes.js:39:51
+2026-05-07 20:36:41 [ERROR]: Error: relation "purchase_orders" does not exist {"url":"/api/po?page=1&limit=20&search=&status=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: relation "purchase_orders" does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Promise.all (index 0)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\po.routes.js:39:51
+2026-05-07 20:45:33 [ERROR]: Error: timeout exceeded when trying to connect {"url":"/api/grn?page=1&limit=20&search=&qcStatus=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: timeout exceeded when trying to connect
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:555:9)
+    at process.processTimers (node:internal/timers:529:7)
+    at async Promise.all (index 1)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\grn.routes.js:36:51
+2026-05-07 20:49:32 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-07 20:49:32 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:116:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-07 20:49:38 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-07 20:49:38 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:116:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-07 20:50:13 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-07 20:50:13 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:116:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-07 20:50:19 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-07 20:50:19 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:116:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-07 20:50:54 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-07 20:50:54 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:116:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-07 20:51:01 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-07 20:51:01 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:116:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-07 20:51:31 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 21:01:37 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-07 21:01:37 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:116:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-07 21:01:40 [ERROR]: Database query error getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-07 21:01:40 [ERROR]: Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:116:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-07 21:08:58 [ERROR]: Error: jwt expired {"url":"/api/po/23955622-3328-4d88-9d7e-71f559849f91","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 21:15:15 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"UPDATE warehouses SET deleted_at = NOW()\n       WHERE id = $1 AND company_id = $2 AND deleted_at IS NULL AND is_primary = FALSE\n       RETURNING id"}
+2026-05-07 21:15:15 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/warehouses/87245d3b-bea1-4119-9e61-aa443d1ed608","method":"DELETE","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async remove (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\warehouse.controller.js:165:20)
+2026-05-07 21:15:17 [ERROR]: Database query error getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-07 21:15:17 [ERROR]: Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:116:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-07 21:20:48 [ERROR]: Database query error column "contact_person" of relation "warehouses" does not exist {"query":"UPDATE warehouses\n       SET name            = COALESCE($1, name),\n           code            = COALESCE($2, code),\n           address         = COALESCE($3, address),\n           city            = COALESCE($4, city),\n           state           = COALESCE($5, state),\n           pincode         = COALESCE($6, pincode),\n           contact_person  = $7,\n           phone           = COALESCE($8, phone),\n           notes           = COALESCE($9, notes),\n           updated_at      = NOW()\n       WHERE id = $10 AND company_id = $11 AND deleted_at IS NULL\n       RETURNING *"}
+2026-05-07 21:20:48 [ERROR]: Error: column "contact_person" of relation "warehouses" does not exist {"url":"/api/warehouses/6452a3d3-275f-42b9-b1e7-3cb19db72f87","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column "contact_person" of relation "warehouses" does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async update (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\warehouse.controller.js:61:20)
+2026-05-07 21:21:32 [ERROR]: Database query error column "contact_person" of relation "warehouses" does not exist {"query":"UPDATE warehouses\n       SET name            = COALESCE($1, name),\n           code            = COALESCE($2, code),\n           address         = COALESCE($3, address),\n           city            = COALESCE($4, city),\n           state           = COALESCE($5, state),\n           pincode         = COALESCE($6, pincode),\n           contact_person  = $7,\n           phone           = COALESCE($8, phone),\n           notes           = COALESCE($9, notes),\n           updated_at      = NOW()\n       WHERE id = $10 AND company_id = $11 AND deleted_at IS NULL\n       RETURNING *"}
+2026-05-07 21:21:32 [ERROR]: Error: column "contact_person" of relation "warehouses" does not exist {"url":"/api/warehouses/6452a3d3-275f-42b9-b1e7-3cb19db72f87","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column "contact_person" of relation "warehouses" does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async update (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\warehouse.controller.js:61:20)
+2026-05-07 21:22:33 [ERROR]: Database query error column "contact_person" of relation "warehouses" does not exist {"query":"UPDATE warehouses\n       SET name            = COALESCE($1, name),\n           code            = COALESCE($2, code),\n           address         = COALESCE($3, address),\n           city            = COALESCE($4, city),\n           state           = COALESCE($5, state),\n           pincode         = COALESCE($6, pincode),\n           contact_person  = $7,\n           phone           = COALESCE($8, phone),\n           notes           = COALESCE($9, notes),\n           updated_at      = NOW()\n       WHERE id = $10 AND company_id = $11 AND deleted_at IS NULL\n       RETURNING *"}
+2026-05-07 21:22:33 [ERROR]: Error: column "contact_person" of relation "warehouses" does not exist {"url":"/api/warehouses/6452a3d3-275f-42b9-b1e7-3cb19db72f87","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column "contact_person" of relation "warehouses" does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async update (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\warehouse.controller.js:61:20)
+2026-05-07 21:24:19 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 21:24:24 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT id, company_id, role, refresh_token, is_active FROM users WHERE id = $1"}
+2026-05-07 21:24:24 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/auth/refresh-token","method":"POST"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async AuthService.refreshToken (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\auth.service.js:115:20)
+    at async refreshToken (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\auth.controller.js:54:20)
+2026-05-07 21:25:07 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-07 21:25:07 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:116:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-07 21:25:14 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-07 21:25:14 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:109:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:116:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-07 21:39:46 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 21:52:25 [ERROR]: Database query error Connection terminated due to connection timeout {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-07 21:52:25 [ERROR]: Error: Connection terminated due to connection timeout {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: Connection terminated due to connection timeout
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:116:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-07 22:00:57 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 22:07:28 [ERROR]: Database query error invalid input syntax for type uuid: "import" {"query":"SELECT m.*, mc.name AS category_name, w.name AS warehouse_name,\n              s.name AS supplier_name, s.contact_person AS supplier_contact\n       FROM materials m\n       LEFT JOIN material_categories mc ON m.category_id = mc.id\n       LEFT JOIN warehouses w ON m.warehouse_id = w.id\n       LEFT JOIN suppliers s ON m.supplier_id = s.id\n       WHERE m.id = $1 AND m.company_id = $2 AND m.deleted_at IS NULL"}
+2026-05-07 22:07:28 [ERROR]: Error: invalid input syntax for type uuid: "import" {"url":"/api/materials/import","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: invalid input syntax for type uuid: "import"
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async getOne (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\material.controller.js:53:20)
+2026-05-07 22:07:28 [ERROR]: Database query error invalid input syntax for type uuid: "import" {"query":"SELECT COUNT(*) FROM stock_transactions WHERE material_id = $1 AND company_id = $2"}
+2026-05-07 22:07:28 [ERROR]: Error: invalid input syntax for type uuid: "import" {"url":"/api/materials/import/history?limit=50","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: invalid input syntax for type uuid: "import"
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 1)
+    at async getStockHistory (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\material.controller.js:227:33)
+2026-05-07 22:07:28 [ERROR]: Database query error invalid input syntax for type uuid: "import" {"query":"SELECT st.*, w.name AS warehouse_name, u.first_name || ' ' || u.last_name AS user_name\n         FROM stock_transactions st\n         LEFT JOIN warehouses w ON st.warehouse_id = w.id\n         LEFT JOIN users u ON st.performed_by = u.id\n         WHERE st.material_id = $1 AND st.company_id = $2\n         ORDER BY st.created_at DESC LIMIT $3 OFFSET $4"}
+2026-05-07 22:07:31 [ERROR]: Database query error invalid input syntax for type uuid: "import" {"query":"SELECT m.*, mc.name AS category_name, w.name AS warehouse_name,\n              s.name AS supplier_name, s.contact_person AS supplier_contact\n       FROM materials m\n       LEFT JOIN material_categories mc ON m.category_id = mc.id\n       LEFT JOIN warehouses w ON m.warehouse_id = w.id\n       LEFT JOIN suppliers s ON m.supplier_id = s.id\n       WHERE m.id = $1 AND m.company_id = $2 AND m.deleted_at IS NULL"}
+2026-05-07 22:07:31 [ERROR]: Error: invalid input syntax for type uuid: "import" {"url":"/api/materials/import","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: invalid input syntax for type uuid: "import"
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async getOne (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\material.controller.js:53:20)
+2026-05-07 22:07:31 [ERROR]: Database query error invalid input syntax for type uuid: "import" {"query":"SELECT COUNT(*) FROM stock_transactions WHERE material_id = $1 AND company_id = $2"}
+2026-05-07 22:07:31 [ERROR]: Error: invalid input syntax for type uuid: "import" {"url":"/api/materials/import/history?limit=50","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: invalid input syntax for type uuid: "import"
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 1)
+    at async getStockHistory (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\material.controller.js:227:33)
+2026-05-07 22:07:31 [ERROR]: Database query error invalid input syntax for type uuid: "import" {"query":"SELECT st.*, w.name AS warehouse_name, u.first_name || ' ' || u.last_name AS user_name\n         FROM stock_transactions st\n         LEFT JOIN warehouses w ON st.warehouse_id = w.id\n         LEFT JOIN users u ON st.performed_by = u.id\n         WHERE st.material_id = $1 AND st.company_id = $2\n         ORDER BY st.created_at DESC LIMIT $3 OFFSET $4"}
+2026-05-07 22:07:34 [ERROR]: Database query error invalid input syntax for type uuid: "import" {"query":"SELECT COUNT(*) FROM stock_transactions WHERE material_id = $1 AND company_id = $2"}
+2026-05-07 22:07:34 [ERROR]: Error: invalid input syntax for type uuid: "import" {"url":"/api/materials/import/history?limit=50","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: invalid input syntax for type uuid: "import"
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 1)
+    at async getStockHistory (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\material.controller.js:227:33)
+2026-05-07 22:07:34 [ERROR]: Database query error invalid input syntax for type uuid: "import" {"query":"SELECT st.*, w.name AS warehouse_name, u.first_name || ' ' || u.last_name AS user_name\n         FROM stock_transactions st\n         LEFT JOIN warehouses w ON st.warehouse_id = w.id\n         LEFT JOIN users u ON st.performed_by = u.id\n         WHERE st.material_id = $1 AND st.company_id = $2\n         ORDER BY st.created_at DESC LIMIT $3 OFFSET $4"}
+2026-05-07 22:07:35 [ERROR]: Database query error invalid input syntax for type uuid: "import" {"query":"SELECT m.*, mc.name AS category_name, w.name AS warehouse_name,\n              s.name AS supplier_name, s.contact_person AS supplier_contact\n       FROM materials m\n       LEFT JOIN material_categories mc ON m.category_id = mc.id\n       LEFT JOIN warehouses w ON m.warehouse_id = w.id\n       LEFT JOIN suppliers s ON m.supplier_id = s.id\n       WHERE m.id = $1 AND m.company_id = $2 AND m.deleted_at IS NULL"}
+2026-05-07 22:07:35 [ERROR]: Error: invalid input syntax for type uuid: "import" {"url":"/api/materials/import","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: invalid input syntax for type uuid: "import"
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async getOne (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\material.controller.js:53:20)
+2026-05-07 22:16:24 [ERROR]: Error: jwt expired {"url":"/api/materials/import","method":"POST"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-07 22:18:02 [ERROR]: Database query error timeout exceeded when trying to connect {"query":"SELECT COUNT(*) FROM suppliers WHERE company_id = $1 AND deleted_at IS NULL"}
+2026-05-07 22:18:02 [ERROR]: Error: timeout exceeded when trying to connect {"url":"/api/suppliers?page=1&limit=20&search=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: timeout exceeded when trying to connect
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at listOnTimeout (node:internal/timers:555:9)
+    at process.processTimers (node:internal/timers:529:7)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 1)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\supplier.controller.js:18:33)
+2026-05-07 22:31:38 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)

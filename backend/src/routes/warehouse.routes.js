@@ -9,5 +9,6 @@ router.post('/', ctrl.create);
 router.post('/transfers', ctrl.createTransfer);
 router.post('/:id/racks', ctrl.addRack);
 router.put('/:id', ctrl.update);
+router.delete('/:id', ctrl.remove);
 
 module.exports = router;

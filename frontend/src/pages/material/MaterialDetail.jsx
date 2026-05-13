@@ -21,7 +21,7 @@ const MaterialDetail = () => {
 
   const { data: txData } = useQuery({
     queryKey: ['material-transactions', id],
-    queryFn: () => materialAPI.getTransactions(id, { limit: 50 }),
+    queryFn: () => materialAPI.getHistory(id, { limit: 50 }),
   });
 
   const mat = data?.data;
@@ -60,7 +60,7 @@ const MaterialDetail = () => {
           { label: 'Current Stock', value: `${formatNumber(mat?.current_stock)} ${mat?.unit}`, color: isLow ? 'text-red-600' : 'text-gray-900' },
           { label: 'In Production', value: `${formatNumber(mat?.in_production_stock)} ${mat?.unit}`, color: 'text-purple-600' },
           { label: 'In Transit', value: `${formatNumber(mat?.in_transit_stock)} ${mat?.unit}`, color: 'text-blue-600' },
-          { label: 'Stock Value', value: formatCurrency(mat?.stock_value || 0, 0), color: 'text-green-600' },
+          { label: 'Stock Value', value: formatCurrency((Number(mat?.current_stock) || 0) * (Number(mat?.purchase_rate) || 0), 0), color: 'text-green-600' },
         ].map((s, i) => (
           <div key={i} className="card p-4">
             <p className="text-xs text-gray-500 mb-1">{s.label}</p>
@@ -80,10 +80,10 @@ const MaterialDetail = () => {
             {[
               { label: 'Unit', value: mat?.unit },
               { label: 'Min Stock', value: `${formatNumber(mat?.minimum_stock)} ${mat?.unit}` },
-              { label: 'Max Stock', value: mat?.maximum_stock ? `${formatNumber(mat?.maximum_stock)} ${mat?.unit}` : '—' },
-              { label: 'Unit Cost', value: mat?.unit_cost ? formatCurrency(mat?.unit_cost) : '—' },
+              { label: 'Reorder Level', value: mat?.reorder_level ? `${formatNumber(mat?.reorder_level)} ${mat?.unit}` : '—' },
+              { label: 'Purchase Rate', value: mat?.purchase_rate ? formatCurrency(mat?.purchase_rate) : '—' },
               { label: 'HSN Code', value: mat?.hsn_code || '—' },
-              { label: 'GST Rate', value: mat?.gst_rate ? `${mat.gst_rate}%` : '—' },
+              { label: 'GST Rate', value: mat?.gst_percent ? `${mat.gst_percent}%` : '—' },
               { label: 'Warehouse', value: mat?.warehouse_name || '—' },
             ].map((item, i) => (
               <div key={i} className="flex justify-between">

@@ -10,11 +10,14 @@ import { useAuthStore } from '../../store/authStore';
 
 const navItems = [
   { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
+  { label: 'Warehouses', icon: Warehouse, path: '/warehouses' },
   {
     label: 'Materials',
     icon: Package,
     children: [
+      { label: 'Suppliers', path: '/suppliers' },
       { label: 'Material Master', path: '/materials' },
+      { label: 'Purchase Orders', path: '/po' },
       { label: 'GRN / Inward', path: '/grn' },
     ],
   },
@@ -22,30 +25,14 @@ const navItems = [
     label: 'Production',
     icon: Factory,
     children: [
+      { label: 'Product Master', path: '/production/products' },
       { label: 'Production Orders', path: '/production' },
       { label: 'Workflow Builder', path: '/production/workflows' },
     ],
   },
-  {
-    label: 'Dispatch',
-    icon: Truck,
-    path: '/dispatches',
-  },
-  {
-    label: 'Invoices',
-    icon: FileText,
-    children: [
-      { label: 'All Invoices', path: '/invoices' },
-      { label: 'Create Invoice', path: '/invoices/create' },
-    ],
-  },
-  {
-    label: 'Warehouses',
-    icon: Warehouse,
-    path: '/warehouses',
-  },
-  { label: 'Suppliers', icon: Boxes, path: '/suppliers' },
+  { label: 'Dispatch', icon: Truck, path: '/dispatches' },
   { label: 'Customers', icon: ShoppingCart, path: '/customers' },
+  { label: 'Invoices', icon: FileText, path: '/invoices' },
   { label: 'Reports', icon: BarChart3, path: '/reports' },
   { label: 'Users', icon: Users, path: '/users', adminOnly: true },
   { label: 'Audit Logs', icon: ClipboardList, path: '/audit', adminOnly: true },

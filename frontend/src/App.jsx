@@ -16,11 +16,18 @@ const MaterialForm = lazy(() => import('./pages/material/MaterialForm'));
 const MaterialDetail = lazy(() => import('./pages/material/MaterialDetail'));
 const GRNList = lazy(() => import('./pages/material/GRNList'));
 const GRNForm = lazy(() => import('./pages/material/GRNForm'));
+const MaterialImport = lazy(() => import('./pages/material/MaterialImport'));
+const POList = lazy(() => import('./pages/purchase/POList'));
+const POForm = lazy(() => import('./pages/purchase/POForm'));
+const PODetail = lazy(() => import('./pages/purchase/PODetail'));
 
 const ProductionList = lazy(() => import('./pages/production/ProductionList'));
 const ProductionForm = lazy(() => import('./pages/production/ProductionForm'));
 const ProductionDetail = lazy(() => import('./pages/production/ProductionDetail'));
 const WorkflowBuilder = lazy(() => import('./pages/production/WorkflowBuilder'));
+const ProductList = lazy(() => import('./pages/production/ProductList'));
+const ProductForm = lazy(() => import('./pages/production/ProductForm'));
+const BOMBuilder = lazy(() => import('./pages/production/BOMBuilder'));
 
 const DispatchList = lazy(() => import('./pages/dispatch/DispatchList'));
 const DispatchForm = lazy(() => import('./pages/dispatch/DispatchForm'));
@@ -81,15 +88,24 @@ const App = () => (
           {/* Materials */}
           <Route path="/materials" element={<MaterialList />} />
           <Route path="/materials/create" element={<MaterialForm />} />
+          <Route path="/materials/import" element={<MaterialImport />} />
           <Route path="/materials/:id" element={<MaterialDetail />} />
           <Route path="/materials/:id/edit" element={<MaterialForm />} />
           <Route path="/grn" element={<GRNList />} />
           <Route path="/grn/create" element={<GRNForm />} />
+          <Route path="/po" element={<POList />} />
+          <Route path="/po/create" element={<POForm />} />
+          <Route path="/po/:id" element={<PODetail />} />
+          <Route path="/po/:id/edit" element={<POForm />} />
 
           {/* Production */}
           <Route path="/production" element={<ProductionList />} />
           <Route path="/production/create" element={<ProductionForm />} />
           <Route path="/production/workflows" element={<WorkflowBuilder />} />
+          <Route path="/production/products" element={<ProductList />} />
+          <Route path="/production/products/new" element={<ProductForm />} />
+          <Route path="/production/products/:id/edit" element={<ProductForm />} />
+          <Route path="/production/products/:productId/bom" element={<BOMBuilder />} />
           <Route path="/production/:id" element={<ProductionDetail />} />
 
           {/* Dispatch */}

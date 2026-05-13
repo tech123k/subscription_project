@@ -23,7 +23,8 @@ const Login = () => {
       navigate('/dashboard');
     },
     onError: (err) => {
-      toast.error(err.message || 'Login failed');
+      const msg = err?.response?.data?.message || err?.message || 'Invalid email or password';
+      toast.error(msg);
     },
   });
 

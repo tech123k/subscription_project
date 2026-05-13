@@ -7,6 +7,7 @@ export const INDUSTRY_TYPES = [
   { value: 'machinery', label: 'Machinery' },
   { value: 'manufacturing', label: 'Manufacturing' },
   { value: 'trading', label: 'Trading' },
+  { value: 'other', label: 'Other' },
 ];
 
 export const MATERIAL_UNITS = [
@@ -35,9 +36,11 @@ export const PRODUCTION_STATUSES = [
 
 export const DISPATCH_STATUSES = [
   { value: 'ready', label: 'Ready' },
+  { value: 'packed', label: 'Packed' },
   { value: 'dispatched', label: 'Dispatched' },
   { value: 'in_transit', label: 'In Transit' },
   { value: 'delivered', label: 'Delivered' },
+  { value: 'delayed', label: 'Delayed' },
   { value: 'returned', label: 'Returned' },
 ];
 
@@ -58,14 +61,14 @@ export const PRIORITIES = [
 
 export const QC_STATUSES = [
   { value: 'pending', label: 'Pending' },
-  { value: 'passed', label: 'Passed' },
-  { value: 'failed', label: 'Failed' },
-  { value: 'partial', label: 'Partial' },
+  { value: 'approved', label: 'Approved' },
+  { value: 'rejected', label: 'Rejected' },
+  { value: 'conditional', label: 'Conditional' },
 ];
 
 export const SUBSCRIPTION_PLANS = [
-  { value: 'trial', label: 'Trial' },
-  { value: 'basic', label: 'Basic' },
+  { value: 'free', label: 'Free' },
+  { value: 'starter', label: 'Starter' },
   { value: 'professional', label: 'Professional' },
   { value: 'enterprise', label: 'Enterprise' },
 ];

@@ -11,7 +11,7 @@ import { humanize, formatDate } from '../../utils/helpers';
 import { SUBSCRIPTION_PLANS } from '../../utils/constants';
 import toast from 'react-hot-toast';
 
-const planColors = { trial: 'default', basic: 'info', professional: 'warning', enterprise: 'success' };
+const planColors = { free: 'default', starter: 'info', professional: 'warning', enterprise: 'success' };
 
 const CompanyList = () => {
   const queryClient = useQueryClient();

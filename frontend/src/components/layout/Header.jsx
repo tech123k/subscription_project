@@ -22,7 +22,7 @@ const Header = ({ onMenuToggle }) => {
       setUnreadCount(res.data.count);
       return res.data.count;
     },
-    refetchInterval: 30000,
+    refetchInterval: 60000,
   });
 
   return (
@@ -94,7 +94,7 @@ const Header = ({ onMenuToggle }) => {
                   </div>
                   <div className="p-1">
                     <button
-                      onClick={() => { navigate('/settings/profile'); setShowUserMenu(false); }}
+                      onClick={() => { navigate('/profile'); setShowUserMenu(false); }}
                       className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg"
                     >
                       <User size={15} /> My Profile

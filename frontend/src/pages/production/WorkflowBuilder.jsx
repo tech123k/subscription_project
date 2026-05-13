@@ -49,6 +49,63 @@ const StageCard = ({ stage, index, onEdit, onDelete }) => (
   </motion.div>
 );
 
+const StageForm = ({ form, setForm, onSubmit, loading, isEdit }) => (
+  <div className="space-y-4">
+    <div className="grid grid-cols-2 gap-4">
+      <div>
+        <label className="label">Stage Name *</label>
+        <input value={form.name} onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
+          className="input-field" placeholder="e.g. Cutting" />
+      </div>
+      <div>
+        <label className="label">Department</label>
+        <input value={form.department} onChange={(e) => setForm(f => ({ ...f, department: e.target.value }))}
+          className="input-field" placeholder="e.g. Production" />
+      </div>
+      <div>
+        <label className="label">Stage Color</label>
+        <div className="flex items-center gap-2">
+          <input type="color" value={form.color} onChange={(e) => setForm(f => ({ ...f, color: e.target.value }))}
+            className="w-10 h-10 rounded border border-gray-200 cursor-pointer" />
+          <div className="flex gap-1.5">
+            {STAGE_COLORS.map((c) => (
+              <button key={c} type="button" onClick={() => setForm(f => ({ ...f, color: c }))}
+                className="w-6 h-6 rounded border-2 transition-all" style={{ background: c, borderColor: form.color === c ? '#1e40af' : 'transparent' }} />
+            ))}
+          </div>
+        </div>
+      </div>
+      <div>
+        <label className="label">SLA Hours</label>
+        <input type="number" value={form.slaHours} onChange={(e) => setForm(f => ({ ...f, slaHours: e.target.value }))}
+          className="input-field" placeholder="e.g. 8" />
+      </div>
+    </div>
+
+    <div className="flex items-center gap-6">
+      <label className="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" checked={form.isQcStage} onChange={(e) => setForm(f => ({ ...f, isQcStage: e.target.checked }))}
+          className="w-4 h-4 rounded border-gray-300 text-primary-600" />
+        <span className="text-sm text-gray-700">QC Stage</span>
+      </label>
+      <label className="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" checked={form.requiresApproval} onChange={(e) => setForm(f => ({ ...f, requiresApproval: e.target.checked }))}
+          className="w-4 h-4 rounded border-gray-300 text-primary-600" />
+        <span className="text-sm text-gray-700">Requires Approval</span>
+      </label>
+      <label className="flex items-center gap-2 cursor-pointer">
+        <input type="checkbox" checked={form.notifyOnComplete} onChange={(e) => setForm(f => ({ ...f, notifyOnComplete: e.target.checked }))}
+          className="w-4 h-4 rounded border-gray-300 text-primary-600" />
+        <span className="text-sm text-gray-700">Notify on Complete</span>
+      </label>
+    </div>
+
+    <Button fullWidth onClick={onSubmit} loading={loading}>
+      {isEdit ? 'Update Stage' : 'Add Stage'}
+    </Button>
+  </div>
+);
+
 const WorkflowBuilder = () => {
   const queryClient = useQueryClient();
   const [selectedTemplate, setSelectedTemplate] = useState(null);
@@ -112,63 +169,6 @@ const WorkflowBuilder = () => {
   });
 
   const stages = templateDetail?.data?.stages || [];
-
-  const StageForm = ({ form, setForm, onSubmit, loading }) => (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="label">Stage Name *</label>
-          <input value={form.name} onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))}
-            className="input-field" placeholder="e.g. Cutting" />
-        </div>
-        <div>
-          <label className="label">Department</label>
-          <input value={form.department} onChange={(e) => setForm(f => ({ ...f, department: e.target.value }))}
-            className="input-field" placeholder="e.g. Production" />
-        </div>
-        <div>
-          <label className="label">Stage Color</label>
-          <div className="flex items-center gap-2">
-            <input type="color" value={form.color} onChange={(e) => setForm(f => ({ ...f, color: e.target.value }))}
-              className="w-10 h-10 rounded border border-gray-200 cursor-pointer" />
-            <div className="flex gap-1.5">
-              {STAGE_COLORS.map((c) => (
-                <button key={c} type="button" onClick={() => setForm(f => ({ ...f, color: c }))}
-                  className="w-6 h-6 rounded border-2 transition-all" style={{ background: c, borderColor: form.color === c ? '#1e40af' : 'transparent' }} />
-              ))}
-            </div>
-          </div>
-        </div>
-        <div>
-          <label className="label">SLA Hours</label>
-          <input type="number" value={form.slaHours} onChange={(e) => setForm(f => ({ ...f, slaHours: e.target.value }))}
-            className="input-field" placeholder="e.g. 8" />
-        </div>
-      </div>
-
-      <div className="flex items-center gap-6">
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" checked={form.isQcStage} onChange={(e) => setForm(f => ({ ...f, isQcStage: e.target.checked }))}
-            className="w-4 h-4 rounded border-gray-300 text-primary-600" />
-          <span className="text-sm text-gray-700">QC Stage</span>
-        </label>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" checked={form.requiresApproval} onChange={(e) => setForm(f => ({ ...f, requiresApproval: e.target.checked }))}
-            className="w-4 h-4 rounded border-gray-300 text-primary-600" />
-          <span className="text-sm text-gray-700">Requires Approval</span>
-        </label>
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" checked={form.notifyOnComplete} onChange={(e) => setForm(f => ({ ...f, notifyOnComplete: e.target.checked }))}
-            className="w-4 h-4 rounded border-gray-300 text-primary-600" />
-          <span className="text-sm text-gray-700">Notify on Complete</span>
-        </label>
-      </div>
-
-      <Button fullWidth onClick={onSubmit} loading={loading}>
-        {editingStage ? 'Update Stage' : 'Add Stage'}
-      </Button>
-    </div>
-  );
 
   return (
     <div className="space-y-5 animate-fade-in">
@@ -302,6 +302,7 @@ const WorkflowBuilder = () => {
         <StageForm
           form={stageForm}
           setForm={setStageForm}
+          isEdit={!!editingStage}
           loading={addStageMutation.isPending || updateStageMutation.isPending}
           onSubmit={() => {
             if (editingStage) {

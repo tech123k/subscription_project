@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const compression = require('compression');
 const hpp = require('hpp');
 
+const path = require('path');
 const { globalLimiter } = require('./middleware/rateLimiter');
 const { errorHandler } = require('./middleware/errorHandler');
 const routes = require('./routes');
@@ -61,6 +62,9 @@ app.get('/health', (req, res) => {
     version: '1.0.0',
   });
 });
+
+// Serve locally uploaded files (fallback when Cloudinary is not configured)
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 // API routes
 app.use('/api', routes);

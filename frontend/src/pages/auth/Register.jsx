@@ -30,6 +30,16 @@ const Register = () => {
       toast.success('Company registered! Please login.');
       navigate('/login');
     },
+    onError: (err) => {
+      const msg = (err?.message || 'Registration failed').toLowerCase();
+      if (err?.status === 409 || msg.includes('duplicate')) {
+        toast.error('Company code ya email already registered hai. Alag code use karein.');
+      } else if (err?.status === 400 || msg.includes('validation') || msg.includes('password')) {
+        toast.error('Password mein kam se kam 1 capital letter aur 1 number hona chahiye. Example: Admin@123');
+      } else {
+        toast.error(err?.message || 'Registration failed');
+      }
+    },
   });
 
   const onSubmit = (data) => {
@@ -109,9 +119,9 @@ const Register = () => {
                   <div>
                     <label className="block text-sm font-medium text-slate-300 mb-1">Industry Type *</label>
                     <select {...register('industryType', { required: true })}
-                      className="w-full bg-white/10 border border-white/20 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400">
-                      <option value="">Select industry</option>
-                      {INDUSTRIES.map((i) => <option key={i.value} value={i.value}>{i.label}</option>)}
+                      className="w-full bg-slate-800 border border-white/20 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary-400">
+                      <option value="" style={{ background: '#1e293b', color: '#94a3b8' }}>Select industry</option>
+                      {INDUSTRIES.map((i) => <option key={i.value} value={i.value} style={{ background: '#1e293b', color: '#fff' }}>{i.label}</option>)}
                     </select>
                   </div>
 

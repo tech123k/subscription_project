@@ -70,61 +70,69 @@ const logger = require('../utils/logger');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+// const pool = new Pool({
+//   host: process.env.DB_HOST,
+//   port: parseInt(process.env.DB_PORT, 10) || 5432,
+//   user: process.env.DB_USER,
+//   password: process.env.DB_PASSWORD,
+//   database: process.env.DB_NAME,
+
+//   // Pool settings — keep small for Supabase free tier (max 20 direct connections)
+//   max: 5,
+//   min: 1,                        // always keep 1 warm connection to avoid cold SSL overhead
+//   idleTimeoutMillis: 60000,      // 60s before idle connections are released (> Supabase idle cut)
+//   connectionTimeoutMillis: 15000,
+
+//   // Keep TCP connections alive so Supabase doesn't terminate idle sockets
+//   keepAlive: true,
+//   keepAliveInitialDelayMillis: 10000,
+
+//   // SSL for Supabase / Render production
+//   ssl:
+//     process.env.DB_SSL === 'true'
+//       ? { rejectUnauthorized: false }
+//       : false,
+// });
 const pool = new Pool({
-  host: process.env.DB_HOST,
-  port: parseInt(process.env.DB_PORT, 10) || 5432,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  connectionString: process.env.DATABASE_URL,
 
   // Pool settings
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
+  max: 5,
+  min: 1,
+  idleTimeoutMillis: 60000,
+  connectionTimeoutMillis: 15000,
 
-  // SSL for Supabase / Render production
-  ssl:
-    process.env.DB_SSL === 'true'
-      ? {
-          rejectUnauthorized: false,
-        }
-      : false,
+  keepAlive: true,
+  keepAliveInitialDelayMillis: 10000,
+
+  ssl: false,
+});
+// Unexpected errors on idle clients — log and let the pool replace them
+pool.on('error', (err, client) => {
+  logger.error('Idle client error (connection will be replaced):', err.message);
 });
 
-// New connection
-pool.on('connect', () => {
-  logger.info('New database connection established');
-});
+const RETRYABLE = ['Connection terminated', 'Connection terminated due to connection timeout', 'write ECONNRESET', 'read ECONNRESET', 'ENOTFOUND', 'ETIMEDOUT'];
 
-// Unexpected errors
-pool.on('error', (err) => {
-  logger.error('Unexpected database pool error:', err);
-});
+const isRetryable = (err) => RETRYABLE.some((msg) => err.message?.includes(msg));
 
-// Query helper
-const query = async (text, params) => {
+// Query helper — retries once on transient connection errors
+const query = async (text, params, attempt = 1) => {
   const start = Date.now();
-
   try {
     const res = await pool.query(text, params);
-
     const duration = Date.now() - start;
-
     if (duration > 1000) {
-      logger.warn('Slow query detected', {
-        query: text,
-        duration: `${duration}ms`,
-        rows: res.rowCount,
-      });
+      logger.warn('Slow query detected', { query: text, duration: `${duration}ms`, rows: res.rowCount });
     }
-
     return res;
   } catch (error) {
-    logger.error('Database query error', {
-      query: text,
-      message: error.message,
-    });
-
+    if (attempt === 1 && isRetryable(error)) {
+      logger.warn('Retrying query after connection error:', error.message);
+      await new Promise((r) => setTimeout(r, 200));
+      return query(text, params, 2);
+    }
+    logger.error('Database query error', { query: text, message: error.message });
     throw error;
   }
 };

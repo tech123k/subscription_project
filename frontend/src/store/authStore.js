@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { connectSocket, disconnectSocket } from '../services/socket';
+import queryClient from '../lib/queryClient';
 
 export const useAuthStore = create(
   persist(
@@ -11,6 +12,7 @@ export const useAuthStore = create(
       isAuthenticated: false,
 
       setAuth: ({ user, accessToken, refreshToken }) => {
+        queryClient.clear();
         set({ user, accessToken, refreshToken, isAuthenticated: true });
         connectSocket(accessToken);
       },
@@ -25,6 +27,7 @@ export const useAuthStore = create(
 
       logout: () => {
         disconnectSocket();
+        queryClient.clear();
         set({ user: null, accessToken: null, refreshToken: null, isAuthenticated: false });
       },
 

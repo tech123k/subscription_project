@@ -26,27 +26,47 @@ const io = new Server(server, {
 setupSocket(io);
 notificationService.setSocketIO(io);
 
-const startServer = async () => {
-  try {
-    await testConnection();
-    logger.info('✅ Database connected');
-
+const tryConnectDB = async (retries = 5, delayMs = 3000) => {
+  for (let i = 1; i <= retries; i++) {
     try {
-      await getRedisClient();
-      logger.info('✅ Redis connected');
-    } catch (redisErr) {
-      logger.warn('⚠️  Redis not available - caching disabled:', redisErr.message);
+      await testConnection();
+      logger.info('✅ Database connected');
+      return true;
+    } catch (err) {
+      const isLastAttempt = i === retries;
+      const hint = err.message?.includes('ENOTFOUND')
+        ? ' (hint: Supabase project may be paused — resume it at supabase.com/dashboard)'
+        : '';
+      if (isLastAttempt) {
+        logger.error(`❌ Database unreachable after ${retries} attempts:`, err.message + hint);
+        return false;
+      }
+      logger.warn(`⚠️  DB connect attempt ${i}/${retries} failed — retrying in ${delayMs / 1000}s...${hint}`);
+      await new Promise((r) => setTimeout(r, delayMs));
     }
+  }
+};
 
-    server.listen(PORT, '0.0.0.0', () => {
-      logger.info(`🚀 ERP Server running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
-      logger.info(`📊 API: http://localhost:${PORT}/api`);
-      logger.info(`🔌 Socket.IO: ws://localhost:${PORT}`);
-      logger.info(`❤️  Health: http://localhost:${PORT}/health`);
-    });
-  } catch (error) {
-    logger.error('❌ Failed to start server:', error);
-    process.exit(1);
+const startServer = async () => {
+  // Start HTTP server first so health-checks always respond
+  server.listen(PORT, '0.0.0.0', () => {
+    logger.info(`🚀 ERP Server running on port ${PORT} in ${process.env.NODE_ENV || 'development'} mode`);
+    logger.info(`📊 API: http://localhost:${PORT}/api`);
+    logger.info(`🔌 Socket.IO: ws://localhost:${PORT}`);
+    logger.info(`❤️  Health: http://localhost:${PORT}/health`);
+  });
+
+  // DB connection (non-fatal — API calls will fail gracefully if DB is down)
+  const dbOk = await tryConnectDB();
+  if (!dbOk) {
+    logger.warn('⚠️  Server started WITHOUT database. Requests will return 503 until DB is reachable.');
+  }
+
+  try {
+    await getRedisClient();
+    logger.info('✅ Redis connected');
+  } catch (redisErr) {
+    logger.warn('⚠️  Redis not available - caching disabled:', redisErr.message);
   }
 };
 

@@ -27,13 +27,14 @@ const getOne = async (req, res, next) => {
       query('SELECT w.*, u.first_name || \' \' || u.last_name AS manager_name FROM warehouses w LEFT JOIN users u ON w.manager_id = u.id WHERE w.id = $1 AND w.company_id = $2 AND w.deleted_at IS NULL', [id, req.companyId]),
       query('SELECT * FROM warehouse_racks WHERE warehouse_id = $1 AND is_active = TRUE ORDER BY rack_code', [id]),
       query(`SELECT m.id, m.name, m.code, m.unit, m.current_stock, m.minimum_stock, m.purchase_rate,
+              m.current_stock * COALESCE(m.purchase_rate, 0) AS stock_value,
               mc.name AS category_name
               FROM materials m LEFT JOIN material_categories mc ON m.category_id = mc.id
               WHERE m.warehouse_id = $1 AND m.deleted_at IS NULL AND m.is_active = TRUE
               ORDER BY m.name`, [id]),
     ]);
     if (!whRes.rows[0]) return ApiResponse.notFound(res, 'Warehouse not found');
-    ApiResponse.success(res, { ...whRes.rows[0], racks: racksRes.rows, stock: stockRes.rows });
+    ApiResponse.success(res, { ...whRes.rows[0], racks: racksRes.rows, stocks: stockRes.rows });
   } catch (error) {
     next(error);
   }
@@ -41,11 +42,11 @@ const getOne = async (req, res, next) => {
 
 const create = async (req, res, next) => {
   try {
-    const { name, code, address, city, state, pincode, managerId, phone, email, capacitySqft, notes } = req.body;
+    const { name, code, address, city, state, pincode, contactPerson, phone, notes } = req.body;
     const result = await query(
-      `INSERT INTO warehouses (company_id, name, code, address, city, state, pincode, manager_id, phone, email, capacity_sqft, notes)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
-      [req.companyId, name, code, address || null, city || null, state || null, pincode || null, managerId || null, phone || null, email || null, capacitySqft || null, notes || null]
+      `INSERT INTO warehouses (company_id, name, code, address, city, state, pincode, contact_person, phone, notes)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`,
+      [req.companyId, name, code || null, address || null, city || null, state || null, pincode || null, contactPerson || null, phone || null, notes || null]
     );
     ApiResponse.created(res, result.rows[0]);
   } catch (error) {
@@ -56,13 +57,22 @@ const create = async (req, res, next) => {
 const update = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { name, address, city, state, managerId, phone, isActive, notes } = req.body;
+    const { name, code, address, city, state, pincode, contactPerson, phone, notes } = req.body;
     const result = await query(
-      `UPDATE warehouses SET name = COALESCE($1, name), address = COALESCE($2, address),
-       city = COALESCE($3, city), state = COALESCE($4, state), manager_id = COALESCE($5, manager_id),
-       phone = COALESCE($6, phone), is_active = COALESCE($7, is_active), notes = COALESCE($8, notes)
-       WHERE id = $9 AND company_id = $10 AND deleted_at IS NULL RETURNING *`,
-      [name, address, city, state, managerId, phone, isActive, notes, id, req.companyId]
+      `UPDATE warehouses
+       SET name            = COALESCE($1, name),
+           code            = COALESCE($2, code),
+           address         = COALESCE($3, address),
+           city            = COALESCE($4, city),
+           state           = COALESCE($5, state),
+           pincode         = COALESCE($6, pincode),
+           contact_person  = $7,
+           phone           = COALESCE($8, phone),
+           notes           = COALESCE($9, notes),
+           updated_at      = NOW()
+       WHERE id = $10 AND company_id = $11 AND deleted_at IS NULL
+       RETURNING *`,
+      [name, code, address, city, state, pincode, contactPerson || null, phone, notes, id, req.companyId]
     );
     if (!result.rows[0]) return ApiResponse.notFound(res, 'Warehouse not found');
     ApiResponse.success(res, result.rows[0]);
@@ -158,4 +168,20 @@ const addRack = async (req, res, next) => {
   }
 };
 
-module.exports = { getAll, getOne, create, update, createTransfer, getTransfers, addRack };
+const remove = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await query(
+      `UPDATE warehouses SET deleted_at = NOW()
+       WHERE id = $1 AND company_id = $2 AND deleted_at IS NULL AND is_primary = FALSE
+       RETURNING id`,
+      [id, req.companyId]
+    );
+    if (!result.rows[0]) return ApiResponse.notFound(res, 'Warehouse not found or cannot delete primary warehouse');
+    ApiResponse.success(res, null, 'Warehouse deleted');
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getAll, getOne, create, update, remove, createTransfer, getTransfers, addRack };

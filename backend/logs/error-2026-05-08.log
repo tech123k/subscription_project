@@ -1,0 +1,1373 @@
+2026-05-08 01:01:39 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 01:16:51 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 01:23:49 [ERROR]: Idle client error (connection will be replaced):
+2026-05-08 01:23:49 [ERROR]: Idle client error (connection will be replaced):
+2026-05-08 01:24:28 [ERROR]: Database query error getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"query":"SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE"}
+2026-05-08 01:24:28 [ERROR]: Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"url":"/api/notifications/unread-count","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async NotificationService.getUnreadCount (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\notification.service.js:126:20)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\notification.routes.js:16:19
+2026-05-08 01:31:56 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 01:49:03 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 11:38:25 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 11:38:25 [ERROR]: Error: jwt expired {"url":"/api/dashboard/stats?period=30","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 11:38:25 [ERROR]: Error: jwt expired {"url":"/api/dashboard/charts?period=30","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 11:38:25 [ERROR]: Error: jwt expired {"url":"/api/dashboard/low-stock","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 11:38:26 [ERROR]: Error: jwt expired {"url":"/api/dashboard/production-timeline","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 11:50:51 [ERROR]: Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"url":"/api/grn?page=1&limit=20&search=&qcStatus=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Promise.all (index 1)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\grn.routes.js:87:51
+2026-05-08 11:51:03 [ERROR]: Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"url":"/api/grn?page=1&limit=20&search=&qcStatus=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Promise.all (index 1)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\grn.routes.js:87:51
+2026-05-08 11:51:03 [ERROR]: Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"url":"/api/po?page=1&limit=20&search=&status=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Promise.all (index 1)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\routes\po.routes.js:39:51
+2026-05-08 11:54:31 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 12:09:36 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 12:23:29 [ERROR]: Database query error invalid input syntax for type uuid: "" {"query":"SELECT id FROM workflow_stages WHERE template_id = $1 AND is_active = TRUE ORDER BY sequence_order ASC LIMIT 1"}
+2026-05-08 12:23:29 [ERROR]: Error: invalid input syntax for type uuid: "" {"url":"/api/production","method":"POST","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: invalid input syntax for type uuid: ""
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async create (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:119:23)
+2026-05-08 12:23:35 [ERROR]: Database query error invalid input syntax for type uuid: "" {"query":"SELECT id FROM workflow_stages WHERE template_id = $1 AND is_active = TRUE ORDER BY sequence_order ASC LIMIT 1"}
+2026-05-08 12:23:35 [ERROR]: Error: invalid input syntax for type uuid: "" {"url":"/api/production","method":"POST","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: invalid input syntax for type uuid: ""
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async create (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:119:23)
+2026-05-08 12:23:55 [ERROR]: Database query error invalid input syntax for type uuid: "" {"query":"SELECT id FROM workflow_stages WHERE template_id = $1 AND is_active = TRUE ORDER BY sequence_order ASC LIMIT 1"}
+2026-05-08 12:23:55 [ERROR]: Error: invalid input syntax for type uuid: "" {"url":"/api/production","method":"POST","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: invalid input syntax for type uuid: ""
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async create (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:119:23)
+2026-05-08 12:24:56 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 12:40:04 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 12:55:12 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 13:16:34 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 13:16:35 [ERROR]: Error: jwt expired {"url":"/api/reports/production?startDate=&endDate=&status=","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 13:16:36 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 13:16:36 [ERROR]: Error: jwt expired {"url":"/api/reports/stock?startDate=&endDate=&status=","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 14:59:43 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 14:59:43 [ERROR]: Error: jwt expired {"url":"/api/reports/stock?startDate=&endDate=&status=","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 15:15:58 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 15:21:43 [ERROR]: Database query error relation "production_stage_reverts" does not exist {"query":"SELECT psr.id, psr.created_at, psr.reason, psr.from_stage_id, psr.to_stage_id,\n                ws_from.name AS from_stage_name, ws_to.name AS to_stage_name,\n                u.first_name || ' ' || u.last_name AS reverted_by_name\n         FROM production_stage_reverts psr\n         JOIN workflow_stages ws_from ON psr.from_stage_id = ws_from.id\n         JOIN workflow_stages ws_to   ON psr.to_stage_id   = ws_to.id\n         LEFT JOIN users u ON psr.reverted_by = u.id\n         WHERE psr.production_order_id = $1\n         ORDER BY psr.created_at DESC"}
+2026-05-08 15:21:43 [ERROR]: Error: relation "production_stage_reverts" does not exist {"url":"/api/production/cd759c8d-0971-498c-a0f8-645bdcb0c869","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: relation "production_stage_reverts" does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 3)
+    at async getOne (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:56:58)
+2026-05-08 15:30:08 [ERROR]: Database query error relation "production_stage_reverts" does not exist {"query":"SELECT psr.id, psr.created_at, psr.reason, psr.from_stage_id, psr.to_stage_id,\n                ws_from.name AS from_stage_name, ws_to.name AS to_stage_name,\n                u.first_name || ' ' || u.last_name AS reverted_by_name\n         FROM production_stage_reverts psr\n         JOIN workflow_stages ws_from ON psr.from_stage_id = ws_from.id\n         JOIN workflow_stages ws_to   ON psr.to_stage_id   = ws_to.id\n         LEFT JOIN users u ON psr.reverted_by = u.id\n         WHERE psr.production_order_id = $1\n         ORDER BY psr.created_at DESC"}
+2026-05-08 15:30:08 [ERROR]: Error: relation "production_stage_reverts" does not exist {"url":"/api/production/cd759c8d-0971-498c-a0f8-645bdcb0c869","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: relation "production_stage_reverts" does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 3)
+    at async getOne (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:56:58)
+2026-05-08 15:32:08 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 15:34:12 [ERROR]: Email send failed: {"to":"kajal971126@gmail.com","subject":"Production Complete - IndustrialERP","error":"Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-2baf1e35bcfsm15610665ad.38 - gsmtp"}
+2026-05-08 15:47:15 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 15:47:49 [ERROR]: Database query error invalid input syntax for type uuid: "" {"query":"SELECT id FROM workflow_stages WHERE template_id = $1 AND is_active = TRUE ORDER BY sequence_order ASC LIMIT 1"}
+2026-05-08 15:47:49 [ERROR]: Error: invalid input syntax for type uuid: "" {"url":"/api/production","method":"POST","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: invalid input syntax for type uuid: ""
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async create (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:134:23)
+2026-05-08 15:49:37 [ERROR]: Database query error invalid input syntax for type uuid: "" {"query":"SELECT id FROM workflow_stages WHERE template_id = $1 AND is_active = TRUE ORDER BY sequence_order ASC LIMIT 1"}
+2026-05-08 15:49:37 [ERROR]: Error: invalid input syntax for type uuid: "" {"url":"/api/production","method":"POST","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: invalid input syntax for type uuid: ""
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async create (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:134:23)
+2026-05-08 16:05:48 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 16:05:49 [ERROR]: Error: jwt expired {"url":"/api/customers?limit=500","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 16:05:49 [ERROR]: Error: jwt expired {"url":"/api/workflows","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 16:05:49 [ERROR]: Error: jwt expired {"url":"/api/materials?limit=500","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 16:06:09 [ERROR]: Database query error COALESCE types character varying and material_unit cannot be matched {"query":"SELECT po.*, COALESCE(po.product_name, m.name) AS product_name,\n                m.code AS product_code, COALESCE(po.unit, m.unit) AS product_unit,\n                c.name AS customer_name, ws.name AS current_stage_name, ws.color AS stage_color,\n                wt.name AS workflow_name,\n                u.first_name || ' ' || u.last_name AS created_by_name,\n                CASE WHEN po.planned_end_date < CURRENT_DATE AND po.status NOT IN ('completed','cancelled') THEN TRUE ELSE FALSE END AS is_delayed\n         FROM production_orders po\n         LEFT JOIN materials m ON po.product_material_id = m.id\n         LEFT JOIN customers c ON po.customer_id = c.id\n         LEFT JOIN workflow_stages ws ON po.current_stage_id = ws.id\n         LEFT JOIN workflow_templates wt ON po.workflow_template_id = wt.id\n         LEFT JOIN users u ON po.created_by = u.id\n         WHERE po.company_id = $1 AND po.deleted_at IS NULL\n         ORDER BY po.created_at DESC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 16:06:09 [ERROR]: Error: COALESCE types character varying and material_unit cannot be matched {"url":"/api/production?page=1&limit=20&search=&status=&priority=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: COALESCE types character varying and material_unit cannot be matched
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:24:33)
+2026-05-08 16:06:10 [ERROR]: Database query error COALESCE types character varying and material_unit cannot be matched {"query":"SELECT po.*, COALESCE(po.product_name, m.name) AS product_name,\n                m.code AS product_code, COALESCE(po.unit, m.unit) AS product_unit,\n                c.name AS customer_name, ws.name AS current_stage_name, ws.color AS stage_color,\n                wt.name AS workflow_name,\n                u.first_name || ' ' || u.last_name AS created_by_name,\n                CASE WHEN po.planned_end_date < CURRENT_DATE AND po.status NOT IN ('completed','cancelled') THEN TRUE ELSE FALSE END AS is_delayed\n         FROM production_orders po\n         LEFT JOIN materials m ON po.product_material_id = m.id\n         LEFT JOIN customers c ON po.customer_id = c.id\n         LEFT JOIN workflow_stages ws ON po.current_stage_id = ws.id\n         LEFT JOIN workflow_templates wt ON po.workflow_template_id = wt.id\n         LEFT JOIN users u ON po.created_by = u.id\n         WHERE po.company_id = $1 AND po.deleted_at IS NULL\n         ORDER BY po.created_at DESC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 16:06:10 [ERROR]: Error: COALESCE types character varying and material_unit cannot be matched {"url":"/api/production?page=1&limit=20&search=&status=&priority=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: COALESCE types character varying and material_unit cannot be matched
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:24:33)
+2026-05-08 16:06:20 [ERROR]: Database query error COALESCE types character varying and material_unit cannot be matched {"query":"SELECT po.*, COALESCE(po.product_name, m.name) AS product_name,\n                m.code AS product_code, COALESCE(po.unit, m.unit) AS product_unit,\n                c.name AS customer_name, ws.name AS current_stage_name, ws.color AS stage_color,\n                wt.name AS workflow_name,\n                u.first_name || ' ' || u.last_name AS created_by_name,\n                CASE WHEN po.planned_end_date < CURRENT_DATE AND po.status NOT IN ('completed','cancelled') THEN TRUE ELSE FALSE END AS is_delayed\n         FROM production_orders po\n         LEFT JOIN materials m ON po.product_material_id = m.id\n         LEFT JOIN customers c ON po.customer_id = c.id\n         LEFT JOIN workflow_stages ws ON po.current_stage_id = ws.id\n         LEFT JOIN workflow_templates wt ON po.workflow_template_id = wt.id\n         LEFT JOIN users u ON po.created_by = u.id\n         WHERE po.company_id = $1 AND po.deleted_at IS NULL\n         ORDER BY po.created_at DESC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 16:06:20 [ERROR]: Error: COALESCE types character varying and material_unit cannot be matched {"url":"/api/production?page=1&limit=20&search=&status=&priority=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: COALESCE types character varying and material_unit cannot be matched
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:24:33)
+2026-05-08 16:06:21 [ERROR]: Database query error COALESCE types character varying and material_unit cannot be matched {"query":"SELECT po.*, COALESCE(po.product_name, m.name) AS product_name,\n                m.code AS product_code, COALESCE(po.unit, m.unit) AS product_unit,\n                c.name AS customer_name, ws.name AS current_stage_name, ws.color AS stage_color,\n                wt.name AS workflow_name,\n                u.first_name || ' ' || u.last_name AS created_by_name,\n                CASE WHEN po.planned_end_date < CURRENT_DATE AND po.status NOT IN ('completed','cancelled') THEN TRUE ELSE FALSE END AS is_delayed\n         FROM production_orders po\n         LEFT JOIN materials m ON po.product_material_id = m.id\n         LEFT JOIN customers c ON po.customer_id = c.id\n         LEFT JOIN workflow_stages ws ON po.current_stage_id = ws.id\n         LEFT JOIN workflow_templates wt ON po.workflow_template_id = wt.id\n         LEFT JOIN users u ON po.created_by = u.id\n         WHERE po.company_id = $1 AND po.deleted_at IS NULL\n         ORDER BY po.created_at DESC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 16:06:21 [ERROR]: Error: COALESCE types character varying and material_unit cannot be matched {"url":"/api/production?page=1&limit=20&search=&status=&priority=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: COALESCE types character varying and material_unit cannot be matched
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:24:33)
+2026-05-08 16:06:42 [ERROR]: Database query error COALESCE types character varying and material_unit cannot be matched {"query":"SELECT po.*, COALESCE(po.product_name, m.name) AS product_name,\n                m.code AS product_code, COALESCE(po.unit, m.unit) AS product_unit,\n                c.name AS customer_name, ws.name AS current_stage_name, ws.color AS stage_color,\n                wt.name AS workflow_name,\n                u.first_name || ' ' || u.last_name AS created_by_name,\n                CASE WHEN po.planned_end_date < CURRENT_DATE AND po.status NOT IN ('completed','cancelled') THEN TRUE ELSE FALSE END AS is_delayed\n         FROM production_orders po\n         LEFT JOIN materials m ON po.product_material_id = m.id\n         LEFT JOIN customers c ON po.customer_id = c.id\n         LEFT JOIN workflow_stages ws ON po.current_stage_id = ws.id\n         LEFT JOIN workflow_templates wt ON po.workflow_template_id = wt.id\n         LEFT JOIN users u ON po.created_by = u.id\n         WHERE po.company_id = $1 AND po.deleted_at IS NULL\n         ORDER BY po.created_at DESC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 16:06:42 [ERROR]: Error: COALESCE types character varying and material_unit cannot be matched {"url":"/api/production?page=1&limit=20&search=&status=&priority=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: COALESCE types character varying and material_unit cannot be matched
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:24:33)
+2026-05-08 16:06:46 [ERROR]: Database query error COALESCE types character varying and material_unit cannot be matched {"query":"SELECT po.*, COALESCE(po.product_name, m.name) AS product_name,\n                m.code AS product_code, COALESCE(po.unit, m.unit) AS product_unit,\n                c.name AS customer_name, ws.name AS current_stage_name, ws.color AS stage_color,\n                wt.name AS workflow_name,\n                u.first_name || ' ' || u.last_name AS created_by_name,\n                CASE WHEN po.planned_end_date < CURRENT_DATE AND po.status NOT IN ('completed','cancelled') THEN TRUE ELSE FALSE END AS is_delayed\n         FROM production_orders po\n         LEFT JOIN materials m ON po.product_material_id = m.id\n         LEFT JOIN customers c ON po.customer_id = c.id\n         LEFT JOIN workflow_stages ws ON po.current_stage_id = ws.id\n         LEFT JOIN workflow_templates wt ON po.workflow_template_id = wt.id\n         LEFT JOIN users u ON po.created_by = u.id\n         WHERE po.company_id = $1 AND po.deleted_at IS NULL\n         ORDER BY po.created_at DESC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 16:06:46 [ERROR]: Error: COALESCE types character varying and material_unit cannot be matched {"url":"/api/production?page=1&limit=20&search=&status=&priority=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: COALESCE types character varying and material_unit cannot be matched
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:24:33)
+2026-05-08 16:08:44 [ERROR]: Database query error COALESCE types character varying and material_unit cannot be matched {"query":"SELECT po.*, COALESCE(po.product_name, m.name) AS product_name,\n                m.code AS product_code, COALESCE(po.unit, m.unit) AS product_unit,\n                c.name AS customer_name, ws.name AS current_stage_name, ws.color AS stage_color,\n                wt.name AS workflow_name,\n                u.first_name || ' ' || u.last_name AS created_by_name,\n                CASE WHEN po.planned_end_date < CURRENT_DATE AND po.status NOT IN ('completed','cancelled') THEN TRUE ELSE FALSE END AS is_delayed\n         FROM production_orders po\n         LEFT JOIN materials m ON po.product_material_id = m.id\n         LEFT JOIN customers c ON po.customer_id = c.id\n         LEFT JOIN workflow_stages ws ON po.current_stage_id = ws.id\n         LEFT JOIN workflow_templates wt ON po.workflow_template_id = wt.id\n         LEFT JOIN users u ON po.created_by = u.id\n         WHERE po.company_id = $1 AND po.deleted_at IS NULL\n         ORDER BY po.created_at DESC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 16:08:44 [ERROR]: Error: COALESCE types character varying and material_unit cannot be matched {"url":"/api/production?page=1&limit=20&search=&status=&priority=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: COALESCE types character varying and material_unit cannot be matched
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:24:33)
+2026-05-08 16:08:45 [ERROR]: Database query error COALESCE types character varying and material_unit cannot be matched {"query":"SELECT po.*, COALESCE(po.product_name, m.name) AS product_name,\n                m.code AS product_code, COALESCE(po.unit, m.unit) AS product_unit,\n                c.name AS customer_name, ws.name AS current_stage_name, ws.color AS stage_color,\n                wt.name AS workflow_name,\n                u.first_name || ' ' || u.last_name AS created_by_name,\n                CASE WHEN po.planned_end_date < CURRENT_DATE AND po.status NOT IN ('completed','cancelled') THEN TRUE ELSE FALSE END AS is_delayed\n         FROM production_orders po\n         LEFT JOIN materials m ON po.product_material_id = m.id\n         LEFT JOIN customers c ON po.customer_id = c.id\n         LEFT JOIN workflow_stages ws ON po.current_stage_id = ws.id\n         LEFT JOIN workflow_templates wt ON po.workflow_template_id = wt.id\n         LEFT JOIN users u ON po.created_by = u.id\n         WHERE po.company_id = $1 AND po.deleted_at IS NULL\n         ORDER BY po.created_at DESC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 16:08:45 [ERROR]: Error: COALESCE types character varying and material_unit cannot be matched {"url":"/api/production?page=1&limit=20&search=&status=&priority=","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: COALESCE types character varying and material_unit cannot be matched
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:24:33)
+2026-05-08 16:30:24 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 16:47:22 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 17:02:45 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 17:17:49 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 17:32:56 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 17:37:59 [ERROR]: Transaction failed:
+2026-05-08 17:37:59 [ERROR]: Error: inconsistent types deduced for parameter $1 {"url":"/api/production/30b86c10-91ae-40e6-970d-69f531e38006/stage","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: inconsistent types deduced for parameter $1
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:305:7
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:139:20)
+    at async updateStage (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:300:5)
+2026-05-08 17:38:06 [ERROR]: Transaction failed:
+2026-05-08 17:38:06 [ERROR]: Error: inconsistent types deduced for parameter $1 {"url":"/api/production/30b86c10-91ae-40e6-970d-69f531e38006/stage","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: inconsistent types deduced for parameter $1
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:305:7
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:139:20)
+    at async updateStage (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:300:5)
+2026-05-08 17:38:08 [ERROR]: Transaction failed:
+2026-05-08 17:38:08 [ERROR]: Error: inconsistent types deduced for parameter $1 {"url":"/api/production/30b86c10-91ae-40e6-970d-69f531e38006/stage","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: inconsistent types deduced for parameter $1
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:305:7
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:139:20)
+    at async updateStage (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:300:5)
+2026-05-08 17:38:16 [ERROR]: Transaction failed:
+2026-05-08 17:38:16 [ERROR]: Error: inconsistent types deduced for parameter $1 {"url":"/api/production/30b86c10-91ae-40e6-970d-69f531e38006/stage","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: inconsistent types deduced for parameter $1
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:305:7
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:139:20)
+    at async updateStage (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:300:5)
+2026-05-08 17:39:50 [ERROR]: Transaction failed:
+2026-05-08 17:39:50 [ERROR]: Error: inconsistent types deduced for parameter $1 {"url":"/api/production/355edb67-c4c9-452c-af5a-39aa669f5c90/stage","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: inconsistent types deduced for parameter $1
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:305:7
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:139:20)
+    at async updateStage (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:300:5)
+2026-05-08 17:40:11 [ERROR]: Transaction failed:
+2026-05-08 17:40:11 [ERROR]: Error: inconsistent types deduced for parameter $1 {"url":"/api/production/355edb67-c4c9-452c-af5a-39aa669f5c90/stage","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: inconsistent types deduced for parameter $1
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:305:7
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:139:20)
+    at async updateStage (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:300:5)
+2026-05-08 17:40:32 [ERROR]: Transaction failed:
+2026-05-08 17:40:32 [ERROR]: Error: inconsistent types deduced for parameter $1 {"url":"/api/production/355edb67-c4c9-452c-af5a-39aa669f5c90/stage","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: inconsistent types deduced for parameter $1
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:305:7
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:139:20)
+    at async updateStage (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:300:5)
+2026-05-08 17:40:41 [ERROR]: Transaction failed:
+2026-05-08 17:40:41 [ERROR]: Error: inconsistent types deduced for parameter $1 {"url":"/api/production/355edb67-c4c9-452c-af5a-39aa669f5c90/stage","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: inconsistent types deduced for parameter $1
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:305:7
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:139:20)
+    at async updateStage (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:300:5)
+2026-05-08 17:45:17 [ERROR]: Idle client error (connection will be replaced):
+2026-05-08 17:52:44 [ERROR]: Idle client error (connection will be replaced):
+2026-05-08 17:58:02 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 17:58:02 [ERROR]: Error: jwt expired {"url":"/api/production/355edb67-c4c9-452c-af5a-39aa669f5c90","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 17:58:02 [ERROR]: Database query error getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"query":"SELECT id, company_id, role, refresh_token, is_active FROM users WHERE id = $1"}
+2026-05-08 17:58:02 [ERROR]: Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"url":"/api/auth/refresh-token","method":"POST"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async AuthService.refreshToken (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\auth.service.js:115:20)
+    at async refreshToken (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\auth.controller.js:54:20)
+2026-05-08 17:58:04 [ERROR]: Database query error getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"query":"SELECT u.*, c.name AS company_name, c.is_active AS company_active,\n              c.subscription_expires_at\n       FROM users u\n       LEFT JOIN companies c ON u.company_id = c.id\n       WHERE u.email = LOWER($1) AND u.deleted_at IS NULL"}
+2026-05-08 17:58:04 [ERROR]: Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"url":"/api/auth/login","method":"POST"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:110:17)
+    at async AuthService.login (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\services\auth.service.js:30:20)
+    at async login (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\auth.controller.js:30:20)
+2026-05-08 17:58:21 [ERROR]: Database connection failed: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"db.bksznpwjhhtybsiwvgtd.supabase.co"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:31:5)
+2026-05-08 17:58:43 [ERROR]: Database connection failed: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"db.bksznpwjhhtybsiwvgtd.supabase.co"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:31:5)
+2026-05-08 17:58:59 [ERROR]: Database connection failed: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"db.bksznpwjhhtybsiwvgtd.supabase.co"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:31:5)
+2026-05-08 18:00:00 [ERROR]: Database connection failed: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"db.bksznpwjhhtybsiwvgtd.supabase.co"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:00:03 [ERROR]: Database connection failed: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"db.bksznpwjhhtybsiwvgtd.supabase.co"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:00:06 [ERROR]: Database connection failed: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"db.bksznpwjhhtybsiwvgtd.supabase.co"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:00:09 [ERROR]: Database connection failed: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"db.bksznpwjhhtybsiwvgtd.supabase.co"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:00:12 [ERROR]: Database connection failed: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co {"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"db.bksznpwjhhtybsiwvgtd.supabase.co"}
+Error: getaddrinfo ENOTFOUND db.bksznpwjhhtybsiwvgtd.supabase.co
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:00:12 [ERROR]: ❌ Database unreachable after 5 attempts:
+2026-05-08 18:14:55 [ERROR]: Database connection failed: The server does not support SSL connections
+Error: The server does not support SSL connections
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:14:58 [ERROR]: Database connection failed: The server does not support SSL connections
+Error: The server does not support SSL connections
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:15:01 [ERROR]: Database connection failed: The server does not support SSL connections
+Error: The server does not support SSL connections
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:15:04 [ERROR]: Database connection failed: The server does not support SSL connections
+Error: The server does not support SSL connections
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:15:07 [ERROR]: Database connection failed: The server does not support SSL connections
+Error: The server does not support SSL connections
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:15:07 [ERROR]: ❌ Database unreachable after 5 attempts:
+2026-05-08 18:16:10 [ERROR]: Database connection failed: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:16:13 [ERROR]: Database connection failed: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:16:16 [ERROR]: Database connection failed: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:16:19 [ERROR]: Database connection failed: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:16:22 [ERROR]: Database connection failed: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:16:22 [ERROR]: ❌ Database unreachable after 5 attempts:
+2026-05-08 18:17:24 [ERROR]: Database connection failed: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:17:27 [ERROR]: Database connection failed: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:17:30 [ERROR]: Database connection failed: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:17:33 [ERROR]: Database connection failed: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:17:36 [ERROR]: Database connection failed: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+Error: SASL: SCRAM-SERVER-FIRST-MESSAGE: client password must be a string
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async testConnection (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:158:17)
+    at async tryConnectDB (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:32:7)
+    at async startServer (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\server.js:60:16)
+2026-05-08 18:17:36 [ERROR]: ❌ Database unreachable after 5 attempts:
+2026-05-08 18:21:04 [ERROR]: Transaction failed:
+2026-05-08 18:21:04 [ERROR]: Error: inconsistent types deduced for parameter $1 {"url":"/api/production/355edb67-c4c9-452c-af5a-39aa669f5c90/stage","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: inconsistent types deduced for parameter $1
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:305:7
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:152:20)
+    at async updateStage (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:300:5)
+2026-05-08 18:21:26 [ERROR]: Transaction failed:
+2026-05-08 18:21:26 [ERROR]: Error: inconsistent types deduced for parameter $1 {"url":"/api/production/355edb67-c4c9-452c-af5a-39aa669f5c90/stage","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: inconsistent types deduced for parameter $1
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:305:7
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:152:20)
+    at async updateStage (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:300:5)
+2026-05-08 18:21:41 [ERROR]: Transaction failed:
+2026-05-08 18:21:41 [ERROR]: Error: inconsistent types deduced for parameter $1 {"url":"/api/production/355edb67-c4c9-452c-af5a-39aa669f5c90/stage","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: inconsistent types deduced for parameter $1
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:305:7
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:152:20)
+    at async updateStage (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:300:5)
+2026-05-08 18:27:17 [ERROR]: Transaction failed:
+2026-05-08 18:27:17 [ERROR]: Error: inconsistent types deduced for parameter $1 {"url":"/api/production/355edb67-c4c9-452c-af5a-39aa669f5c90/stage","method":"PUT","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: inconsistent types deduced for parameter $1
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:305:7
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:152:20)
+    at async updateStage (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\production.controller.js:300:5)
+2026-05-08 18:33:42 [ERROR]: Email send failed: {"to":"kajal971126@gmail.com","subject":"Production Complete - IndustrialERP","error":"Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to\n535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-83965d314f7sm12890325b3a.23 - gsmtp"}
+2026-05-08 18:35:15 [ERROR]: Error: jwt expired {"url":"/api/bom/products/46bf9bab-df56-4fcd-b5d4-7ddc05500409","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 18:35:15 [ERROR]: Error: jwt expired {"url":"/api/materials?limit=500","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 19:04:15 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 19:19:22 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 19:34:30 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 19:49:37 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 20:03:06 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:03:06 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:03:07 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:03:07 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:03:07 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:03:07 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:03:08 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:03:08 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:03:09 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:03:09 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:03:10 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:03:10 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:03:10 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:03:10 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:04:37 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:04:37 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:04:37 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:04:37 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:04:38 [ERROR]: Error: jwt expired {"url":"/api/products/summary","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 20:04:38 [ERROR]: Error: jwt expired {"url":"/api/products?limit=200","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 20:04:38 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:04:38 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:04:38 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:04:38 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:12:36 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:12:36 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:12:36 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:12:36 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:12:37 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:12:37 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:12:37 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:12:37 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:14:05 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:14:05 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:14:05 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:14:05 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:14:06 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:14:06 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:14:07 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:14:07 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:14:43 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:14:43 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:14:44 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:14:44 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:14:45 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:14:45 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:14:45 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:14:45 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:19:39 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 20:20:52 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:20:52 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:20:53 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:20:53 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:20:53 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:20:53 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:20:54 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:20:54 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:21:05 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:21:05 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:21:05 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:21:05 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:21:06 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:21:06 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:21:07 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:21:07 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:25:30 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:25:30 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:25:30 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:25:30 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:25:32 [ERROR]: Database query error column p.current_stock does not exist {"query":"SELECT\n           p.*,\n           GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,\n           b.id AS bom_id,\n           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count\n         \n      FROM products p\n      LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n      WHERE p.company_id = $1 AND p.deleted_at IS NULL \n    \n         ORDER BY p.name ASC\n         LIMIT $2 OFFSET $3"}
+2026-05-08 20:25:32 [ERROR]: Error: column p.current_stock does not exist {"url":"/api/products?limit=200","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.current_stock does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getAll (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:56:33)
+2026-05-08 20:25:32 [ERROR]: Database query error column p.produced_qty does not exist {"query":"SELECT\n           COUNT(p.id)::int                                                                  AS total_products,\n           COUNT(p.id) FILTER (WHERE p.is_active)::int                                      AS active_products,\n           COUNT(b.id)::int                                                                  AS products_with_bom,\n           COUNT(p.id) FILTER (WHERE p.produced_qty > 0 AND p.current_stock <= 0)::int     AS out_of_stock,\n           COUNT(p.id) FILTER (WHERE p.current_stock > 0 AND p.current_stock <= $2)::int   AS low_stock,\n           COALESCE(SUM(p.current_stock), 0)::numeric                                       AS total_current_stock,\n           COALESCE(SUM(p.produced_qty),  0)::numeric                                       AS total_produced_ever\n         FROM products p\n         LEFT JOIN bill_of_materials b ON b.product_id = p.id AND b.is_active = TRUE\n         WHERE p.company_id = $1 AND p.deleted_at IS NULL"}
+2026-05-08 20:25:32 [ERROR]: Error: column p.produced_qty does not exist {"url":"/api/products/summary","method":"GET","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: column p.produced_qty does not exist
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async query (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:123:17)
+    at async Promise.all (index 0)
+    at async getSummary (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\product.controller.js:82:36)
+2026-05-08 20:34:39 [ERROR]: Error: jwt expired {"url":"/api/dashboard/stats?period=30","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 20:34:39 [ERROR]: Error: jwt expired {"url":"/api/dashboard/low-stock","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 20:34:39 [ERROR]: Error: jwt expired {"url":"/api/dashboard/production-timeline","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 20:34:39 [ERROR]: Error: jwt expired {"url":"/api/dashboard/charts?period=30","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 20:49:51 [ERROR]: Error: jwt expired {"url":"/api/materials?page=1&limit=20&search=s&lowStock=&categoryId=&warehouseId=","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 21:05:38 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 23:28:40 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 23:28:40 [ERROR]: Error: jwt expired {"url":"/api/dashboard/stats?period=30","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 23:28:40 [ERROR]: Error: jwt expired {"url":"/api/dashboard/charts?period=30","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 23:28:40 [ERROR]: Error: jwt expired {"url":"/api/dashboard/low-stock","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 23:28:40 [ERROR]: Error: jwt expired {"url":"/api/dashboard/production-timeline","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 23:43:52 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)
+2026-05-08 23:59:09 [ERROR]: Error: jwt expired {"url":"/api/notifications/unread-count","method":"GET"}
+TokenExpiredError: jwt expired
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:190:21
+    at getSecret (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:97:14)
+    at module.exports [as verify] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\jsonwebtoken\verify.js:101:10)
+    at authenticate (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\middleware\auth.js:14:25)
+    at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
+    at Layer.handle [as handle_request] (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:280:10)

@@ -47,6 +47,7 @@ const WarehouseList = () => {
       toast.success('Warehouse deleted');
       queryClient.invalidateQueries({ queryKey: ['warehouses'] });
     },
+    onError: (err) => toast.error(err?.message || 'Failed to delete warehouse'),
   });
 
   const openCreate = () => { setEditing(null); setForm(emptyForm); setShowModal(true); };

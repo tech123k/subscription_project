@@ -55,6 +55,7 @@ api.interceptors.response.use(
       const refreshToken = useAuthStore.getState().refreshToken;
 
       if (!refreshToken) {
+        isRefreshing = false;
         useAuthStore.getState().logout();
         return Promise.reject(error);
       }
@@ -76,12 +77,15 @@ api.interceptors.response.use(
     }
 
     const message = error.response?.data?.message || error.message || 'Something went wrong';
+    const status = error.response?.status;
 
-    if (error.response?.status !== 401 && error.response?.status !== 403) {
+    // Skip auto-toast for client-error codes that forms handle themselves
+    const silentCodes = new Set([400, 401, 403, 409, 422]);
+    if (!silentCodes.has(status)) {
       toast.error(message);
     }
 
-    return Promise.reject(error.response?.data || error);
+    return Promise.reject({ ...(error.response?.data || {}), status, message, response: error.response });
   }
 );
 
@@ -118,8 +122,30 @@ export const materialAPI = {
   createGRN: (data) => api.post('/materials/grn', data),
   getCategories: () => api.get('/materials/categories'),
   createCategory: (data) => api.post('/materials/categories', data),
-  export: () => `${API_URL}/materials/export`,
-  template: () => `${API_URL}/materials/template`,
+  export: () => api.get('/materials/export', { responseType: 'blob' }),
+  template: () => api.get('/materials/template', { responseType: 'blob' }),
+  import: (formData) => api.post('/materials/import', formData, { headers: { 'Content-Type': 'multipart/form-data' } }),
+};
+
+export const productAPI = {
+  getAll:           (params) => api.get('/products', { params }),
+  getOne:           (id)     => api.get(`/products/${id}`),
+  create:           (data)   => api.post('/products', data),
+  update:           (id, data) => api.put(`/products/${id}`, data),
+  delete:           (id)     => api.delete(`/products/${id}`),
+  getCategories:    ()       => api.get('/products/categories'),
+  getBOMForQuantity:(id, qty)=> api.get(`/products/${id}/bom-calculate`, { params: { qty } }),
+  getSummary:       ()       => api.get('/products/summary'),
+  getHistory:       (id)     => api.get(`/products/${id}/history`),
+  getAnalytics:     ()       => api.get('/products/analytics'),
+};
+
+export const bomAPI = {
+  getByProduct: (productId) => api.get(`/bom/products/${productId}`),
+  upsert: (productId, data) => api.post(`/bom/products/${productId}`, data),
+  addItem: (productId, data) => api.post(`/bom/products/${productId}/items`, data),
+  updateItem: (itemId, data) => api.put(`/bom/items/${itemId}`, data),
+  removeItem: (itemId) => api.delete(`/bom/items/${itemId}`),
 };
 
 export const productionAPI = {
@@ -128,6 +154,7 @@ export const productionAPI = {
   getOne: (id) => api.get(`/production/${id}`),
   create: (data) => api.post('/production', data),
   updateStage: (id, data) => api.put(`/production/${id}/stage`, data),
+  revertStage: (id, data) => api.post(`/production/${id}/revert-stage`, data),
   updateStatus: (id, data) => api.patch(`/production/${id}/status`, data),
   export: () => `${API_URL}/production/export`,
 };
@@ -217,6 +244,16 @@ export const grnAPI = {
   getById: (id) => api.get(`/grn/${id}`),
   create: (data) => api.post('/grn', data),
   update: (id, data) => api.put(`/grn/${id}`, data),
+  delete: (id) => api.delete(`/grn/${id}`),
+};
+
+export const poAPI = {
+  getAll: (params) => api.get('/po', { params }),
+  getById: (id) => api.get(`/po/${id}`),
+  create: (data) => api.post('/po', data),
+  update: (id, data) => api.put(`/po/${id}`, data),
+  updateStatus: (id, status) => api.patch(`/po/${id}/status`, { status }),
+  delete: (id) => api.delete(`/po/${id}`),
 };
 
 export const superAdminAPI = {
@@ -244,6 +281,54 @@ export const reportAPI = {
 
 export const auditAPI = {
   getAll: (params) => api.get('/audit', { params }),
+};
+
+// ─── VARIANT ENGINE ───────────────────────────────────────────────────────────
+export const variantAPI = {
+  getAttributes:          ()          => api.get('/variants/attributes'),
+  createAttribute:        (data)      => api.post('/variants/attributes', data),
+  updateAttribute:        (id, data)  => api.put(`/variants/attributes/${id}`, data),
+  addAttributeValue:      (id, data)  => api.post(`/variants/attributes/${id}/values`, data),
+  updateAttributeValue:   (id, data)  => api.put(`/variants/attributes/values/${id}`, data),
+  deleteAttributeValue:   (id)        => api.delete(`/variants/attributes/values/${id}`),
+  generateCombinations:   (data)      => api.post('/variants/generate-combinations', data),
+  getVariants:            (productId, params) => api.get(`/variants/products/${productId}/variants`, { params }),
+  createVariants:         (productId, data)   => api.post(`/variants/products/${productId}/variants`, data),
+  updateVariant:          (variantId, data)   => api.put(`/variants/variants/${variantId}`, data),
+  deleteVariant:          (variantId)         => api.delete(`/variants/variants/${variantId}`),
+  adjustVariantStock:     (variantId, data)   => api.post(`/variants/variants/${variantId}/adjust-stock`, data),
+  getBomOverrides:        (productId, variantId) => api.get(`/variants/products/${productId}/variants/${variantId}/bom-overrides`),
+  upsertBomOverride:      (productId, variantId, data) => api.post(`/variants/products/${productId}/variants/${variantId}/bom-overrides`, data),
+};
+
+// ─── INVENTORY LEDGER ─────────────────────────────────────────────────────────
+export const ledgerAPI = {
+  getEntries:           (params)     => api.get('/ledger', { params }),
+  getLowStock:          ()           => api.get('/ledger/low-stock'),
+  getMovementSummary:   (params)     => api.get('/ledger/movement-summary', { params }),
+  adjust:               (data)       => api.post('/ledger/adjust', data),
+  getMaterialCard:      (materialId, params) => api.get(`/ledger/materials/${materialId}`, { params }),
+  getProductCard:       (productId, params)  => api.get(`/ledger/products/${productId}`, { params }),
+};
+
+// ─── SALES ORDERS (OMS) ───────────────────────────────────────────────────────
+export const salesOrderAPI = {
+  getAll:           (params)  => api.get('/sales-orders', { params }),
+  getSummary:       ()        => api.get('/sales-orders/summary'),
+  getOne:           (id)      => api.get(`/sales-orders/${id}`),
+  create:           (data)    => api.post('/sales-orders', data),
+  updateStatus:     (id, data)=> api.patch(`/sales-orders/${id}/status`, data),
+  createBackorder:  (id)      => api.post(`/sales-orders/${id}/backorder`),
+  delete:           (id)      => api.delete(`/sales-orders/${id}`),
+};
+
+// ─── CREDIT & OUTSTANDING ─────────────────────────────────────────────────────
+export const creditAPI = {
+  getOutstandingList:     (params)               => api.get('/credit/outstanding', { params }),
+  getCustomerCredit:      (customerId)            => api.get(`/credit/customers/${customerId}`),
+  updateCreditSettings:   (customerId, data)      => api.put(`/credit/customers/${customerId}/settings`, data),
+  recordPayment:          (customerId, data)      => api.post(`/credit/customers/${customerId}/payment`, data),
+  addInvoiceTransaction:  (customerId, data)      => api.post(`/credit/customers/${customerId}/transaction`, data),
 };
 
 export default api;

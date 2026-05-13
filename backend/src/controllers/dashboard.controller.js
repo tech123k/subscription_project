@@ -7,25 +7,24 @@ const getStats = async (req, res, next) => {
     const { period = '30' } = req.query;
     const days = parseInt(period);
 
+    const safe = (p, fallback) => p.catch(() => ({ rows: [fallback] }));
+
     const [
       orderStats, productionStats, dispatchStats, stockStats,
       revenueStats, lowStockCount, pendingInvoices,
     ] = await Promise.all([
-      // Sales order stats
-      query(
-        `SELECT
-           COUNT(*) AS total,
+      safe(query(
+        `SELECT COUNT(*) AS total,
            COUNT(*) FILTER (WHERE status = 'pending') AS pending,
            COUNT(*) FILTER (WHERE status = 'in_progress') AS in_progress,
            COUNT(*) FILTER (WHERE status = 'completed') AS completed,
            COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '${days} days') AS period_total
          FROM sales_orders WHERE company_id = $1 AND deleted_at IS NULL`,
         [companyId]
-      ),
-      // Production stats
-      query(
-        `SELECT
-           COUNT(*) AS total,
+      ), { total: 0, pending: 0, in_progress: 0, completed: 0, period_total: 0 }),
+
+      safe(query(
+        `SELECT COUNT(*) AS total,
            COUNT(*) FILTER (WHERE status = 'pending') AS pending,
            COUNT(*) FILTER (WHERE status = 'in_progress') AS running,
            COUNT(*) FILTER (WHERE status = 'completed') AS completed,
@@ -35,48 +34,47 @@ const getStats = async (req, res, next) => {
          FROM production_orders WHERE company_id = $1 AND deleted_at IS NULL
          AND created_at >= NOW() - INTERVAL '${days} days'`,
         [companyId]
-      ),
-      // Dispatch stats
-      query(
-        `SELECT
-           COUNT(*) AS total,
+      ), { total: 0, pending: 0, running: 0, completed: 0, delayed: 0, total_produced: 0, total_rejected: 0 }),
+
+      safe(query(
+        `SELECT COUNT(*) AS total,
            COUNT(*) FILTER (WHERE status = 'dispatched') AS in_transit,
            COUNT(*) FILTER (WHERE status = 'delivered') AS delivered,
            COUNT(*) FILTER (WHERE expected_delivery_date < CURRENT_DATE AND status NOT IN ('delivered','returned')) AS delayed
          FROM dispatches WHERE company_id = $1 AND deleted_at IS NULL
          AND created_at >= NOW() - INTERVAL '${days} days'`,
         [companyId]
-      ),
-      // Stock stats
-      query(
-        `SELECT
-           COUNT(*) AS total_materials,
+      ), { total: 0, in_transit: 0, delivered: 0, delayed: 0 }),
+
+      safe(query(
+        `SELECT COUNT(*) AS total_materials,
            COALESCE(SUM(current_stock * purchase_rate), 0) AS stock_value,
            COUNT(*) FILTER (WHERE current_stock <= minimum_stock) AS low_stock_count,
            COUNT(*) FILTER (WHERE current_stock = 0) AS out_of_stock
          FROM materials WHERE company_id = $1 AND is_active = TRUE AND deleted_at IS NULL`,
         [companyId]
-      ),
-      // Revenue stats
-      query(
-        `SELECT
-           COALESCE(SUM(net_amount), 0) AS total_revenue,
+      ), { total_materials: 0, stock_value: 0, low_stock_count: 0, out_of_stock: 0 }),
+
+      safe(query(
+        `SELECT COALESCE(SUM(net_amount), 0) AS total_revenue,
            COALESCE(SUM(net_amount) FILTER (WHERE payment_status = 'paid'), 0) AS paid_revenue,
            COALESCE(SUM(balance_amount) FILTER (WHERE payment_status != 'paid'), 0) AS pending_revenue,
            COUNT(*) AS total_invoices
          FROM invoices WHERE company_id = $1 AND deleted_at IS NULL
          AND invoice_date >= NOW() - INTERVAL '${days} days'`,
         [companyId]
-      ),
-      query(
+      ), { total_revenue: 0, paid_revenue: 0, pending_revenue: 0, total_invoices: 0 }),
+
+      safe(query(
         `SELECT COUNT(*) FROM materials WHERE company_id = $1 AND current_stock <= minimum_stock AND is_active = TRUE AND deleted_at IS NULL`,
         [companyId]
-      ),
-      query(
+      ), { count: 0 }),
+
+      safe(query(
         `SELECT COUNT(*), COALESCE(SUM(balance_amount), 0) AS amount
          FROM invoices WHERE company_id = $1 AND payment_status != 'paid' AND deleted_at IS NULL`,
         [companyId]
-      ),
+      ), { count: 0, amount: 0 }),
     ]);
 
     ApiResponse.success(res, {
@@ -85,10 +83,10 @@ const getStats = async (req, res, next) => {
       dispatches: dispatchStats.rows[0],
       stock: stockStats.rows[0],
       revenue: revenueStats.rows[0],
-      lowStockCount: parseInt(lowStockCount.rows[0].count),
+      lowStockCount: parseInt(lowStockCount.rows[0].count || 0),
       pendingInvoices: {
-        count: parseInt(pendingInvoices.rows[0].count),
-        amount: parseFloat(pendingInvoices.rows[0].amount),
+        count: parseInt(pendingInvoices.rows[0].count || 0),
+        amount: parseFloat(pendingInvoices.rows[0].amount || 0),
       },
     });
   } catch (error) {

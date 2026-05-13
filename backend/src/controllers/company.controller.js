@@ -19,7 +19,10 @@ const getAll = async (req, res, next) => {
 
     const [dataRes, countRes, statsRes] = await Promise.all([
       query(
-        `SELECT c.*, (SELECT COUNT(*) FROM users u WHERE u.company_id = c.id AND u.deleted_at IS NULL) AS user_count
+        `SELECT c.*,
+          (SELECT COUNT(*) FROM users u WHERE u.company_id = c.id AND u.deleted_at IS NULL) AS user_count,
+          (SELECT first_name || ' ' || last_name FROM users u WHERE u.company_id = c.id AND u.role = 'company_admin' AND u.deleted_at IS NULL LIMIT 1) AS admin_name,
+          (SELECT email FROM users u WHERE u.company_id = c.id AND u.role = 'company_admin' AND u.deleted_at IS NULL LIMIT 1) AS admin_email
          FROM companies c ${where} ORDER BY c.created_at DESC LIMIT $${idx} OFFSET $${idx + 1}`,
         [...params, limit, offset]
       ),

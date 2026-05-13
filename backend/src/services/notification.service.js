@@ -2,6 +2,10 @@ const { query } = require('../config/database');
 const emailService = require('./email.service');
 const logger = require('../utils/logger');
 
+// Simple in-memory cache: key = `${userId}:${companyId}`, value = { count, expiresAt }
+const countCache = new Map();
+const CACHE_TTL = 45 * 1000; // 45 seconds
+
 class NotificationService {
   constructor() {
     this.io = null;
@@ -76,12 +80,13 @@ class NotificationService {
     }
   }
 
-  async markAsRead(notificationId, userId) {
+  async markAsRead(notificationId, userId, companyId) {
     const result = await query(
       `UPDATE notifications SET is_read = TRUE, read_at = NOW()
-       WHERE id = $1 AND user_id = $2 RETURNING id`,
+       WHERE id = $1 AND user_id = $2 RETURNING id, user_id`,
       [notificationId, userId]
     );
+    if (result.rows[0] && companyId) this.invalidateCountCache(userId, companyId);
     return result.rows[0];
   }
 
@@ -91,6 +96,7 @@ class NotificationService {
        WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE`,
       [userId, companyId]
     );
+    this.invalidateCountCache(userId, companyId);
   }
 
   async getUserNotifications(userId, companyId, { page = 1, limit = 20, unreadOnly = false }) {
@@ -113,11 +119,21 @@ class NotificationService {
   }
 
   async getUnreadCount(userId, companyId) {
+    const key = `${userId}:${companyId}`;
+    const cached = countCache.get(key);
+    if (cached && cached.expiresAt > Date.now()) return cached.count;
+
     const result = await query(
       'SELECT COUNT(*) FROM notifications WHERE user_id = $1 AND company_id = $2 AND is_read = FALSE',
       [userId, companyId]
     );
-    return parseInt(result.rows[0].count);
+    const count = parseInt(result.rows[0].count);
+    countCache.set(key, { count, expiresAt: Date.now() + CACHE_TTL });
+    return count;
+  }
+
+  invalidateCountCache(userId, companyId) {
+    countCache.delete(`${userId}:${companyId}`);
   }
 
   async checkLowStock(companyId) {

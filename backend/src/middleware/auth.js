@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
-const { query } = require('../config/database');
 const { AppError } = require('./errorHandler');
 
-const authenticate = async (req, res, next) => {
+// JWT-only auth — no DB query per request.
+// Token expires in 15m so deactivated accounts are locked out within one token lifetime.
+const authenticate = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -12,43 +13,16 @@ const authenticate = async (req, res, next) => {
     const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const result = await query(
-      `SELECT u.id, u.company_id, u.email, u.first_name, u.last_name,
-              u.role, u.department, u.is_active, u.notification_preferences,
-              c.name AS company_name, c.subscription_plan, c.subscription_expires_at,
-              c.is_active AS company_active
-       FROM users u
-       LEFT JOIN companies c ON u.company_id = c.id
-       WHERE u.id = $1 AND u.deleted_at IS NULL`,
-      [decoded.userId]
-    );
-
-    if (!result.rows[0]) throw new AppError('User not found', 401);
-
-    const user = result.rows[0];
-
-    if (!user.is_active) throw new AppError('Account is deactivated', 401);
-
-    if (user.role !== 'super_admin' && user.company_id) {
-      if (!user.company_active) throw new AppError('Company account is deactivated', 403);
-      if (
-        user.subscription_expires_at &&
-        new Date(user.subscription_expires_at) < new Date()
-      ) {
-        throw new AppError('Company subscription has expired', 403);
-      }
-    }
-
     req.user = {
-      id: user.id,
-      companyId: user.company_id,
-      email: user.email,
-      firstName: user.first_name,
-      lastName: user.last_name,
-      fullName: `${user.first_name} ${user.last_name}`,
-      role: user.role,
-      department: user.department,
-      companyName: user.company_name,
+      id: decoded.userId,
+      companyId: decoded.companyId,
+      email: decoded.email || '',
+      firstName: decoded.firstName || '',
+      lastName: decoded.lastName || '',
+      fullName: decoded.fullName || `${decoded.firstName || ''} ${decoded.lastName || ''}`.trim(),
+      role: decoded.role,
+      department: decoded.department || '',
+      companyName: decoded.companyName || '',
     };
 
     next();
@@ -68,17 +42,14 @@ const requireRole = (...roles) =>
 const requireSuperAdmin = requireRole('super_admin');
 const requireCompanyAdmin = requireRole('super_admin', 'company_admin');
 
-const optionalAuth = async (req, res, next) => {
+const optionalAuth = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) return next();
 
   try {
     const token = authHeader.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const result = await query('SELECT id, company_id, email, role FROM users WHERE id = $1', [decoded.userId]);
-    if (result.rows[0]) {
-      req.user = result.rows[0];
-    }
+    req.user = { id: decoded.userId, companyId: decoded.companyId, role: decoded.role };
   } catch (_) { /* ignore */ }
 
   next();

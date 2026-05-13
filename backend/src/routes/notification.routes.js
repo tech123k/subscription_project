@@ -20,7 +20,7 @@ router.get('/unread-count', async (req, res, next) => {
 
 router.patch('/:id/read', async (req, res, next) => {
   try {
-    await notificationService.markAsRead(req.params.id, req.user.id);
+    await notificationService.markAsRead(req.params.id, req.user.id, req.companyId);
     ApiResponse.success(res, null, 'Marked as read');
   } catch (error) { next(error); }
 });

@@ -7,6 +7,7 @@ router.get('/export', ctrl.exportOrders);
 router.get('/:id', ctrl.getOne);
 router.post('/', ctrl.create);
 router.put('/:id/stage', ctrl.updateStage);
+router.post('/:id/revert-stage', ctrl.revertStage);
 router.patch('/:id/status', ctrl.updateStatus);
 
 module.exports = router;

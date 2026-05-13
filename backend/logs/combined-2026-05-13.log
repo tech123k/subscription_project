@@ -1,0 +1,4 @@
+2026-05-13 13:51:26 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-13 13:51:26 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-13 13:51:26 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-13 13:51:26 [INFO]: ❤️  Health: http://localhost:5000/health

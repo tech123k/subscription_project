@@ -65,7 +65,17 @@ class AuthService {
       throw new AppError('Company account is deactivated', 403);
     }
 
-    const tokenPayload = { userId: user.id, companyId: user.company_id, role: user.role };
+    const tokenPayload = {
+      userId: user.id,
+      companyId: user.company_id,
+      role: user.role,
+      email: user.email,
+      firstName: user.first_name,
+      lastName: user.last_name,
+      fullName: `${user.first_name} ${user.last_name}`,
+      department: user.department || '',
+      companyName: user.company_name || '',
+    };
     const accessToken = this.generateAccessToken(tokenPayload);
     const refreshToken = this.generateRefreshToken(tokenPayload);
 
@@ -210,6 +220,18 @@ class AuthService {
          VALUES ($1, 'Main Warehouse', 'WH-01', TRUE)`,
         [company.id]
       );
+
+      // Create default material categories
+      const defaultCategories = [
+        'Raw Materials', 'Packaging', 'Finished Goods',
+        'Semi-Finished', 'Consumables', 'Spare Parts',
+      ];
+      for (const catName of defaultCategories) {
+        await client.query(
+          'INSERT INTO material_categories (company_id, name) VALUES ($1, $2)',
+          [company.id, catName]
+        );
+      }
 
       // Create default workflow template based on industry
       const templateResult = await client.query(
