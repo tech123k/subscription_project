@@ -58,8 +58,11 @@ const create = async (req, res, next) => {
     const companyId = req.companyId;
     const { email, password, firstName, lastName, phone, role, department, designation, employeeCode } = req.body;
 
-    const existing = await query('SELECT id FROM users WHERE email = LOWER($1) AND deleted_at IS NULL', [email]);
-    if (existing.rows[0]) return ApiResponse.badRequest(res, 'Email already registered');
+    const existing = await query(
+      'SELECT id FROM users WHERE email = LOWER($1) AND company_id = $2 AND deleted_at IS NULL',
+      [email, companyId]
+    );
+    if (existing.rows[0]) return ApiResponse.badRequest(res, 'Email already registered for this company');
 
     const passwordHash = await bcrypt.hash(password || 'User@1234', 12);
     const avatarUrl = req.file?.path;

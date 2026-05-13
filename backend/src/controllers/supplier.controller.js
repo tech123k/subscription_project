@@ -44,6 +44,14 @@ const create = async (req, res, next) => {
       bankName, bankAccountNumber, bankIfsc, creditDays, creditLimit, rating, notes,
     } = req.body;
 
+    if (code) {
+      const dup = await query(
+        'SELECT id FROM suppliers WHERE company_id=$1 AND code=$2 AND deleted_at IS NULL',
+        [req.companyId, code]
+      );
+      if (dup.rows[0]) return ApiResponse.conflict(res, 'Supplier code already exists for this company');
+    }
+
     const result = await query(
       `INSERT INTO suppliers (company_id, name, code, contact_person, email, phone, alternate_phone,
         gst_number, pan_number, address_line1, address_line2, city, state, country, pincode,
@@ -57,6 +65,7 @@ const create = async (req, res, next) => {
     );
     ApiResponse.created(res, result.rows[0]);
   } catch (error) {
+    if (error.code === '23505') return ApiResponse.conflict(res, 'Supplier code already exists for this company');
     next(error);
   }
 };
@@ -65,6 +74,14 @@ const update = async (req, res, next) => {
   try {
     const { id } = req.params;
     const fields = ['name', 'code', 'contact_person', 'email', 'phone', 'gst_number', 'city', 'state', 'credit_days', 'credit_limit', 'rating', 'is_active'];
+
+    if (req.body.code) {
+      const dup = await query(
+        'SELECT id FROM suppliers WHERE company_id=$1 AND code=$2 AND id<>$3 AND deleted_at IS NULL',
+        [req.companyId, req.body.code, id]
+      );
+      if (dup.rows[0]) return ApiResponse.conflict(res, 'Supplier code already exists for this company');
+    }
     const updates = [];
     const values = [];
     let idx = 1;
@@ -88,6 +105,7 @@ const update = async (req, res, next) => {
     if (!result.rows[0]) return ApiResponse.notFound(res, 'Supplier not found');
     ApiResponse.success(res, result.rows[0]);
   } catch (error) {
+    if (error.code === '23505') return ApiResponse.conflict(res, 'Supplier code already exists for this company');
     next(error);
   }
 };

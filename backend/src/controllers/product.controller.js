@@ -277,6 +277,14 @@ const create = async (req, res, next) => {
     if (!name?.trim()) return ApiResponse.badRequest(res, 'Product name is required');
     if (!unit?.trim()) return ApiResponse.badRequest(res, 'Unit is required');
 
+    if (code?.trim()) {
+      const dup = await query(
+        'SELECT id FROM products WHERE company_id=$1 AND code=$2 AND deleted_at IS NULL',
+        [companyId, code.trim()]
+      );
+      if (dup.rows[0]) return ApiResponse.conflict(res, 'A product with this code already exists for this company');
+    }
+
     const result = await query(
       `INSERT INTO products
          (company_id, name, code, category, unit, description, is_active, finished_goods_material_id, created_by)
@@ -290,7 +298,7 @@ const create = async (req, res, next) => {
 
     ApiResponse.created(res, result.rows[0], 'Product created');
   } catch (error) {
-    if (error.code === '23505') return ApiResponse.conflict(res, 'A product with this code already exists');
+    if (error.code === '23505') return ApiResponse.conflict(res, 'A product with this code already exists for this company');
     next(error);
   }
 };
@@ -301,6 +309,14 @@ const update = async (req, res, next) => {
     const { id } = req.params;
     const companyId = req.companyId;
     const { name, code, category, unit, description, isActive, finishedGoodsMaterialId } = req.body;
+
+    if (code?.trim()) {
+      const dup = await query(
+        'SELECT id FROM products WHERE company_id=$1 AND code=$2 AND id<>$3 AND deleted_at IS NULL',
+        [companyId, code.trim(), id]
+      );
+      if (dup.rows[0]) return ApiResponse.conflict(res, 'A product with this code already exists for this company');
+    }
 
     const result = await query(
       `UPDATE products SET
@@ -325,7 +341,7 @@ const update = async (req, res, next) => {
     if (!result.rows[0]) return ApiResponse.notFound(res, 'Product not found');
     ApiResponse.success(res, result.rows[0], 'Product updated');
   } catch (error) {
-    if (error.code === '23505') return ApiResponse.conflict(res, 'A product with this code already exists');
+    if (error.code === '23505') return ApiResponse.conflict(res, 'A product with this code already exists for this company');
     next(error);
   }
 };

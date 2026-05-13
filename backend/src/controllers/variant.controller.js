@@ -35,6 +35,12 @@ const createAttribute = async (req, res, next) => {
     const { name, code, dataType = 'text', isRequired = false, sortOrder = 0, values = [] } = req.body;
     if (!name?.trim() || !code?.trim()) return ApiResponse.badRequest(res, 'name and code are required');
 
+    const dup = await query(
+      'SELECT id FROM product_attributes WHERE company_id=$1 AND code=$2',
+      [req.companyId, code.trim().toUpperCase()]
+    );
+    if (dup.rows[0]) return ApiResponse.conflict(res, 'Attribute code already exists for this company');
+
     const result = await transaction(async (client) => {
       const attrRes = await client.query(
         `INSERT INTO product_attributes (company_id, name, code, data_type, is_required, sort_order)
@@ -59,7 +65,7 @@ const createAttribute = async (req, res, next) => {
 
     ApiResponse.created(res, result, 'Attribute created');
   } catch (err) {
-    if (err.code === '23505') return ApiResponse.conflict(res, 'Attribute code already exists');
+    if (err.code === '23505') return ApiResponse.conflict(res, 'Attribute code already exists for this company');
     next(err);
   }
 };

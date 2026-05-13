@@ -50,6 +50,14 @@ const create = async (req, res, next) => {
       shippingAddress, creditDays, creditLimit, discountPercent, notes,
     } = req.body;
 
+    if (code) {
+      const dup = await query(
+        'SELECT id FROM customers WHERE company_id=$1 AND code=$2 AND deleted_at IS NULL',
+        [req.companyId, code]
+      );
+      if (dup.rows[0]) return ApiResponse.conflict(res, 'Customer code already exists for this company');
+    }
+
     const result = await query(
       `INSERT INTO customers (company_id, name, code, contact_person, email, phone, alternate_phone,
         gst_number, pan_number, address_line1, address_line2, city, state, country, pincode,
@@ -63,6 +71,7 @@ const create = async (req, res, next) => {
     );
     ApiResponse.created(res, result.rows[0]);
   } catch (error) {
+    if (error.code === '23505') return ApiResponse.conflict(res, 'Customer code already exists for this company');
     next(error);
   }
 };
@@ -70,6 +79,15 @@ const create = async (req, res, next) => {
 const update = async (req, res, next) => {
   try {
     const { id } = req.params;
+
+    if (req.body.code) {
+      const dup = await query(
+        'SELECT id FROM customers WHERE company_id=$1 AND code=$2 AND id<>$3 AND deleted_at IS NULL',
+        [req.companyId, req.body.code, id]
+      );
+      if (dup.rows[0]) return ApiResponse.conflict(res, 'Customer code already exists for this company');
+    }
+
     const fieldMap = { name: 'name', code: 'code', contactPerson: 'contact_person', email: 'email', phone: 'phone', gstNumber: 'gst_number', city: 'city', state: 'state', creditDays: 'credit_days', creditLimit: 'credit_limit', discountPercent: 'discount_percent', isActive: 'is_active' };
     const updates = []; const values = []; let idx = 1;
     Object.entries(fieldMap).forEach(([jsKey, dbKey]) => {
@@ -80,6 +98,7 @@ const update = async (req, res, next) => {
     if (!result.rows[0]) return ApiResponse.notFound(res, 'Customer not found');
     ApiResponse.success(res, result.rows[0]);
   } catch (error) {
+    if (error.code === '23505') return ApiResponse.conflict(res, 'Customer code already exists for this company');
     next(error);
   }
 };

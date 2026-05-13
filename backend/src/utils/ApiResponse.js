@@ -32,6 +32,10 @@ class ApiResponse {
     return this.error(res, message, 400, errors);
   }
 
+  static conflict(res, message = 'Record already exists') {
+    return this.error(res, message, 409);
+  }
+
   static paginated(res, data, meta, message = 'Success') {
     return res.status(200).json({ success: true, message, data, meta });
   }

@@ -43,6 +43,15 @@ const getOne = async (req, res, next) => {
 const create = async (req, res, next) => {
   try {
     const { name, code, address, city, state, pincode, contactPerson, phone, notes } = req.body;
+
+    if (code) {
+      const dup = await query(
+        'SELECT id FROM warehouses WHERE company_id=$1 AND code=$2 AND deleted_at IS NULL',
+        [req.companyId, code]
+      );
+      if (dup.rows[0]) return ApiResponse.conflict(res, 'Warehouse code already exists for this company');
+    }
+
     const result = await query(
       `INSERT INTO warehouses (company_id, name, code, address, city, state, pincode, contact_person, phone, notes)
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`,
@@ -50,6 +59,7 @@ const create = async (req, res, next) => {
     );
     ApiResponse.created(res, result.rows[0]);
   } catch (error) {
+    if (error.code === '23505') return ApiResponse.conflict(res, 'Warehouse code already exists for this company');
     next(error);
   }
 };
@@ -77,6 +87,7 @@ const update = async (req, res, next) => {
     if (!result.rows[0]) return ApiResponse.notFound(res, 'Warehouse not found');
     ApiResponse.success(res, result.rows[0]);
   } catch (error) {
+    if (error.code === '23505') return ApiResponse.conflict(res, 'Warehouse code already exists for this company');
     next(error);
   }
 };

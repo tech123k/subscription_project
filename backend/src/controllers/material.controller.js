@@ -80,7 +80,7 @@ const create = async (req, res, next) => {
     const imageUrl = req.file?.path || null;
 
     const existing = await query('SELECT id FROM materials WHERE company_id = $1 AND code = $2 AND deleted_at IS NULL', [companyId, code]);
-    if (existing.rows[0]) return ApiResponse.badRequest(res, 'Material code already exists');
+    if (existing.rows[0]) return ApiResponse.conflict(res, 'Material code already exists for this company');
 
     const result = await query(
       `INSERT INTO materials (
@@ -113,6 +113,7 @@ const create = async (req, res, next) => {
 
     ApiResponse.created(res, result.rows[0], 'Material created successfully');
   } catch (error) {
+    if (error.code === '23505') return ApiResponse.conflict(res, 'Material code already exists for this company');
     next(error);
   }
 };
@@ -340,7 +341,7 @@ const importMaterials = async (req, res, next) => {
 
       try {
         const existing = await query('SELECT id FROM materials WHERE company_id = $1 AND code = $2 AND deleted_at IS NULL', [req.companyId, row['Material Code*']]);
-        if (existing.rows[0]) { errors.push(`Row ${i + 2}: Material code '${row['Material Code*']}' already exists`); continue; }
+        if (existing.rows[0]) { errors.push(`Row ${i + 2}: Material code '${row['Material Code*']}' already exists for this company`); continue; }
 
         const result = await query(
           `INSERT INTO materials (company_id, name, code, unit, hsn_code, gst_percent, purchase_rate, sale_rate, opening_stock, current_stock, minimum_stock, reorder_level, lead_time_days)
