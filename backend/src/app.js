@@ -52,6 +52,9 @@ app.set('trust proxy', 1);
 // Global rate limiter
 app.use(globalLimiter);
 
+// Lightweight ping — used by frontend to wake Render cold-starts
+app.get('/ping', (req, res) => res.json({ ok: true }));
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({

@@ -4,25 +4,25 @@ import { useAuthStore } from '../store/authStore';
 
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 
+// 90s timeout — covers Render free-tier cold starts (typically 30-60s)
 const api = axios.create({
   baseURL: API_URL,
-  timeout: 30000,
+  timeout: 90000,
   headers: { 'Content-Type': 'application/json' },
 });
 
-// Request interceptor - attach token
+// Request interceptor — attach token + mark request start time
 api.interceptors.request.use(
   (config) => {
     const token = useAuthStore.getState().accessToken;
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    config._startTime = Date.now();
     return config;
   },
   (error) => Promise.reject(error)
 );
 
-// Response interceptor - handle 401, refresh token
+// Response interceptor — handle 401, refresh token, timeout, network errors
 let isRefreshing = false;
 let failedQueue = [];
 
@@ -34,11 +34,18 @@ const processQueue = (error, token = null) => {
   failedQueue = [];
 };
 
+const isTimeoutError = (error) =>
+  error.code === 'ECONNABORTED' ||
+  error.code === 'ERR_NETWORK' ||
+  error.message?.toLowerCase().includes('timeout') ||
+  error.message?.toLowerCase().includes('network error');
+
 api.interceptors.response.use(
   (response) => response.data,
   async (error) => {
     const original = error.config;
 
+    // ── Token refresh on 401 ──────────────────────────────────
     if (error.response?.status === 401 && !original._retry) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
@@ -53,7 +60,6 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       const refreshToken = useAuthStore.getState().refreshToken;
-
       if (!refreshToken) {
         isRefreshing = false;
         useAuthStore.getState().logout();
@@ -76,10 +82,39 @@ api.interceptors.response.use(
       }
     }
 
+    // ── Timeout / network-down handling ──────────────────────
+    if (isTimeoutError(error)) {
+      // Only show toast if not already retrying
+      if (!original._timeoutRetry) {
+        toast.error(
+          'Server is taking longer than usual. Please wait a moment and try again.',
+          { id: 'timeout-toast', duration: 6000 }
+        );
+      }
+      return Promise.reject({
+        status: 0,
+        message: 'Server is taking longer than usual. Please wait a moment and try again.',
+        isTimeout: true,
+      });
+    }
+
+    // ── No internet connection ────────────────────────────────
+    if (!navigator.onLine) {
+      toast.error('No internet connection. Please check your network.', {
+        id: 'offline-toast',
+        duration: 5000,
+      });
+      return Promise.reject({
+        status: 0,
+        message: 'No internet connection.',
+        isOffline: true,
+      });
+    }
+
     const message = error.response?.data?.message || error.message || 'Something went wrong';
     const status = error.response?.status;
 
-    // Skip auto-toast for client-error codes that forms handle themselves
+    // Skip auto-toast for codes that forms handle themselves
     const silentCodes = new Set([400, 401, 403, 409, 422]);
     if (!silentCodes.has(status)) {
       toast.error(message);

@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom
 import { useAuthStore } from './store/authStore';
 import Layout from './components/layout/Layout';
 import LoadingScreen from './components/ui/LoadingScreen';
+import NetworkBanner from './components/ui/NetworkBanner';
 
 // Auth pages (eager — needed immediately)
 import Login from './pages/auth/Login';
@@ -83,7 +84,8 @@ const AdminRoute = () => {
 
 const App = () => (
   <BrowserRouter>
-    <Suspense fallback={<LoadingScreen />}>
+    <NetworkBanner />
+    <Suspense fallback={<LoadingScreen message="Loading..." />}>
       <Routes>
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
