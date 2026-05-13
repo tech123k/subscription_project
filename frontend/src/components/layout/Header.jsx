@@ -84,7 +84,7 @@ const Header = ({ onMenuToggle }) => {
   const go = (path) => { navigate(path); closeMenu(); };
 
   return (
-    <header className="h-14 sm:h-16 bg-white/90 backdrop-blur-md border-b border-slate-100 shadow-[0_1px_0_rgba(0,0,0,0.04)] flex items-center px-3 sm:px-5 gap-2 sm:gap-3 sticky top-0 z-30">
+    <header className="h-14 sm:h-16 bg-white border-b border-slate-100 shadow-[0_1px_0_rgba(0,0,0,0.04)] flex items-center px-3 sm:px-5 gap-2 sm:gap-3 sticky top-0 z-30">
 
       {/* Menu toggle */}
       <button

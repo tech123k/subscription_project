@@ -427,8 +427,8 @@ const CommandPalette = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.12 }}
-          className="fixed inset-0 bg-slate-900/60 backdrop-blur-[3px] z-[9998]"
-          onMouseDown={forceClose}
+          className="fixed inset-0 bg-slate-900/60 z-[9998]"
+          onClick={forceClose}
         />
       )}
       {isOpen && (
@@ -439,7 +439,6 @@ const CommandPalette = () => {
           exit={{ opacity: 0,  scale: 0.96, y: -12 }}
           transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
           className="fixed inset-x-3 top-[8vh] sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-2xl z-[9999]"
-          onMouseDown={e => e.stopPropagation()}
         >
             <div className="bg-white rounded-2xl overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.28),0_0_0_1px_rgba(0,0,0,0.06)]">
 
@@ -464,6 +463,7 @@ const CommandPalette = () => {
                   placeholder="Search pages, materials, customers, invoices…"
                   spellCheck={false}
                   autoComplete="off"
+                  autoFocus
                   className="flex-1 text-[15px] text-slate-900 placeholder-slate-400 focus:outline-none bg-transparent font-medium"
                 />
                 <div className="flex items-center gap-2 flex-shrink-0">
