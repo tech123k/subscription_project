@@ -412,11 +412,11 @@ const generateSkuCombinations = async (req, res, next) => {
       const sku = skuPrefix ? `${skuPrefix}-${suffix}` : suffix;
       const name = combo.map((c) => c.display_name || c.value).join(' / ');
       const attributeValues = combo.map((c) => ({
-        attribute_id:   c.value_id ? combo.find((x) => x.value_id === c.value_id)?.attr_code : null,
+        attribute_code: c.attr_code,
         attribute_name: c.attr_name,
         value_id:       c.value_id,
         value:          c.value,
-        display_name:   c.display_name,
+        display_name:   c.display_name || c.value,
       }));
       return { sku, name, attributeValues };
     });

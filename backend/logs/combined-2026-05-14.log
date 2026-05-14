@@ -143,3 +143,59 @@ Error: No token provided
     at router (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express\lib\router\index.js:47:12)
     at newFn (C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\express-async-errors\index.js:16:20)
 2026-05-14 02:06:07 [INFO]: SIGINT received. Shutting down gracefully...
+2026-05-14 15:30:17 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-14 15:30:17 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-14 15:30:17 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-14 15:30:17 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-14 15:30:18 [INFO]: Database connected successfully at Thu May 14 2026 15:30:20 GMT+0530 (India Standard Time)
+2026-05-14 15:30:18 [INFO]: ✅ Database connected
+2026-05-14 15:30:18 [INFO]: ✅ Redis connected
+2026-05-14 15:35:00 [WARN]: Slow query detected {"query":"SELECT COUNT(*) AS total,\n           COUNT(*) FILTER (WHERE status = 'pending') AS pending,\n           COUNT(*) FILTER (WHERE status = 'in_progress') AS in_progress,\n           COUNT(*) FILTER (WHERE status = 'completed') AS completed,\n           COUNT(*) FILTER (WHERE created_at >= NOW() - INTERVAL '30 days') AS period_total\n         FROM sales_orders WHERE company_id = $1 AND deleted_at IS NULL","duration":"1010ms","rows":1}
+2026-05-14 15:35:00 [WARN]: Slow query detected {"query":"SELECT COUNT(*) AS total,\n           COUNT(*) FILTER (WHERE status = 'dispatched') AS in_transit,\n           COUNT(*) FILTER (WHERE status = 'delivered') AS delivered,\n           COUNT(*) FILTER (WHERE expected_delivery_date < CURRENT_DATE AND status NOT IN ('delivered','returned')) AS delayed\n         FROM dispatches WHERE company_id = $1 AND deleted_at IS NULL\n         AND created_at >= NOW() - INTERVAL '30 days'","duration":"1041ms","rows":1}
+2026-05-14 15:35:00 [WARN]: Slow query detected {"query":"SELECT COUNT(*) AS total_materials,\n           COALESCE(SUM(current_stock * purchase_rate), 0) AS stock_value,\n           COUNT(*) FILTER (WHERE current_stock <= minimum_stock) AS low_stock_count,\n           COUNT(*) FILTER (WHERE current_stock = 0) AS out_of_stock\n         FROM materials WHERE company_id = $1 AND is_active = TRUE AND deleted_at IS NULL","duration":"1074ms","rows":1}
+2026-05-14 15:35:01 [WARN]: Slow query detected {"query":"SELECT m.name, m.code, SUM(po.produced_quantity) AS total_produced,\n                SUM(po.rejected_quantity) AS total_rejected\n         FROM production_orders po\n         JOIN materials m ON po.product_material_id = m.id\n         WHERE po.company_id = $1 AND po.deleted_at IS NULL\n         AND po.created_at >= NOW() - INTERVAL '30 days'\n         GROUP BY m.id, m.name, m.code\n         ORDER BY total_produced DESC LIMIT 10","duration":"1011ms","rows":0}
+2026-05-14 15:43:38 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-14 15:43:38 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-14 15:43:38 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-14 15:43:38 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-14 15:43:39 [INFO]: Database connected successfully at Thu May 14 2026 15:43:41 GMT+0530 (India Standard Time)
+2026-05-14 15:43:39 [INFO]: ✅ Database connected
+2026-05-14 15:43:39 [INFO]: ✅ Redis connected
+2026-05-14 15:43:42 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-14 15:43:42 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-14 15:43:42 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-14 15:43:42 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-14 15:43:43 [INFO]: Database connected successfully at Thu May 14 2026 15:43:45 GMT+0530 (India Standard Time)
+2026-05-14 15:43:43 [INFO]: ✅ Database connected
+2026-05-14 15:43:43 [INFO]: ✅ Redis connected
+2026-05-14 15:44:13 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-14 15:44:13 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-14 15:44:13 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-14 15:44:13 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-14 15:44:14 [INFO]: Database connected successfully at Thu May 14 2026 15:44:16 GMT+0530 (India Standard Time)
+2026-05-14 15:44:14 [INFO]: ✅ Database connected
+2026-05-14 15:44:14 [INFO]: ✅ Redis connected
+2026-05-14 15:51:50 [WARN]: Slow query detected {"query":"SELECT\n         movement_type,\n         COUNT(*)::int AS count,\n         SUM(ABS(quantity))::numeric AS total_quantity\n       FROM inventory_ledger\n       WHERE company_id=$1\n         AND created_at >= NOW() - INTERVAL '1 day' * $2\n       GROUP BY movement_type\n       ORDER BY total_quantity DESC","duration":"1056ms","rows":0}
+2026-05-14 15:58:16 [WARN]: Slow query detected {"query":"SELECT w.*, u.first_name || ' ' || u.last_name AS manager_name,\n              (SELECT COUNT(*) FROM materials m WHERE m.warehouse_id = w.id AND m.deleted_at IS NULL) AS material_count,\n              (SELECT COALESCE(SUM(m.current_stock * m.purchase_rate), 0) FROM materials m WHERE m.warehouse_id = w.id AND m.deleted_at IS NULL) AS stock_value\n       FROM warehouses w\n       LEFT JOIN users u ON w.manager_id = u.id\n       WHERE w.company_id = $1 AND w.deleted_at IS NULL\n       ORDER BY w.is_primary DESC, w.name","duration":"1023ms","rows":2}
+2026-05-14 16:11:44 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-14 16:11:44 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-14 16:11:44 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-14 16:11:44 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-14 16:11:45 [INFO]: Database connected successfully at Thu May 14 2026 16:11:47 GMT+0530 (India Standard Time)
+2026-05-14 16:11:45 [INFO]: ✅ Database connected
+2026-05-14 16:11:45 [INFO]: ✅ Redis connected
+2026-05-14 16:11:53 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-14 16:11:53 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-14 16:11:53 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-14 16:11:53 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-14 16:11:54 [INFO]: Database connected successfully at Thu May 14 2026 16:11:56 GMT+0530 (India Standard Time)
+2026-05-14 16:11:54 [INFO]: ✅ Database connected
+2026-05-14 16:11:54 [INFO]: ✅ Redis connected
+2026-05-14 16:12:12 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-14 16:12:12 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-14 16:12:12 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-14 16:12:12 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-14 16:12:13 [INFO]: Database connected successfully at Thu May 14 2026 16:12:15 GMT+0530 (India Standard Time)
+2026-05-14 16:12:13 [INFO]: ✅ Database connected
+2026-05-14 16:12:13 [INFO]: ✅ Redis connected
+2026-05-14 16:23:13 [INFO]: SIGINT received. Shutting down gracefully...

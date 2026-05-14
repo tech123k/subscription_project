@@ -2,11 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { pool } = require('../config/database');
 const { v4: uuidv4 } = require('uuid');
+const { writeLedger } = require('../services/ledger.service');
 
 // ─── Helper ──────────────────────────────────────────────────────────────────
-// Recalculates po_items.received_quantity from scratch using physical
-// received_quantity (not accepted_quantity) so PO completion reflects
-// what the supplier actually delivered, independent of QC outcome.
 const recalculatePOStatus = async (client, poId) => {
   if (!poId) return;
 
@@ -25,7 +23,6 @@ const recalculatePOStatus = async (client, poId) => {
     [poId]
   );
 
-  // Fetch updated items to decide PO status
   const { rows: items } = await client.query(
     'SELECT quantity, received_quantity FROM po_items WHERE po_id = $1',
     [poId]
@@ -33,19 +30,14 @@ const recalculatePOStatus = async (client, poId) => {
 
   if (!items.length) return;
 
-  const totalOrdered   = items.reduce((s, i) => s + Number(i.quantity), 0);
-  const totalReceived  = items.reduce((s, i) => s + Number(i.received_quantity), 0);
+  const totalOrdered  = items.reduce((s, i) => s + Number(i.quantity), 0);
+  const totalReceived = items.reduce((s, i) => s + Number(i.received_quantity), 0);
 
   let newStatus;
-  if (totalReceived <= 0) {
-    newStatus = 'confirmed';                        // nothing received yet
-  } else if (totalReceived < totalOrdered) {
-    newStatus = 'partial';                          // Partially Received
-  } else {
-    newStatus = 'completed';                        // Completed
-  }
+  if (totalReceived <= 0)             newStatus = 'confirmed';
+  else if (totalReceived < totalOrdered) newStatus = 'partial';
+  else                                newStatus = 'completed';
 
-  // Only update if PO is in a state that makes sense to auto-progress
   await client.query(
     `UPDATE purchase_orders
      SET status = $1, updated_at = NOW()
@@ -147,8 +139,6 @@ router.post('/', async (req, res) => {
     await client.query('BEGIN');
 
     // ── PO quantity cap validation ──────────────────────────────────────────
-    // Compute remaining from LIVE GRN data — never trust po_items.received_quantity
-    // which may be stale from before this fix was deployed.
     if (poId && materialId) {
       const { rows: [poItem] } = await client.query(
         `SELECT pi.quantity,
@@ -204,7 +194,7 @@ router.post('/', async (req, res) => {
     );
 
     const { rows: [mat] } = await client.query(
-      'SELECT unit FROM materials WHERE id = $1', [materialId]
+      'SELECT unit, current_stock FROM materials WHERE id = $1', [materialId]
     );
 
     await client.query(
@@ -220,13 +210,14 @@ router.post('/', async (req, res) => {
       ]
     );
 
-    // Only add accepted qty to stock when QC is approved — pending/rejected must NOT increase stock
+    // Only add accepted qty to stock when QC is approved
     if (accepted > 0 && qcStatus === 'approved') {
-      await client.query(
+      const { rows: [updated] } = await client.query(
         `UPDATE materials SET current_stock = current_stock + $1, updated_at = NOW()
-         WHERE id = $2 AND company_id = $3`,
+         WHERE id = $2 AND company_id = $3 RETURNING current_stock`,
         [accepted, materialId, companyId]
       );
+
       await client.query(
         `INSERT INTO stock_transactions
          (id, company_id, material_id, warehouse_id, transaction_type, quantity,
@@ -235,9 +226,26 @@ router.post('/', async (req, res) => {
         [uuidv4(), companyId, materialId, warehouseId || null,
          accepted, grn.id, unitCost || null, notes || null, user.id]
       );
+
+      // ── Write inventory_ledger entry ──────────────────────────────────────
+      await writeLedger({
+        companyId,
+        materialId,
+        warehouseId: warehouseId || null,
+        movementType: 'grn_inward',
+        quantity: accepted,
+        balanceAfter: updated?.current_stock ?? null,
+        unit: mat?.unit || null,
+        rate: unitCost ? Number(unitCost) : null,
+        referenceType: 'grn',
+        referenceId: grn.id,
+        referenceNumber: grnNumber,
+        batchNumber: batchNumber || null,
+        notes: notes || null,
+        performedBy: user.id,
+      }, client);
     }
 
-    // Auto-update PO status (recalculates from scratch)
     await recalculatePOStatus(client, poId);
 
     await client.query('COMMIT');
@@ -261,22 +269,23 @@ router.put('/:id', async (req, res) => {
     await client.query('BEGIN');
 
     const { rows } = await client.query(
-      `SELECT g.qc_status, g.po_id, g.warehouse_id,
-              gi.material_id, gi.accepted_quantity AS old_accepted, gi.received_quantity, gi.rate
+      `SELECT g.qc_status, g.grn_number, g.po_id, g.warehouse_id,
+              gi.material_id, gi.accepted_quantity AS old_accepted, gi.received_quantity, gi.rate,
+              m.unit AS material_unit
        FROM grn g
        JOIN grn_items gi ON gi.grn_id = g.id
+       JOIN materials m ON m.id = gi.material_id
        WHERE g.id = $1 AND g.company_id = $2 AND g.status != 'cancelled'`,
       [id, companyId]
     );
     if (!rows[0]) return res.status(404).json({ success: false, message: 'GRN not found' });
     const grn = rows[0];
 
-    const oldQcStatus  = grn.qc_status;
-    const oldAccepted  = Number(grn.old_accepted);
-    const newQcStatus  = qcStatus || oldQcStatus;
-    const newAccepted  = acceptedQuantity !== undefined ? Number(acceptedQuantity) : oldAccepted;
+    const oldQcStatus = grn.qc_status;
+    const oldAccepted = Number(grn.old_accepted);
+    const newQcStatus = qcStatus || oldQcStatus;
+    const newAccepted = acceptedQuantity !== undefined ? Number(acceptedQuantity) : oldAccepted;
 
-    // Stock delta: only approved GRNs contribute to stock
     const oldStockAdded = oldQcStatus === 'approved' ? oldAccepted : 0;
     const newStockAdded = newQcStatus === 'approved' ? newAccepted : 0;
     const stockDelta    = newStockAdded - oldStockAdded;
@@ -296,12 +305,12 @@ router.put('/:id', async (req, res) => {
     );
 
     if (stockDelta !== 0) {
-      await client.query(
+      const { rows: [updated] } = await client.query(
         `UPDATE materials SET current_stock = GREATEST(0, current_stock + $1)
-         WHERE id = $2 AND company_id = $3`,
+         WHERE id = $2 AND company_id = $3 RETURNING current_stock`,
         [stockDelta, grn.material_id, companyId]
       );
-      // Log the stock movement (positive = inward on approval, negative = reversal)
+
       const txnType = stockDelta > 0 ? 'inward' : 'outward';
       await client.query(
         `INSERT INTO stock_transactions
@@ -312,9 +321,26 @@ router.put('/:id', async (req, res) => {
          txnType, Math.abs(stockDelta), id, grn.rate || null,
          notes ?? null, req.user.id]
       );
+
+      // ── Write inventory_ledger entry for QC status change ─────────────────
+      // Positive delta = new approval (grn_inward), negative = reversal (adjustment_deduct)
+      await writeLedger({
+        companyId,
+        materialId: grn.material_id,
+        warehouseId: grn.warehouse_id || null,
+        movementType: stockDelta > 0 ? 'grn_inward' : 'adjustment_deduct',
+        quantity: stockDelta,
+        balanceAfter: updated?.current_stock ?? null,
+        unit: grn.material_unit || null,
+        rate: grn.rate ? Number(grn.rate) : null,
+        referenceType: 'grn',
+        referenceId: id,
+        referenceNumber: grn.grn_number,
+        notes: `QC status changed to ${newQcStatus}${notes ? ': ' + notes : ''}`,
+        performedBy: req.user.id,
+      }, client);
     }
 
-    // Auto-update PO status
     await recalculatePOStatus(client, grn.po_id);
 
     await client.query('COMMIT');
@@ -337,22 +363,41 @@ router.delete('/:id', async (req, res) => {
     await client.query('BEGIN');
 
     const { rows } = await client.query(
-      `SELECT g.qc_status, g.po_id, gi.material_id, gi.accepted_quantity
+      `SELECT g.qc_status, g.grn_number, g.po_id, g.warehouse_id,
+              gi.material_id, gi.accepted_quantity, gi.rate,
+              m.unit AS material_unit
        FROM grn g
        JOIN grn_items gi ON gi.grn_id = g.id
+       JOIN materials m ON m.id = gi.material_id
        WHERE g.id = $1 AND g.company_id = $2 AND g.status != 'cancelled'`,
       [id, companyId]
     );
     if (!rows[0]) return res.status(404).json({ success: false, message: 'GRN not found' });
     const grn = rows[0];
 
-    // Only reverse stock that was actually added (approved GRNs only)
+    // Reverse stock only if it was approved
     if (grn.qc_status === 'approved' && Number(grn.accepted_quantity) > 0) {
-      await client.query(
+      const { rows: [updated] } = await client.query(
         `UPDATE materials SET current_stock = GREATEST(0, current_stock - $1)
-         WHERE id = $2 AND company_id = $3`,
+         WHERE id = $2 AND company_id = $3 RETURNING current_stock`,
         [Number(grn.accepted_quantity), grn.material_id, companyId]
       );
+
+      // ── Write reversal ledger entry ────────────────────────────────────────
+      await writeLedger({
+        companyId,
+        materialId: grn.material_id,
+        warehouseId: grn.warehouse_id || null,
+        movementType: 'adjustment_deduct',
+        quantity: -Number(grn.accepted_quantity),
+        balanceAfter: updated?.current_stock ?? null,
+        unit: grn.material_unit || null,
+        referenceType: 'grn',
+        referenceId: id,
+        referenceNumber: grn.grn_number,
+        notes: `GRN cancelled — stock reversed`,
+        performedBy: req.user.id,
+      }, client);
     }
 
     await client.query(
@@ -360,7 +405,6 @@ router.delete('/:id', async (req, res) => {
       [id]
     );
 
-    // Auto-update PO status (this GRN is now excluded from totals)
     await recalculatePOStatus(client, grn.po_id);
 
     await client.query('COMMIT');

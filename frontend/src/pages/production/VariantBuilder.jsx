@@ -52,9 +52,9 @@ const VariantBuilder = () => {
     mutationFn: (payload) => variantAPI.generateCombinations(payload),
     onSuccess: (res) => {
       const combos = res?.data || [];
+      // Backend already applies skuPrefix in the SKU — do NOT apply it again here
       setGenerated(combos.map(v => ({
         ...v,
-        sku: skuPrefix ? `${skuPrefix}-${v.sku}` : v.sku,
         saleRate: product?.sale_rate || 0,
         barcode: '',
       })));

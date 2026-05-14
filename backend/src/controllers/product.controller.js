@@ -59,7 +59,8 @@ const getAll = async (req, res, next) => {
            p.*,
            GREATEST(0, p.current_stock - p.reserved_stock)::numeric AS available_stock,
            b.id AS bom_id,
-           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count
+           (SELECT COUNT(*)::int FROM bom_items bi WHERE bi.bom_id = b.id) AS bom_item_count,
+           (SELECT COUNT(*)::int FROM product_variants pv WHERE pv.product_id = p.id AND pv.is_active = TRUE) AS variant_count
          ${joins}
          ORDER BY p.name ASC
          LIMIT $${idx} OFFSET $${idx + 1}`,
@@ -272,7 +273,11 @@ const getAnalytics = async (req, res, next) => {
 const create = async (req, res, next) => {
   try {
     const companyId = req.companyId;
-    const { name, code, category, unit, description, isActive, finishedGoodsMaterialId } = req.body;
+    const {
+      name, code, category, unit, description, isActive,
+      finishedGoodsMaterialId, hasVariants, skuPrefix,
+      saleRate, hsnCode, gstPercent,
+    } = req.body;
 
     if (!name?.trim()) return ApiResponse.badRequest(res, 'Product name is required');
     if (!unit?.trim()) return ApiResponse.badRequest(res, 'Unit is required');
@@ -287,12 +292,19 @@ const create = async (req, res, next) => {
 
     const result = await query(
       `INSERT INTO products
-         (company_id, name, code, category, unit, description, is_active, finished_goods_material_id, created_by)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`,
+         (company_id, name, code, category, unit, description, is_active,
+          finished_goods_material_id, has_variants, sku_prefix,
+          sale_rate, hsn_code, gst_percent, created_by)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) RETURNING *`,
       [
         companyId, name.trim(), code?.trim() || null, category?.trim() || null,
         unit.trim(), description?.trim() || null,
-        isActive !== false, finishedGoodsMaterialId || null, req.user.id,
+        isActive !== false, finishedGoodsMaterialId || null,
+        hasVariants === true, skuPrefix?.trim().toUpperCase() || null,
+        saleRate ? parseFloat(saleRate) : 0,
+        hsnCode?.trim() || null,
+        gstPercent ? parseFloat(gstPercent) : 0,
+        req.user.id,
       ]
     );
 
@@ -308,7 +320,11 @@ const update = async (req, res, next) => {
   try {
     const { id } = req.params;
     const companyId = req.companyId;
-    const { name, code, category, unit, description, isActive, finishedGoodsMaterialId } = req.body;
+    const {
+      name, code, category, unit, description, isActive,
+      finishedGoodsMaterialId, hasVariants, skuPrefix,
+      saleRate, hsnCode, gstPercent,
+    } = req.body;
 
     if (code?.trim()) {
       const dup = await query(
@@ -327,13 +343,23 @@ const update = async (req, res, next) => {
          description                = COALESCE($5, description),
          is_active                  = COALESCE($6, is_active),
          finished_goods_material_id = COALESCE($7, finished_goods_material_id),
+         has_variants               = COALESCE($8, has_variants),
+         sku_prefix                 = COALESCE($9, sku_prefix),
+         sale_rate                  = COALESCE($10, sale_rate),
+         hsn_code                   = COALESCE($11, hsn_code),
+         gst_percent                = COALESCE($12, gst_percent),
          updated_at                 = NOW()
-       WHERE id = $8 AND company_id = $9 AND deleted_at IS NULL RETURNING *`,
+       WHERE id = $13 AND company_id = $14 AND deleted_at IS NULL RETURNING *`,
       [
         name?.trim() || null, code?.trim() || null, category?.trim() || null,
         unit?.trim() || null, description?.trim() || null,
         isActive !== undefined ? isActive : null,
         finishedGoodsMaterialId || null,
+        hasVariants !== undefined ? hasVariants : null,
+        skuPrefix?.trim().toUpperCase() || null,
+        saleRate !== undefined ? parseFloat(saleRate) : null,
+        hsnCode?.trim() || null,
+        gstPercent !== undefined ? parseFloat(gstPercent) : null,
         id, companyId,
       ]
     );

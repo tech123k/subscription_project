@@ -3,6 +3,7 @@ const ApiResponse = require('../utils/ApiResponse');
 const { paginate, paginationMeta } = require('../utils/helpers');
 const notificationService = require('../services/notification.service');
 const excelService = require('../services/excel.service');
+const { writeLedger } = require('../services/ledger.service');
 
 const getAll = async (req, res, next) => {
   try {
@@ -135,9 +136,10 @@ const create = async (req, res, next) => {
           );
 
           if (item.materialId) {
-            await client.query(
+            const { rows: [matUpdated] } = await client.query(
               `UPDATE materials SET in_transit_stock = in_transit_stock + $1,
-               current_stock = current_stock - $1 WHERE id = $2 AND company_id = $3`,
+               current_stock = GREATEST(0, current_stock - $1)
+               WHERE id = $2 AND company_id = $3 RETURNING current_stock`,
               [item.quantity, item.materialId, companyId]
             );
 
@@ -146,10 +148,24 @@ const create = async (req, res, next) => {
                VALUES ($1,$2,$3,'outward','in_transit',$4,'dispatch',$5,$6,$7)`,
               [companyId, item.materialId, warehouseId || null, item.quantity, dispatchId, dispatchNumber, req.user.id]
             );
+
+            await writeLedger({
+              companyId,
+              materialId: item.materialId,
+              warehouseId: warehouseId || null,
+              movementType: 'dispatch_outward',
+              quantity: -Number(item.quantity),
+              balanceAfter: matUpdated?.current_stock ?? null,
+              unit: item.unit || null,
+              referenceType: 'dispatches',
+              referenceId: dispatchId,
+              referenceNumber: dispatchNumber,
+              notes: item.notes || null,
+              performedBy: req.user.id,
+            }, client);
           }
 
           if (item.productId) {
-            // Check stock availability
             const stockCheck = await client.query(
               `SELECT current_stock FROM products WHERE id = $1 AND company_id = $2`,
               [item.productId, companyId]
@@ -159,13 +175,28 @@ const create = async (req, res, next) => {
               throw new Error(`Insufficient stock for product. Available: ${stockCheck.rows[0].current_stock}, Requested: ${item.quantity}`);
             }
 
-            await client.query(
+            const { rows: [prodUpdated] } = await client.query(
               `UPDATE products
                SET current_stock  = GREATEST(0, current_stock - $1),
                    dispatched_qty = dispatched_qty + $1
-               WHERE id = $2 AND company_id = $3`,
+               WHERE id = $2 AND company_id = $3 RETURNING current_stock`,
               [item.quantity, item.productId, companyId]
             );
+
+            await writeLedger({
+              companyId,
+              productId: item.productId,
+              warehouseId: warehouseId || null,
+              movementType: 'dispatch_outward',
+              quantity: -Number(item.quantity),
+              balanceAfter: prodUpdated?.current_stock ?? null,
+              unit: item.unit || null,
+              referenceType: 'dispatches',
+              referenceId: dispatchId,
+              referenceNumber: dispatchNumber,
+              notes: item.notes || null,
+              performedBy: req.user.id,
+            }, client);
           }
         }
       }

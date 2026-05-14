@@ -1,9 +1,8 @@
 const { query } = require('../config/database');
-const logger = require('../utils/logger');
 
 /**
  * Write a single entry to the inventory_ledger table.
- * Non-throwing — errors are logged so callers don't break on ledger failures.
+ * Throws on failure — callers inside a transaction will automatically roll back.
  *
  * @param {object} entry
  * @param {string} entry.companyId
@@ -28,36 +27,32 @@ const logger = require('../utils/logger');
  */
 const writeLedger = async (entry, client = null) => {
   const runner = client || { query: (sql, params) => query(sql, params) };
-  try {
-    await runner.query(
-      `INSERT INTO inventory_ledger
-         (company_id, material_id, product_id, variant_id, warehouse_id,
-          movement_type, quantity, balance_after, unit, rate,
-          reference_type, reference_id, reference_number,
-          batch_number, notes, performed_by)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`,
-      [
-        entry.companyId,
-        entry.materialId   || null,
-        entry.productId    || null,
-        entry.variantId    || null,
-        entry.warehouseId  || null,
-        entry.movementType,
-        entry.quantity,
-        entry.balanceAfter ?? null,
-        entry.unit         || null,
-        entry.rate         || null,
-        entry.referenceType   || null,
-        entry.referenceId     || null,
-        entry.referenceNumber || null,
-        entry.batchNumber  || null,
-        entry.notes        || null,
-        entry.performedBy  || null,
-      ]
-    );
-  } catch (err) {
-    logger.error('ledger.service writeLedger failed:', err.message, entry);
-  }
+  await runner.query(
+    `INSERT INTO inventory_ledger
+       (company_id, material_id, product_id, variant_id, warehouse_id,
+        movement_type, quantity, balance_after, unit, rate,
+        reference_type, reference_id, reference_number,
+        batch_number, notes, performed_by)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)`,
+    [
+      entry.companyId,
+      entry.materialId   || null,
+      entry.productId    || null,
+      entry.variantId    || null,
+      entry.warehouseId  || null,
+      entry.movementType,
+      entry.quantity,
+      entry.balanceAfter ?? null,
+      entry.unit         || null,
+      entry.rate         || null,
+      entry.referenceType   || null,
+      entry.referenceId     || null,
+      entry.referenceNumber || null,
+      entry.batchNumber  || null,
+      entry.notes        || null,
+      entry.performedBy  || null,
+    ]
+  );
 };
 
 /**

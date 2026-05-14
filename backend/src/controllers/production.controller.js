@@ -3,6 +3,7 @@ const ApiResponse = require('../utils/ApiResponse');
 const { paginate, paginationMeta } = require('../utils/helpers');
 const notificationService = require('../services/notification.service');
 const excelService = require('../services/excel.service');
+const { writeLedger } = require('../services/ledger.service');
 
 const getAll = async (req, res, next) => {
   try {
@@ -246,20 +247,36 @@ const create = async (req, res, next) => {
         );
       }
 
-      // Reserve BOM materials from stock
+      // Reserve BOM materials from stock and write ledger entries
       for (const mat of bomMaterials) {
         await client.query(
           `INSERT INTO production_materials (production_order_id, material_id, planned_quantity, unit)
            VALUES ($1,$2,$3,$4)`,
           [poId, mat.material_id, mat.required_quantity, mat.unit]
         );
-        await client.query(
+        const { rows: [matUpdated] } = await client.query(
           `UPDATE materials
              SET reserved_stock = reserved_stock + $1,
                  current_stock  = GREATEST(0, current_stock - $1)
-           WHERE id = $2 AND company_id = $3`,
+           WHERE id = $2 AND company_id = $3
+           RETURNING current_stock`,
           [mat.required_quantity, mat.material_id, companyId]
         );
+
+        // Write ledger: materials consumed by production (negative = outward)
+        await writeLedger({
+          companyId,
+          materialId: mat.material_id,
+          movementType: 'production_consume',
+          quantity: -Number(mat.required_quantity),
+          balanceAfter: matUpdated?.current_stock ?? null,
+          unit: mat.unit || null,
+          referenceType: 'production_orders',
+          referenceId: poId,
+          referenceNumber: orderNumber,
+          notes: `Materials consumed for production order ${orderNumber}`,
+          performedBy: req.user.id,
+        }, client);
       }
 
       return po.rows[0];
@@ -429,17 +446,31 @@ const updateStage = async (req, res, next) => {
             );
           }
 
-          // ── Update product's own FG stock ledger (primary, always runs) ──
-          // This is the authoritative FG stock — independent of the materials system.
+          // ── Update product's own FG stock (primary, always runs) ──────────
           if (order.product_id && producedQty > 0) {
-            await client.query(
+            const { rows: [prodUpdated] } = await client.query(
               `UPDATE products
                  SET current_stock        = GREATEST(0, current_stock + $1),
                      produced_qty         = produced_qty + $1,
                      last_production_date = NOW()
-               WHERE id = $2 AND company_id = $3`,
+               WHERE id = $2 AND company_id = $3
+               RETURNING current_stock`,
               [producedQty, order.product_id, companyId]
             );
+
+            // Write ledger: finished goods added to product inventory (positive = inward)
+            await writeLedger({
+              companyId,
+              productId: order.product_id,
+              movementType: 'production_complete',
+              quantity: producedQty,
+              balanceAfter: prodUpdated?.current_stock ?? null,
+              referenceType: 'production_orders',
+              referenceId: id,
+              referenceNumber: order.order_number,
+              notes: `Production completed: ${producedQty} units added to finished goods stock`,
+              performedBy: req.user.id,
+            }, client);
           }
 
           setImmediate(() => {

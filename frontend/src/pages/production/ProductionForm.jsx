@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { ArrowLeft, Factory, AlertTriangle, CheckCircle, Package, BookOpen } from 'lucide-react';
-import { productionAPI, productAPI, customerAPI, workflowAPI } from '../../services/api';
+import { ArrowLeft, Factory, AlertTriangle, CheckCircle, Package, BookOpen, Layers } from 'lucide-react';
+import { productionAPI, productAPI, customerAPI, workflowAPI, variantAPI } from '../../services/api';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import { PRIORITIES } from '../../utils/constants';
@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 const ProductionForm = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    productId: '', customerId: '', workflowTemplateId: '',
+    productId: '', variantId: '', customerId: '', workflowTemplateId: '',
     plannedQuantity: '', priority: 'normal',
     plannedStartDate: '', plannedEndDate: '', notes: '',
   });
@@ -41,8 +41,21 @@ const ProductionForm = () => {
     staleTime: 30000,
   });
 
-  // Clear stock errors when product/qty changes
-  useEffect(() => { setStockErrors([]); }, [form.productId, form.plannedQuantity]);
+  // Fetch variants when the selected product has variants
+  const selectedProduct = (products?.data || []).find((p) => p.id === form.productId);
+  const { data: variantsData } = useQuery({
+    queryKey: ['variants', form.productId],
+    queryFn: () => variantAPI.getVariants(form.productId),
+    enabled: Boolean(form.productId) && selectedProduct?.has_variants === true,
+    staleTime: 60_000,
+  });
+  const variantList = variantsData?.data || [];
+
+  // Clear variant and stock errors when product changes
+  useEffect(() => {
+    setStockErrors([]);
+    setForm((p) => ({ ...p, variantId: '' }));
+  }, [form.productId]);
 
   const create = useMutation({
     mutationFn: (d) => productionAPI.create(d),
@@ -59,12 +72,16 @@ const ProductionForm = () => {
   const f = (k) => (e) => setForm((p) => ({ ...p, [k]: e.target.value }));
 
   const bomItems = bomData?.data?.bom_items || [];
-  const selectedProduct = (products?.data || []).find((p) => p.id === form.productId);
 
   const handleSubmit = () => {
     if (!form.productId) { toast.error('Please select a product'); return; }
     if (!form.plannedQuantity || Number(form.plannedQuantity) <= 0) { toast.error('Planned quantity must be > 0'); return; }
     if (!form.workflowTemplateId) { toast.error('Please select a workflow template'); return; }
+
+    // Variant is required when the product has variants
+    if (selectedProduct?.has_variants && variantList.length > 0 && !form.variantId) {
+      toast.error('Please select a variant for this product'); return;
+    }
 
     if (!selectedProduct?.bom_id) {
       toast.error('This product has no BOM. Please create a BOM before placing a production order.');
@@ -135,6 +152,60 @@ const ProductionForm = () => {
               </div>
             )}
           </div>
+
+          {/* ── Variant selector (shown when product has variants) ── */}
+          {form.productId && selectedProduct?.has_variants && (
+            <div className="col-span-2">
+              <label className="label flex items-center gap-1.5">
+                <Layers size={12} className="text-indigo-500" />
+                Variant *
+              </label>
+              {variantList.length === 0 ? (
+                <div className="flex items-center gap-2 text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2.5 text-xs">
+                  <AlertTriangle size={13} />
+                  No variants defined for this product.
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/production/products/${form.productId}/variants`)}
+                    className="underline font-medium"
+                  >
+                    Add variants →
+                  </button>
+                </div>
+              ) : (
+                <select value={form.variantId} onChange={f('variantId')} className="input-field">
+                  <option value="">— Select variant —</option>
+                  {variantList.filter((v) => v.is_active).map((v) => {
+                    const attrLabel = (v.attribute_values || [])
+                      .map((av) => av.display_name || av.value)
+                      .join(' / ');
+                    return (
+                      <option key={v.id} value={v.id}>
+                        {v.sku}{attrLabel ? ` — ${attrLabel}` : ''}
+                        {` (Stock: ${Number(v.current_stock || 0).toLocaleString('en-IN')})`}
+                      </option>
+                    );
+                  })}
+                </select>
+              )}
+              {form.variantId && (() => {
+                const v = variantList.find((vv) => vv.id === form.variantId);
+                if (!v) return null;
+                const stock = Number(v.current_stock || 0);
+                const needed = Number(form.plannedQuantity || 0);
+                return (
+                  <div className={`mt-1.5 flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs ${stock >= needed && needed > 0 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-gray-50 text-gray-600'}`}>
+                    <CheckCircle size={11} />
+                    Variant stock: <strong>{stock.toLocaleString('en-IN')}</strong> {selectedProduct?.unit}
+                    {needed > 0 && stock < needed && (
+                      <span className="ml-1 text-amber-700">(insufficient for {needed} units)</span>
+                    )}
+                  </div>
+                );
+              })()}
+            </div>
+          )}
+
 
           <div>
             <label className="label">Planned Quantity *</label>
