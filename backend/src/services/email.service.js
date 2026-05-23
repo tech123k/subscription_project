@@ -2,31 +2,26 @@ const https = require('https');
 const nodemailer = require('nodemailer');
 const logger = require('../utils/logger');
 
-const USE_MAILJET = (process.env.SMTP_HOST || '').includes('mailjet');
+const USE_RESEND  = !!process.env.RESEND_API_KEY;
+const USE_MAILJET = !USE_RESEND && (process.env.SMTP_HOST || '').includes('mailjet');
 
-// Mailjet HTTP API — uses port 443, never blocked by cloud providers
-const mailjetSend = ({ to, subject, html, text, fromEmail, fromName }) =>
+// Resend HTTP API — most reliable for cloud deployments
+const resendSend = ({ to, subject, html, text, fromName }) =>
   new Promise((resolve, reject) => {
     const body = JSON.stringify({
-      Messages: [{
-        From:     { Email: fromEmail, Name: fromName },
-        To:       [{ Email: to }],
-        Subject:  subject,
-        HTMLPart: html,
-        TextPart: text || '',
-      }],
+      from:    `${fromName} <onboarding@resend.dev>`,
+      to:      [to],
+      subject,
+      html,
+      text:    text || '',
     });
-    const auth = Buffer.from(
-      `${process.env.SMTP_USER}:${process.env.SMTP_PASS}`
-    ).toString('base64');
-
     const req = https.request(
       {
-        hostname: 'api.mailjet.com',
-        path:     '/v3.1/send',
+        hostname: 'api.resend.com',
+        path:     '/emails',
         method:   'POST',
         headers:  {
-          Authorization:  `Basic ${auth}`,
+          Authorization:  `Bearer ${process.env.RESEND_API_KEY}`,
           'Content-Type': 'application/json',
           'Content-Length': Buffer.byteLength(body),
         },
@@ -35,15 +30,12 @@ const mailjetSend = ({ to, subject, html, text, fromEmail, fromName }) =>
         let data = '';
         res.on('data', (c) => { data += c; });
         res.on('end', () => {
-          if (res.statusCode >= 400) {
-            reject(new Error(`Mailjet ${res.statusCode}: ${data}`));
-          } else {
-            resolve(JSON.parse(data));
-          }
+          if (res.statusCode >= 400) reject(new Error(`Resend ${res.statusCode}: ${data}`));
+          else resolve(JSON.parse(data));
         });
       }
     );
-    req.setTimeout(20000, () => { req.destroy(); reject(new Error('Mailjet API timeout')); });
+    req.setTimeout(20000, () => { req.destroy(); reject(new Error('Resend API timeout')); });
     req.on('error', reject);
     req.write(body);
     req.end();
@@ -72,7 +64,9 @@ class EmailService {
     const fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER;
     const fromName  = process.env.APP_NAME  || 'IndustrialERP';
 
-    if (USE_MAILJET) {
+    if (USE_RESEND) {
+      await resendSend({ to, subject, html, text, fromName });
+    } else if (USE_MAILJET) {
       await mailjetSend({ to, subject, html, text, fromEmail, fromName });
     } else {
       const sendMail = this.transporter.sendMail.bind(this.transporter, {
