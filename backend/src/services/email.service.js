@@ -4,27 +4,41 @@ const logger = require('../utils/logger');
 class EmailService {
   constructor() {
     this.transporter = nodemailer.createTransport({
-      host:   process.env.SMTP_HOST || 'smtp.gmail.com',
-      port:   parseInt(process.env.SMTP_PORT) || 587,
-      secure: false,
-      requireTLS: true,
+      service: 'gmail',
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
-      tls: { rejectUnauthorized: false },
-      connectionTimeout: 30000,
-      greetingTimeout:   30000,
-      socketTimeout:     30000,
+      pool:           true,
+      maxConnections: 1,
+      maxMessages:    5,
+      connectionTimeout: 10000,
+      greetingTimeout:   10000,
+      socketTimeout:     10000,
+    });
+
+    this.transporter.verify((err, success) => {
+      if (err) {
+        logger.error('SMTP ERROR:', err.message);
+      } else {
+        logger.info('SMTP READY');
+      }
     });
   }
 
   async send({ to, subject, html, text }) {
     const from = process.env.SMTP_FROM || process.env.SMTP_USER;
-    await this.transporter.sendMail({
+
+    const mailPromise = this.transporter.sendMail({
       from: `"${process.env.APP_NAME || 'IndustrialERP'}" <${from}>`,
       to, subject, html, text,
     });
+
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('SMTP Timeout')), 15000)
+    );
+
+    await Promise.race([mailPromise, timeoutPromise]);
     logger.info(`Email sent to ${to}: ${subject}`);
   }
 
