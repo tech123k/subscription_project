@@ -1,132 +1,30 @@
-const https = require('https');
 const nodemailer = require('nodemailer');
 const logger = require('../utils/logger');
 
-const USE_SENDGRID = !!process.env.SENDGRID_API_KEY;
-const USE_RESEND   = !USE_SENDGRID && !!process.env.RESEND_API_KEY;
-const USE_MAILJET  = !USE_SENDGRID && !USE_RESEND && (process.env.SMTP_HOST || '').includes('mailjet');
-
-// SendGrid HTTP API — single sender verification, no domain needed
-const sendgridSend = ({ to, subject, html, text, fromEmail, fromName }) =>
-  new Promise((resolve, reject) => {
-    const body = JSON.stringify({
-      personalizations: [{ to: [{ email: to }] }],
-      from:    { email: fromEmail, name: fromName },
-      subject,
-      content: [
-        { type: 'text/html',  value: html       },
-        { type: 'text/plain', value: text || '' },
-      ],
-    });
-    const req = https.request(
-      {
-        hostname: 'api.sendgrid.com',
-        path:     '/v3/mail/send',
-        method:   'POST',
-        headers:  {
-          Authorization:  `Bearer ${process.env.SENDGRID_API_KEY}`,
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(body),
-        },
-      },
-      (res) => {
-        let data = '';
-        res.on('data', (c) => { data += c; });
-        res.on('end', () => {
-          // SendGrid returns 202 on success (no body)
-          if (res.statusCode >= 400) reject(new Error(`SendGrid ${res.statusCode}: ${data}`));
-          else resolve(true);
-        });
-      }
-    );
-    req.setTimeout(20000, () => { req.destroy(); reject(new Error('SendGrid API timeout')); });
-    req.on('error', reject);
-    req.write(body);
-    req.end();
-  });
-
-// Resend HTTP API
-const resendSend = ({ to, subject, html, text, fromName }) =>
-  new Promise((resolve, reject) => {
-    const body = JSON.stringify({
-      from:    `${fromName} <onboarding@resend.dev>`,
-      to:      [to],
-      subject,
-      html,
-      text:    text || '',
-    });
-    const req = https.request(
-      {
-        hostname: 'api.resend.com',
-        path:     '/emails',
-        method:   'POST',
-        headers:  {
-          Authorization:  `Bearer ${process.env.RESEND_API_KEY}`,
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(body),
-        },
-      },
-      (res) => {
-        let data = '';
-        res.on('data', (c) => { data += c; });
-        res.on('end', () => {
-          if (res.statusCode >= 400) reject(new Error(`Resend ${res.statusCode}: ${data}`));
-          else resolve(JSON.parse(data));
-        });
-      }
-    );
-    req.setTimeout(20000, () => { req.destroy(); reject(new Error('Resend API timeout')); });
-    req.on('error', reject);
-    req.write(body);
-    req.end();
-  });
-
 class EmailService {
   constructor() {
-    if (!USE_MAILJET) {
-      // Local dev: use Gmail SMTP
-      this.transporter = nodemailer.createTransport({
-        host:       process.env.SMTP_HOST || 'smtp.gmail.com',
-        port:       parseInt(process.env.SMTP_PORT) || 587,
-        secure:     false,
-        requireTLS: true,
-        auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-        tls: { rejectUnauthorized: false },
-        connectionTimeout: 10000,
-        greetingTimeout:   10000,
-        socketTimeout:     15000,
-      });
-    }
+    this.transporter = nodemailer.createTransport({
+      host:   process.env.SMTP_HOST || 'smtp.gmail.com',
+      port:   parseInt(process.env.SMTP_PORT) || 587,
+      secure: false,
+      requireTLS: true,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+      tls: { rejectUnauthorized: false },
+    });
   }
 
-  // send() throws on failure — callers decide whether to swallow or propagate
   async send({ to, subject, html, text }) {
-    const fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER;
-    const fromName  = process.env.APP_NAME  || 'IndustrialERP';
-
-    if (USE_SENDGRID) {
-      await sendgridSend({ to, subject, html, text, fromEmail, fromName });
-    } else if (USE_RESEND) {
-      await resendSend({ to, subject, html, text, fromName });
-    } else if (USE_MAILJET) {
-      await mailjetSend({ to, subject, html, text, fromEmail, fromName });
-    } else {
-      const sendMail = this.transporter.sendMail.bind(this.transporter, {
-        from: `"${fromName}" <${fromEmail}>`, to, subject, html, text,
-      });
-      await Promise.race([
-        new Promise((resolve, reject) =>
-          sendMail((err, info) => (err ? reject(err) : resolve(info)))
-        ),
-        new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('SMTP timeout after 20s')), 20000)
-        ),
-      ]);
-    }
+    const from = process.env.SMTP_FROM || process.env.SMTP_USER;
+    await this.transporter.sendMail({
+      from: `"${process.env.APP_NAME || 'IndustrialERP'}" <${from}>`,
+      to, subject, html, text,
+    });
     logger.info(`Email sent to ${to}: ${subject}`);
   }
 
-  // silent wrapper for non-critical emails (low-stock alerts, welcome, etc.)
   async sendSilent(opts) {
     try {
       await this.send(opts);
