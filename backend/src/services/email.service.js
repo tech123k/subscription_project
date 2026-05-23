@@ -13,18 +13,25 @@ class EmailService {
         pass: process.env.SMTP_PASS,
       },
       tls: { rejectUnauthorized: false },
+      connectionTimeout: 10000,
+      greetingTimeout:   10000,
+      socketTimeout:     15000,
     });
   }
 
   // send() throws on failure — callers decide whether to swallow or propagate
   async send({ to, subject, html, text }) {
-    await this.transporter.sendMail({
+    const sendMail = this.transporter.sendMail.bind(this.transporter, {
       from: `"${process.env.APP_NAME || 'IndustrialERP'}" <${process.env.SMTP_USER}>`,
-      to,
-      subject,
-      html,
-      text,
+      to, subject, html, text,
     });
+    const timeout = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('SMTP timeout after 20s')), 20000)
+    );
+    await Promise.race([
+      new Promise((resolve, reject) => sendMail((err, info) => err ? reject(err) : resolve(info))),
+      timeout,
+    ]);
     logger.info(`Email sent to ${to}: ${subject}`);
   }
 
