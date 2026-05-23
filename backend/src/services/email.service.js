@@ -2,10 +2,50 @@ const https = require('https');
 const nodemailer = require('nodemailer');
 const logger = require('../utils/logger');
 
-const USE_RESEND  = !!process.env.RESEND_API_KEY;
-const USE_MAILJET = !USE_RESEND && (process.env.SMTP_HOST || '').includes('mailjet');
+const USE_SENDGRID = !!process.env.SENDGRID_API_KEY;
+const USE_RESEND   = !USE_SENDGRID && !!process.env.RESEND_API_KEY;
+const USE_MAILJET  = !USE_SENDGRID && !USE_RESEND && (process.env.SMTP_HOST || '').includes('mailjet');
 
-// Resend HTTP API — most reliable for cloud deployments
+// SendGrid HTTP API — single sender verification, no domain needed
+const sendgridSend = ({ to, subject, html, text, fromEmail, fromName }) =>
+  new Promise((resolve, reject) => {
+    const body = JSON.stringify({
+      personalizations: [{ to: [{ email: to }] }],
+      from:    { email: fromEmail, name: fromName },
+      subject,
+      content: [
+        { type: 'text/html',  value: html       },
+        { type: 'text/plain', value: text || '' },
+      ],
+    });
+    const req = https.request(
+      {
+        hostname: 'api.sendgrid.com',
+        path:     '/v3/mail/send',
+        method:   'POST',
+        headers:  {
+          Authorization:  `Bearer ${process.env.SENDGRID_API_KEY}`,
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(body),
+        },
+      },
+      (res) => {
+        let data = '';
+        res.on('data', (c) => { data += c; });
+        res.on('end', () => {
+          // SendGrid returns 202 on success (no body)
+          if (res.statusCode >= 400) reject(new Error(`SendGrid ${res.statusCode}: ${data}`));
+          else resolve(true);
+        });
+      }
+    );
+    req.setTimeout(20000, () => { req.destroy(); reject(new Error('SendGrid API timeout')); });
+    req.on('error', reject);
+    req.write(body);
+    req.end();
+  });
+
+// Resend HTTP API
 const resendSend = ({ to, subject, html, text, fromName }) =>
   new Promise((resolve, reject) => {
     const body = JSON.stringify({
@@ -64,7 +104,9 @@ class EmailService {
     const fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER;
     const fromName  = process.env.APP_NAME  || 'IndustrialERP';
 
-    if (USE_RESEND) {
+    if (USE_SENDGRID) {
+      await sendgridSend({ to, subject, html, text, fromEmail, fromName });
+    } else if (USE_RESEND) {
       await resendSend({ to, subject, html, text, fromName });
     } else if (USE_MAILJET) {
       await mailjetSend({ to, subject, html, text, fromEmail, fromName });
