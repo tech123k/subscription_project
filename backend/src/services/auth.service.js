@@ -260,6 +260,9 @@ class AuthService {
     try {
       await emailService.sendOTP(email, firstName || 'User', otp);
     } catch (err) {
+      console.error('SMTP FULL ERROR:', err);
+      console.error('SMTP MESSAGE:', err.message);
+      console.error('SMTP STACK:', err.stack);
       await clearOTP(email).catch(() => {});
       logger.error('OTP email send failed:', err.message);
       throw new AppError(

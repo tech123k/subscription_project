@@ -19,8 +19,10 @@ class EmailService {
 
     this.transporter.verify((err, success) => {
       if (err) {
+        console.error('SMTP VERIFY ERROR:', err);
         logger.error('SMTP ERROR:', err.message);
       } else {
+        console.log('SMTP VERIFY SUCCESS');
         logger.info('SMTP READY');
       }
     });
@@ -29,16 +31,22 @@ class EmailService {
   async send({ to, subject, html, text }) {
     const from = process.env.SMTP_FROM || process.env.SMTP_USER;
 
-    const mailPromise = this.transporter.sendMail({
+    const mailOptions = {
       from: `"${process.env.APP_NAME || 'IndustrialERP'}" <${from}>`,
       to, subject, html, text,
-    });
+    };
+
+    console.log('SMTP SENDING...');
+
+    const mailPromise = this.transporter.sendMail(mailOptions);
 
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('SMTP Timeout')), 15000)
+      setTimeout(() => reject(new Error('SMTP Timeout after 15 seconds')), 15000)
     );
 
     await Promise.race([mailPromise, timeoutPromise]);
+
+    console.log('SMTP SUCCESS');
     logger.info(`Email sent to ${to}: ${subject}`);
   }
 
@@ -46,6 +54,9 @@ class EmailService {
     try {
       await this.send(opts);
     } catch (err) {
+      console.error('SMTP FULL ERROR:', err);
+      console.error('SMTP MESSAGE:', err.message);
+      console.error('SMTP STACK:', err.stack);
       logger.error('Email send failed (non-critical):', { to: opts.to, error: err.message });
     }
   }
@@ -114,6 +125,8 @@ class EmailService {
   }
 
   async sendOTP(email, name, otp) {
+    console.log('SEND OTP START');
+    console.log('EMAIL:', email);
     await this.send({
       to: email,
       subject: `${otp} — Your IndustrialERP Verification Code`,
