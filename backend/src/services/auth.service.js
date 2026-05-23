@@ -263,7 +263,7 @@ class AuthService {
       await clearOTP(email).catch(() => {});
       logger.error('OTP email send failed:', err.message);
       throw new AppError(
-        'Could not send OTP email. Please try again in a moment.',
+        `OTP email failed: ${err.message}`,
         503
       );
     }
