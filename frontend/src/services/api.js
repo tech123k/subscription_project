@@ -4,11 +4,10 @@ import { useAuthStore } from '../store/authStore';
 
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 
-// 90s timeout — covers Render free-tier cold starts (typically 30-60s)
-// withCredentials: true — sends the httpOnly refresh token cookie on every request
+// 2 min timeout — Render free-tier cold starts can take up to 90s
 const api = axios.create({
   baseURL: API_URL,
-  timeout: 90000,
+  timeout: 120000,
   withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
 });

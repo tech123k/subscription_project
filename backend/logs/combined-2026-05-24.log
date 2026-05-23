@@ -1,0 +1,47 @@
+2026-05-24 00:00:16 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-24 00:00:16 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-24 00:00:16 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-24 00:00:16 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-24 00:00:17 [INFO]: Database connected successfully at Sun May 24 2026 00:00:19 GMT+0530 (India Standard Time)
+2026-05-24 00:00:17 [INFO]: ✅ Database connected
+2026-05-24 00:00:17 [INFO]: ✅ Redis connected
+2026-05-24 00:20:40 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-24 00:20:40 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-24 00:20:40 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-24 00:20:40 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-24 00:20:41 [INFO]: Database connected successfully at Sun May 24 2026 00:20:42 GMT+0530 (India Standard Time)
+2026-05-24 00:20:41 [INFO]: ✅ Database connected
+2026-05-24 00:20:41 [INFO]: ✅ Redis connected
+2026-05-24 00:20:41 [INFO]: SMTP READY
+2026-05-24 00:20:48 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-24 00:20:48 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-24 00:20:48 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-24 00:20:48 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-24 00:20:49 [INFO]: Database connected successfully at Sun May 24 2026 00:20:51 GMT+0530 (India Standard Time)
+2026-05-24 00:20:49 [INFO]: ✅ Database connected
+2026-05-24 00:20:49 [INFO]: ✅ Redis connected
+2026-05-24 00:20:50 [INFO]: SMTP READY
+2026-05-24 00:29:06 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-24 00:29:06 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-24 00:29:06 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-24 00:29:06 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-24 00:29:07 [INFO]: Database connected successfully at Sun May 24 2026 00:29:08 GMT+0530 (India Standard Time)
+2026-05-24 00:29:07 [INFO]: ✅ Database connected
+2026-05-24 00:29:07 [INFO]: ✅ Redis connected
+2026-05-24 00:29:07 [INFO]: SMTP READY
+2026-05-24 00:29:26 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-24 00:29:26 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-24 00:29:26 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-24 00:29:26 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-24 00:29:26 [INFO]: Database connected successfully at Sun May 24 2026 00:29:28 GMT+0530 (India Standard Time)
+2026-05-24 00:29:26 [INFO]: ✅ Database connected
+2026-05-24 00:29:26 [INFO]: ✅ Redis connected
+2026-05-24 00:29:27 [INFO]: SMTP READY
+2026-05-24 00:29:37 [INFO]: 🚀 ERP Server running on port 5000 in development mode
+2026-05-24 00:29:37 [INFO]: 📊 API: http://localhost:5000/api
+2026-05-24 00:29:37 [INFO]: 🔌 Socket.IO: ws://localhost:5000
+2026-05-24 00:29:37 [INFO]: ❤️  Health: http://localhost:5000/health
+2026-05-24 00:29:38 [INFO]: Database connected successfully at Sun May 24 2026 00:29:39 GMT+0530 (India Standard Time)
+2026-05-24 00:29:38 [INFO]: ✅ Database connected
+2026-05-24 00:29:38 [INFO]: ✅ Redis connected
+2026-05-24 00:29:38 [INFO]: SMTP READY
