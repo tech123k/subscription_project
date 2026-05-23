@@ -1,44 +1,92 @@
+const https = require('https');
 const nodemailer = require('nodemailer');
 const logger = require('../utils/logger');
 
+const USE_MAILJET = (process.env.SMTP_HOST || '').includes('mailjet');
+
+// Mailjet HTTP API — uses port 443, never blocked by cloud providers
+const mailjetSend = ({ to, subject, html, text, fromEmail, fromName }) =>
+  new Promise((resolve, reject) => {
+    const body = JSON.stringify({
+      Messages: [{
+        From:     { Email: fromEmail, Name: fromName },
+        To:       [{ Email: to }],
+        Subject:  subject,
+        HTMLPart: html,
+        TextPart: text || '',
+      }],
+    });
+    const auth = Buffer.from(
+      `${process.env.SMTP_USER}:${process.env.SMTP_PASS}`
+    ).toString('base64');
+
+    const req = https.request(
+      {
+        hostname: 'api.mailjet.com',
+        path:     '/v3.1/send',
+        method:   'POST',
+        headers:  {
+          Authorization:  `Basic ${auth}`,
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(body),
+        },
+      },
+      (res) => {
+        let data = '';
+        res.on('data', (c) => { data += c; });
+        res.on('end', () => {
+          if (res.statusCode >= 400) {
+            reject(new Error(`Mailjet ${res.statusCode}: ${data}`));
+          } else {
+            resolve(JSON.parse(data));
+          }
+        });
+      }
+    );
+    req.setTimeout(20000, () => { req.destroy(); reject(new Error('Mailjet API timeout')); });
+    req.on('error', reject);
+    req.write(body);
+    req.end();
+  });
+
 class EmailService {
   constructor() {
-    const smtpPort = parseInt(process.env.SMTP_PORT) || 587;
-    const useSSL   = smtpPort === 465; // port 465 = direct TLS, 587 = STARTTLS
-
-    this.transporter = nodemailer.createTransport({
-      host:   process.env.SMTP_HOST || 'smtp.gmail.com',
-      port:   smtpPort,
-      secure: useSSL,
-      ...(useSSL
-        ? {}
-        : { requireTLS: true, tls: { rejectUnauthorized: false } }),
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-      // SMTP_FROM lets you use a separate verified sender address
-      // (needed for Mailjet/Brevo where SMTP_USER is an API key, not an email)
-      connectionTimeout: 10000,
-      greetingTimeout:   10000,
-      socketTimeout:     15000,
-    });
+    if (!USE_MAILJET) {
+      // Local dev: use Gmail SMTP
+      this.transporter = nodemailer.createTransport({
+        host:       process.env.SMTP_HOST || 'smtp.gmail.com',
+        port:       parseInt(process.env.SMTP_PORT) || 587,
+        secure:     false,
+        requireTLS: true,
+        auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+        tls: { rejectUnauthorized: false },
+        connectionTimeout: 10000,
+        greetingTimeout:   10000,
+        socketTimeout:     15000,
+      });
+    }
   }
 
   // send() throws on failure — callers decide whether to swallow or propagate
   async send({ to, subject, html, text }) {
     const fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER;
-    const sendMail = this.transporter.sendMail.bind(this.transporter, {
-      from: `"${process.env.APP_NAME || 'IndustrialERP'}" <${fromEmail}>`,
-      to, subject, html, text,
-    });
-    const timeout = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('SMTP timeout after 20s')), 20000)
-    );
-    await Promise.race([
-      new Promise((resolve, reject) => sendMail((err, info) => err ? reject(err) : resolve(info))),
-      timeout,
-    ]);
+    const fromName  = process.env.APP_NAME  || 'IndustrialERP';
+
+    if (USE_MAILJET) {
+      await mailjetSend({ to, subject, html, text, fromEmail, fromName });
+    } else {
+      const sendMail = this.transporter.sendMail.bind(this.transporter, {
+        from: `"${fromName}" <${fromEmail}>`, to, subject, html, text,
+      });
+      await Promise.race([
+        new Promise((resolve, reject) =>
+          sendMail((err, info) => (err ? reject(err) : resolve(info)))
+        ),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('SMTP timeout after 20s')), 20000)
+        ),
+      ]);
+    }
     logger.info(`Email sent to ${to}: ${subject}`);
   }
 
