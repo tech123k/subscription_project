@@ -19,19 +19,21 @@ const registerValidation = [
   body('otp').notEmpty().withMessage('OTP is required'),
 ];
 
-// Cookie configuration — cross-origin safe for Render + Vercel
+// Cookie configuration — cross-origin safe for Render (backend) + Netlify (frontend)
+// sameSite=none + secure=true is REQUIRED when backend and frontend are on different domains
+const IS_PROD = process.env.NODE_ENV === 'production';
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+  secure: IS_PROD,                      // HTTPS only in production
+  sameSite: IS_PROD ? 'none' : 'lax',  // 'none' allows cross-site cookie sending
+  maxAge: 7 * 24 * 60 * 60 * 1000,    // 7 days
   path: '/',
 };
 
 const CLEAR_COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  secure: IS_PROD,
+  sameSite: IS_PROD ? 'none' : 'lax',
   path: '/',
 };
 

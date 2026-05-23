@@ -1,17 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Eye, EyeOff, Factory, Mail, Lock, Loader2 } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { authAPI } from '../../services/api';
+import { authAPI, pingServer } from '../../services/api';
 import { useAuthStore } from '../../store/authStore';
 
 const Login = () => {
   const navigate = useNavigate();
   const setAuth = useAuthStore((s) => s.setAuth);
   const [showPassword, setShowPassword] = useState(false);
+
+  // Wake up Render backend the moment user lands on login page
+  useEffect(() => { pingServer(); }, []);
 
   const { register, handleSubmit, formState: { errors } } = useForm();
 

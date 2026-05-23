@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { authAPI } from '../../services/api';
+import { authAPI, pingServer } from '../../services/api';
 
 const INDUSTRIES = [
   { value: 'footwear',      label: 'Footwear' },
@@ -76,6 +76,9 @@ const Register = () => {
   const [otp, setOtp]       = useState('');
   const [countdown, setCd]  = useState(0);
 
+  // Wake up Render backend the moment user lands on register page
+  useEffect(() => { pingServer(); }, []);
+
   const { register, handleSubmit, getValues, trigger, formState: { errors } } = useForm();
 
   // Start 60-second resend cooldown
@@ -88,10 +91,31 @@ const Register = () => {
 
   // ── Send OTP mutation ──────────────────────────────────────
   const sendOtpMut = useMutation({
-    mutationFn: () => authAPI.sendOtp({
-      email:     getValues('adminEmail'),
-      firstName: getValues('firstName'),
-    }),
+    mutationFn: async () => {
+      // Show warm-up toast if server might be cold
+      const warmToastId = toast.loading('Connecting to server…', { id: 'warm-toast' });
+      try {
+        const res = await authAPI.sendOtp({
+          email:     getValues('adminEmail'),
+          firstName: getValues('firstName'),
+        });
+        toast.dismiss(warmToastId);
+        return res;
+      } catch (err) {
+        toast.dismiss(warmToastId);
+        // If timeout → auto-retry once after 5s
+        if (err?.isTimeout) {
+          toast.loading('Server waking up, retrying in 5s…', { id: 'retry-toast', duration: 6000 });
+          await new Promise(r => setTimeout(r, 5000));
+          toast.dismiss('retry-toast');
+          return authAPI.sendOtp({
+            email:     getValues('adminEmail'),
+            firstName: getValues('firstName'),
+          });
+        }
+        throw err;
+      }
+    },
     onSuccess: () => {
       toast.success(`OTP sent to ${getValues('adminEmail')}`);
       setStep(3);
@@ -101,6 +125,8 @@ const Register = () => {
       const msg = err?.message || '';
       if (err?.status === 429 || msg.includes('wait')) {
         toast.error('Please wait before requesting another OTP.');
+      } else if (err?.isTimeout) {
+        toast.error('Server is still starting up. Please click "Send OTP" again in a few seconds.');
       } else {
         toast.error(msg || 'Failed to send OTP. Check email address.');
       }

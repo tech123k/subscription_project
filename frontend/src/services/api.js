@@ -156,6 +156,11 @@ api.interceptors.response.use(
 );
 
 // Typed API modules
+// Wake up Render backend (free tier cold start) — call on auth page mount
+const BASE_URL = (import.meta.env.VITE_API_URL || '/api').replace('/api', '');
+export const pingServer = () =>
+  fetch(`${BASE_URL}/ping`, { method: 'GET', mode: 'cors' }).catch(() => {});
+
 export const authAPI = {
   login: (data) => api.post('/auth/login', data),
   sendOtp: (data) => api.post('/auth/send-otp', data),
