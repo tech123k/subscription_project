@@ -76,8 +76,15 @@ const Register = () => {
   const [otp, setOtp]       = useState('');
   const [countdown, setCd]  = useState(0);
 
-  // Wake up Render backend the moment user lands on register page
-  useEffect(() => { pingServer(); }, []);
+  // Aggressively wake Render backend — ping every 8s for 2 minutes
+  useEffect(() => {
+    pingServer();
+    const t1 = setTimeout(pingServer, 8000);
+    const t2 = setTimeout(pingServer, 16000);
+    const t3 = setTimeout(pingServer, 30000);
+    const t4 = setTimeout(pingServer, 60000);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+  }, []);
 
   const { register, handleSubmit, getValues, trigger, formState: { errors } } = useForm();
 
@@ -89,32 +96,38 @@ const Register = () => {
     }, 1000);
   };
 
-  // ── Send OTP mutation ──────────────────────────────────────
+  // ── Send OTP mutation — auto-retry up to 3x on cold-start timeout ────────────
   const sendOtpMut = useMutation({
     mutationFn: async () => {
-      // Show warm-up toast if server might be cold
-      const warmToastId = toast.loading('Connecting to server…', { id: 'warm-toast' });
-      try {
-        const res = await authAPI.sendOtp({
-          email:     getValues('adminEmail'),
-          firstName: getValues('firstName'),
-        });
-        toast.dismiss(warmToastId);
-        return res;
-      } catch (err) {
-        toast.dismiss(warmToastId);
-        // If timeout → auto-retry once after 5s
-        if (err?.isTimeout) {
-          toast.loading('Server waking up, retrying in 5s…', { id: 'retry-toast', duration: 6000 });
-          await new Promise(r => setTimeout(r, 5000));
-          toast.dismiss('retry-toast');
-          return authAPI.sendOtp({
-            email:     getValues('adminEmail'),
-            firstName: getValues('firstName'),
-          });
+      const payload = { email: getValues('adminEmail'), firstName: getValues('firstName') };
+      const delays  = [0, 15000, 20000]; // attempt 1 immediately, 2 after 15s, 3 after 20s more
+      let lastErr;
+
+      for (let i = 0; i < delays.length; i++) {
+        if (delays[i] > 0) {
+          toast.loading(`Server waking up… retry ${i}/${delays.length - 1}`, { id: 'otp-toast' });
+          await new Promise(r => setTimeout(r, delays[i]));
+        } else {
+          toast.loading('Sending OTP…', { id: 'otp-toast' });
         }
-        throw err;
+
+        try {
+          const res = await authAPI.sendOtp(payload);
+          toast.dismiss('otp-toast');
+          return res;
+        } catch (err) {
+          lastErr = err;
+          // Retry on timeout OR 503 (email service down), stop on any other 4xx/5xx
+          const retryable = err?.isTimeout || err?.status === 503;
+          if (!retryable && err?.status >= 400) {
+            toast.dismiss('otp-toast');
+            throw err;
+          }
+        }
       }
+
+      toast.dismiss('otp-toast');
+      throw lastErr;
     },
     onSuccess: () => {
       toast.success(`OTP sent to ${getValues('adminEmail')}`);
@@ -124,9 +137,9 @@ const Register = () => {
     onError: (err) => {
       const msg = err?.message || '';
       if (err?.status === 429 || msg.includes('wait')) {
-        toast.error('Please wait before requesting another OTP.');
+        toast.error('Please wait 60 seconds before requesting another OTP.');
       } else if (err?.isTimeout) {
-        toast.error('Server is still starting up. Please click "Send OTP" again in a few seconds.');
+        toast.error('Server took too long. Click "Send OTP" once more — it should work now.');
       } else {
         toast.error(msg || 'Failed to send OTP. Check email address.');
       }

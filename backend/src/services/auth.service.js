@@ -256,7 +256,16 @@ class AuthService {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     await storeOTP(email, otp);
 
-    await emailService.sendOTP(email, firstName || 'User', otp);
+    try {
+      await emailService.sendOTP(email, firstName || 'User', otp);
+    } catch (err) {
+      await clearOTP(email).catch(() => {});
+      logger.error('OTP email send failed:', err.message);
+      throw new AppError(
+        'Could not send OTP email. Please try again in a moment.',
+        503
+      );
+    }
     return true;
   }
 

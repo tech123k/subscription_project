@@ -3,16 +3,20 @@ const logger = require('../utils/logger');
 
 class EmailService {
   constructor() {
+    const smtpPort = parseInt(process.env.SMTP_PORT) || 587;
+    const useSSL   = smtpPort === 465; // port 465 = direct TLS, 587 = STARTTLS
+
     this.transporter = nodemailer.createTransport({
-      host:       process.env.SMTP_HOST || 'smtp.gmail.com',
-      port:       parseInt(process.env.SMTP_PORT) || 587,
-      secure:     false,       // STARTTLS on 587
-      requireTLS: true,
+      host:   process.env.SMTP_HOST || 'smtp.gmail.com',
+      port:   smtpPort,
+      secure: useSSL,
+      ...(useSSL
+        ? {}
+        : { requireTLS: true, tls: { rejectUnauthorized: false } }),
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
-      tls: { rejectUnauthorized: false },
       connectionTimeout: 10000,
       greetingTimeout:   10000,
       socketTimeout:     15000,

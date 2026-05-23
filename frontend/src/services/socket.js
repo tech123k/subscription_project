@@ -7,14 +7,16 @@ let socket = null;
 export const getSocket = () => socket;
 
 export const connectSocket = (token) => {
+  // Don't connect if no backend socket URL is configured
+  if (!SOCKET_URL) return null;
   if (socket?.connected) return socket;
 
   socket = io(SOCKET_URL, {
     auth: { token },
     transports: ['websocket', 'polling'],
     reconnection: true,
-    reconnectionAttempts: 5,
-    reconnectionDelay: 1000,
+    reconnectionAttempts: 3,
+    reconnectionDelay: 2000,
   });
 
   socket.on('connect', () => {
