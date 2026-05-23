@@ -27,10 +27,17 @@ const variantRoutes = require('./variant.routes');
 const ledgerRoutes = require('./ledger.routes');
 const salesOrderRoutes = require('./salesorder.routes');
 const creditRoutes = require('./credit.routes');
-const searchRoutes = require('./search.routes');
+const searchRoutes      = require('./search.routes');
+const accountingRoutes  = require('./accounting.routes');
+const billingRoutes     = require('./billing.routes');
+const subscriptionRoutes = require('./subscription.routes');
+const plansRoutes       = require('./plans.routes');
 
 // Public routes
 router.use('/auth', authRoutes);
+
+// Razorpay webhook — must be BEFORE auth middleware, uses raw body
+router.use('/billing', billingRoutes);
 
 // Protected routes
 router.use(authenticate);
@@ -66,5 +73,8 @@ router.use('/reports', reportRoutes);
 router.use('/notifications', notificationRoutes);
 router.use('/audit', auditRoutes);
 router.use('/search', searchRoutes);
+router.use('/accounting', accountingRoutes);
+router.use('/subscription', subscriptionRoutes);
+router.use('/admin/saas', plansRoutes);
 
 module.exports = router;

@@ -61,11 +61,35 @@ const ProfileSettings = lazy(() => import('./pages/ProfileSettings'));
 const CompanyList = lazy(() => import('./pages/superadmin/CompanyList'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
+// Accounting
+const ChartOfAccounts = lazy(() => import('./pages/accounting/ChartOfAccounts'));
+const VoucherForm      = lazy(() => import('./pages/accounting/VoucherForm'));
+const DayBook          = lazy(() => import('./pages/accounting/DayBook'));
+const TrialBalance     = lazy(() => import('./pages/accounting/TrialBalance'));
+const ProfitLoss       = lazy(() => import('./pages/accounting/ProfitLoss'));
+
+// Billing & Subscription
+const BillingDashboard = lazy(() => import('./pages/billing/BillingDashboard'));
+const PlanSelection    = lazy(() => import('./pages/billing/PlanSelection'));
+
+// Super Admin — SaaS
+const Revenue         = lazy(() => import('./pages/superadmin/Revenue'));
+const Subscriptions   = lazy(() => import('./pages/superadmin/Subscriptions'));
+const AdminDashboard  = lazy(() => import('./pages/superadmin/AdminDashboard'));
+
 // Protected route — redirects to /login if unauthenticated
+// Super admin lands on /admin/dashboard; everyone else on /dashboard
 const ProtectedRoute = () => {
-  const token = useAuthStore((s) => s.accessToken);
+  const token       = useAuthStore((s) => s.accessToken);
+  const isSuperAdmin = useAuthStore((s) => s.isSuperAdmin());
   if (!token) return <Navigate to="/login" replace />;
-  return <Layout><Outlet /></Layout>;
+  return <Layout><Outlet context={{ isSuperAdmin }} /></Layout>;
+};
+
+// Redirect root based on role
+const RootRedirect = () => {
+  const isSuperAdmin = useAuthStore((s) => s.isSuperAdmin());
+  return <Navigate to={isSuperAdmin ? '/admin/dashboard' : '/dashboard'} replace />;
 };
 
 // Super-admin only route
@@ -93,8 +117,9 @@ const App = () => (
 
         {/* Authenticated routes */}
         <Route element={<ProtectedRoute />}>
-          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route index element={<RootRedirect />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
           {/* Materials */}
           <Route path="/materials" element={<MaterialList />} />
@@ -149,6 +174,24 @@ const App = () => (
           {/* Warehouses */}
           <Route path="/warehouses" element={<WarehouseList />} />
           <Route path="/warehouses/:id" element={<WarehouseDetail />} />
+
+          {/* Accounting */}
+          <Route path="/accounting/accounts"      element={<ChartOfAccounts />} />
+          <Route path="/accounting/voucher/new"   element={<VoucherForm />} />
+          <Route path="/accounting/day-book"      element={<DayBook />} />
+          <Route path="/accounting/trial-balance" element={<TrialBalance />} />
+          <Route path="/accounting/profit-loss"   element={<ProfitLoss />} />
+
+          {/* Billing */}
+          <Route path="/billing"         element={<BillingDashboard />} />
+          <Route path="/billing/plans"   element={<PlanSelection />} />
+
+          {/* Super Admin — SaaS */}
+          <Route element={<SuperAdminRoute />}>
+            <Route path="/admin/dashboard"     element={<AdminDashboard />} />
+            <Route path="/admin/revenue"       element={<Revenue />} />
+            <Route path="/admin/subscriptions" element={<Subscriptions />} />
+          </Route>
 
           {/* Reports */}
           <Route path="/reports" element={<Reports />} />

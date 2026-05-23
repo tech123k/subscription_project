@@ -410,4 +410,66 @@ export const searchAPI = {
   global: (q, limit = 5) => api.get('/search', { params: { q, limit } }),
 };
 
+// ─── SUBSCRIPTION & BILLING ───────────────────────────────────────────────────
+export const subscriptionAPI = {
+  getPlans:            ()            => api.get('/subscription/plans'),
+  getMySubscription:   ()            => api.get('/subscription/my'),
+  getAccessibleModules:()            => api.get('/subscription/modules'),
+  getBillingHistory:   ()            => api.get('/subscription/billing-history'),
+  getInvoices:         ()            => api.get('/subscription/invoices'),
+};
+
+export const billingAPI = {
+  startTrial:          (data)        => api.post('/billing/start-trial', data),
+  createSubscription:  (data)        => api.post('/billing/create-subscription', data),
+  verifyPayment:       (data)        => api.post('/billing/verify-payment', data),
+  cancelSubscription:  (data)        => api.post('/billing/cancel-subscription', data),
+};
+
+// ─── SUPER ADMIN — SAAS ───────────────────────────────────────────────────────
+export const saasAdminAPI = {
+  getPlans:             ()            => api.get('/admin/saas'),
+  createPlan:           (data)        => api.post('/admin/saas', data),
+  updatePlan:           (id, data)    => api.put(`/admin/saas/${id}`, data),
+  setPlanModules:       (id, data)    => api.put(`/admin/saas/${id}/modules`, data),
+  getModules:           ()            => api.get('/admin/saas/modules'),
+  getAllSubscriptions:   (params)      => api.get('/admin/saas/subscriptions', { params }),
+  extendSubscription:   (id, data)    => api.patch(`/admin/saas/subscriptions/${id}/extend`, data),
+  changePlan:           (id, data)    => api.patch(`/admin/saas/subscriptions/${id}/plan`, data),
+  manualActivate:       (id, data)    => api.patch(`/admin/saas/subscriptions/${id}/activate`, data),
+  manualCreate:         (data)        => api.post('/admin/saas/subscriptions/activate', data),
+  getCompanyModules:    (companyId)   => api.get(`/admin/saas/companies/${companyId}/modules`),
+  setCompanyModules:    (companyId, data) => api.put(`/admin/saas/companies/${companyId}/modules`, data),
+  getRevenue:           ()            => api.get('/admin/saas/revenue'),
+};
+
+// ─── ACCOUNTING (Double-Entry) ────────────────────────────────────────────────
+export const accountingAPI = {
+  // Init / seed
+  init:                ()            => api.post('/accounting/init'),
+  // Account groups
+  getAccountGroups:    ()            => api.get('/accounting/account-groups'),
+  createAccountGroup:  (data)        => api.post('/accounting/account-groups', data),
+  // Ledger masters
+  getAccounts:         (params)      => api.get('/accounting/accounts', { params }),
+  getAccount:          (id)          => api.get(`/accounting/accounts/${id}`),
+  createAccount:       (data)        => api.post('/accounting/accounts', data),
+  updateAccount:       (id, data)    => api.put(`/accounting/accounts/${id}`, data),
+  // Vouchers
+  getVouchers:         (params)      => api.get('/accounting/vouchers', { params }),
+  getVoucher:          (id)          => api.get(`/accounting/vouchers/${id}`),
+  createVoucher:       (data)        => api.post('/accounting/vouchers', data),
+  cancelVoucher:       (id)          => api.patch(`/accounting/vouchers/${id}/cancel`),
+  // Day book
+  getDayBook:          (params)      => api.get('/accounting/day-book', { params }),
+  // Ledger statement
+  getLedgerStatement:  (accountId, params) => api.get(`/accounting/ledger/${accountId}`, { params }),
+  // Reports
+  getTrialBalance:     (params)      => api.get('/accounting/trial-balance', { params }),
+  getProfitLoss:       (params)      => api.get('/accounting/profit-loss', { params }),
+  getBalanceSheet:     (params)      => api.get('/accounting/balance-sheet', { params }),
+  // GST
+  getGstRates:         ()            => api.get('/accounting/gst-rates'),
+};
+
 export default api;

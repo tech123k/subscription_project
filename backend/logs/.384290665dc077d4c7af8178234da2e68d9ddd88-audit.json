@@ -6,21 +6,6 @@
     "auditLog": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\.384290665dc077d4c7af8178234da2e68d9ddd88-audit.json",
     "files": [
         {
-            "date": 1778094278889,
-            "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-05-07.log",
-            "hash": "a9e13b0709de63ce618d4e87496029065a24399181ffbb95388bbc036ab8b826"
-        },
-        {
-            "date": 1778181312868,
-            "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-05-08.log",
-            "hash": "50f9e23cdf0da6f78218cde262518dd573e24083527b7c449345f49d6c349498"
-        },
-        {
-            "date": 1778265012669,
-            "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-05-09.log",
-            "hash": "4e7a2cdfc8a18150bdd80445aaaeb97cb2b2414ede9807f9b2e5af048613a0c1"
-        },
-        {
             "date": 1778660484668,
             "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-05-13.log",
             "hash": "4b7ce6b259f4e248d27c346a669733e073ad915fb1a6c20fb33665a12ec257e8"
@@ -29,6 +14,21 @@
             "date": 1778697025813,
             "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-05-14.log",
             "hash": "17e2b3d7bc56157233d38d85c99433f338fd6767ceec7361d2005aebe7b5b36a"
+        },
+        {
+            "date": 1778841951368,
+            "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-05-15.log",
+            "hash": "224d6e9c29dbcb2dcd0a2ff05f3c86245729c8faae2e2e54aa9ed47324c851c0"
+        },
+        {
+            "date": 1779360501473,
+            "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-05-21.log",
+            "hash": "d08fcdde749853726514c24ead3aa7f3b4d2c3868e616e1720a051393eb2df7d"
+        },
+        {
+            "date": 1779550365754,
+            "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-05-23.log",
+            "hash": "cb74f04589404bfe939bc9c3b18b5bd5ce4c532026d2e167601c2a3f296b5227"
         }
     ],
     "hashType": "sha256"

@@ -5,15 +5,38 @@ const { generateToken } = require('../utils/helpers');
 const { AppError } = require('../middleware/errorHandler');
 const emailService = require('./email.service');
 
-// ── In-memory OTP store (no DB needed) ─────────────────────
-// key: email (lowercase) → { otp: string, expiresAt: number }
-const otpStore = new Map();
+// ── OTP Store — Redis (production) with in-memory fallback ──
+// Redis survives server restarts; in-memory is fallback for local dev
+const { setCache, getCache, deleteCache } = require('../config/redis');
+const otpFallback = new Map(); // used only when Redis is unavailable
 
-// Purge expired entries every 5 minutes
+const OTP_TTL = 600; // 10 minutes in seconds
+
+async function storeOTP(email, otp) {
+  const key = `otp:${email.toLowerCase()}`;
+  const payload = { otp, expiresAt: Date.now() + OTP_TTL * 1000 };
+  await setCache(key, payload, OTP_TTL);
+  otpFallback.set(key, payload); // always write fallback too
+}
+
+async function readOTP(email) {
+  const key = `otp:${email.toLowerCase()}`;
+  const fromRedis = await getCache(key);
+  if (fromRedis) return fromRedis;
+  return otpFallback.get(key) || null; // fallback
+}
+
+async function clearOTP(email) {
+  const key = `otp:${email.toLowerCase()}`;
+  await deleteCache(key);
+  otpFallback.delete(key);
+}
+
+// Purge expired fallback entries every 5 minutes
 setInterval(() => {
   const now = Date.now();
-  for (const [k, v] of otpStore) {
-    if (v.expiresAt < now) otpStore.delete(k);
+  for (const [k, v] of otpFallback) {
+    if (v.expiresAt < now) otpFallback.delete(k);
   }
 }, 5 * 60 * 1000);
 
@@ -224,28 +247,25 @@ class AuthService {
   // ── OTP Methods ───────────────────────────────────────────
 
   async sendRegistrationOTP(email, firstName) {
-    const key = email.toLowerCase();
-
     // Rate-limit: allow resend only after 60 s
-    const existing = otpStore.get(key);
+    const existing = await readOTP(email);
     if (existing && existing.expiresAt - Date.now() > 9 * 60 * 1000) {
       throw new AppError('OTP already sent. Please wait 60 seconds before requesting again.', 429);
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    otpStore.set(key, { otp, expiresAt: Date.now() + 10 * 60 * 1000 });
+    await storeOTP(email, otp);
 
     await emailService.sendOTP(email, firstName || 'User', otp);
     return true;
   }
 
-  verifyOTP(email, otp) {
-    const key = email.toLowerCase();
-    const record = otpStore.get(key);
-    if (!record)                      throw new AppError('OTP not found. Please request a new one.', 400);
-    if (Date.now() > record.expiresAt) throw new AppError('OTP expired. Please request a new one.', 400);
+  async verifyOTP(email, otp) {
+    const record = await readOTP(email);
+    if (!record)                           throw new AppError('OTP not found. Please request a new one.', 400);
+    if (Date.now() > record.expiresAt)     throw new AppError('OTP expired. Please request a new one.', 400);
     if (record.otp !== String(otp).trim()) throw new AppError('Invalid OTP. Please check and try again.', 400);
-    otpStore.delete(key); // single-use
+    await clearOTP(email); // single-use
     return true;
   }
 
@@ -253,7 +273,7 @@ class AuthService {
 
   async registerCompany(companyData, adminData, otp) {
     // Verify OTP first — throws if invalid/expired
-    this.verifyOTP(adminData.email, otp);
+    await this.verifyOTP(adminData.email, otp);
 
     return transaction(async (client) => {
       // Create company

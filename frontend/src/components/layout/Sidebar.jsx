@@ -7,8 +7,10 @@ import {
   Users, Settings, BarChart3, ClipboardList, ShoppingCart,
   Building2, ChevronRight, LogOut, Boxes, BookOpen,
   CreditCard, X, Zap, PanelLeftClose, PanelLeftOpen,
+  Calculator, Receipt, TrendingUp, Scale, Lock, Crown,
 } from 'lucide-react';
 import { useAuthStore } from '../../store/authStore';
+import { useModules } from '../../hooks/useModules';
 
 /* ─── Palette (royal blue enterprise) ────────────────────
    Base:   #1e3a8a  blue-900  (top of gradient)
@@ -22,108 +24,135 @@ const navGroups = [
   {
     label: 'Overview',
     items: [
-      { label: 'Dashboard',  icon: LayoutDashboard, path: '/dashboard' },
-      { label: 'Warehouses', icon: Warehouse,       path: '/warehouses' },
-      { label: 'Reports',    icon: BarChart3,       path: '/reports' },
+      { label: 'Dashboard',       icon: LayoutDashboard, path: '/dashboard',       moduleCode: 'dashboard',  hideForSuperAdmin: true },
+      { label: 'Admin Dashboard', icon: LayoutDashboard, path: '/admin/dashboard', superAdminOnly: true },
+      { label: 'Warehouses',      icon: Warehouse,        path: '/warehouses',      moduleCode: 'warehouses' },
+      { label: 'Reports',         icon: BarChart3,        path: '/reports',         moduleCode: 'reports' },
     ],
   },
   {
     label: 'Procurement',
     items: [
-      { label: 'Suppliers',       icon: Boxes,        path: '/suppliers' },
-      { label: 'Materials',       icon: Package,      path: '/materials' },
-      { label: 'Purchase Orders', icon: ClipboardList, path: '/po' },
-      { label: 'GRN / Inward',    icon: Truck,        path: '/grn' },
+      { label: 'Suppliers',       icon: Boxes,         path: '/suppliers',  moduleCode: 'inventory' },
+      { label: 'Materials',       icon: Package,       path: '/materials',  moduleCode: 'inventory' },
+      { label: 'Purchase Orders', icon: ClipboardList, path: '/po',         moduleCode: 'inventory' },
+      { label: 'GRN / Inward',    icon: Truck,         path: '/grn',        moduleCode: 'inventory' },
     ],
   },
   {
     label: 'Production',
     items: [
-      { label: 'Products',          icon: Factory,  path: '/production/products' },
-      { label: 'Production Orders', icon: Zap,      path: '/production' },
-      { label: 'Attributes',        icon: Settings, path: '/production/attributes' },
+      { label: 'Products',          icon: Factory,  path: '/production/products',    moduleCode: 'production' },
+      { label: 'Production Orders', icon: Zap,      path: '/production',             moduleCode: 'production', end: true },
+      { label: 'Attributes',        icon: Settings, path: '/production/attributes',  moduleCode: 'production' },
     ],
   },
   {
     label: 'Sales & Finance',
     items: [
-      { label: 'Sales Orders', icon: ShoppingCart, path: '/sales-orders' },
-      { label: 'Customers',    icon: Users,        path: '/customers' },
-      { label: 'Dispatch',     icon: Truck,        path: '/dispatches' },
-      { label: 'Invoices',     icon: FileText,     path: '/invoices' },
-      { label: 'Ledger',       icon: BookOpen,     path: '/ledger' },
-      { label: 'Outstanding',  icon: CreditCard,   path: '/credit' },
+      { label: 'Sales Orders', icon: ShoppingCart, path: '/sales-orders', moduleCode: 'sales' },
+      { label: 'Customers',    icon: Users,        path: '/customers',    moduleCode: 'sales' },
+      { label: 'Dispatch',     icon: Truck,        path: '/dispatches',   moduleCode: 'dispatch' },
+      { label: 'Invoices',     icon: FileText,     path: '/invoices',     moduleCode: 'sales' },
+      { label: 'Ledger',       icon: BookOpen,     path: '/ledger',       moduleCode: 'inventory' },
+      { label: 'Outstanding',  icon: CreditCard,   path: '/credit',       moduleCode: 'sales' },
+    ],
+  },
+  {
+    label: 'Accounting',
+    items: [
+      { label: 'Chart of Accounts', icon: Calculator, path: '/accounting/accounts',      moduleCode: 'accounting' },
+      { label: 'Day Book',          icon: Receipt,    path: '/accounting/day-book',       moduleCode: 'accounting' },
+      { label: 'Trial Balance',     icon: Scale,      path: '/accounting/trial-balance',  moduleCode: 'accounting' },
+      { label: 'Profit & Loss',     icon: TrendingUp, path: '/accounting/profit-loss',    moduleCode: 'accounting' },
     ],
   },
   {
     label: 'Admin',
     items: [
-      { label: 'Users',      icon: Users,        path: '/users',     adminOnly: true },
-      { label: 'Audit Logs', icon: ClipboardList, path: '/audit',    adminOnly: true },
-      { label: 'Companies',  icon: Building2,    path: '/companies', superAdminOnly: true },
-      { label: 'Settings',   icon: Settings,     path: '/settings' },
+      { label: 'Users',         icon: Users,        path: '/users',                adminOnly: true },
+      { label: 'Audit Logs',    icon: ClipboardList, path: '/audit',               adminOnly: true },
+      { label: 'Companies',     icon: Building2,    path: '/companies',             superAdminOnly: true },
+      { label: 'Subscriptions', icon: CreditCard,   path: '/admin/subscriptions',  superAdminOnly: true },
+      { label: 'Revenue',       icon: TrendingUp,   path: '/admin/revenue',        superAdminOnly: true },
+      { label: 'Billing',       icon: Crown,        path: '/billing' },
+      { label: 'Settings',      icon: Settings,     path: '/settings' },
     ],
   },
 ];
 
 /* ─── NavItem ────────────────────────────────────────── */
-const NavItem = ({ item, collapsed, onMobileClose }) => (
-  <NavLink
-    to={item.path}
-    onClick={onMobileClose}
-    title={collapsed ? item.label : undefined}
-    end={item.path === '/production'}
-    className={({ isActive }) => clsx(
-      'group relative flex items-center rounded-xl transition-all duration-200 outline-none',
-      collapsed ? 'justify-center p-2.5' : 'gap-3 px-3 py-2.5',
-      'text-sm font-medium select-none',
-      isActive
-        ? [
-            'bg-white/[0.13] text-white font-semibold',
-            'shadow-[inset_0_1px_0_rgba(255,255,255,0.10),inset_0_-1px_0_rgba(0,0,0,0.08)]',
-            collapsed && 'ring-1 ring-inset ring-white/[0.18]',
-          ]
-        : 'text-blue-100/60 hover:bg-white/[0.07] hover:text-white/95'
-    )}
-  >
-    {({ isActive }) => (
-      <>
-        {/* Sliding active bg pill — Framer Motion layoutId */}
-        {isActive && (
-          <motion.span
-            layoutId="sidebar-active-pill"
-            className="absolute inset-0 rounded-xl"
-            transition={{ type: 'spring', bounce: 0.18, duration: 0.35 }}
-          />
+const NavItem = ({ item, collapsed, onMobileClose, locked }) => {
+  if (locked) {
+    return (
+      <div
+        title={collapsed ? `${item.label} — Upgrade to unlock` : undefined}
+        className={clsx(
+          'group relative flex items-center rounded-xl transition-all duration-200 opacity-40 cursor-not-allowed select-none',
+          collapsed ? 'justify-center p-2.5' : 'gap-3 px-3 py-2.5',
+          'text-sm font-medium text-blue-100/40'
         )}
-
-        <item.icon
-          size={collapsed ? 18 : 16}
-          className={clsx(
-            'flex-shrink-0 relative z-10 transition-colors duration-150',
-            isActive
-              ? 'text-white'
-              : 'text-blue-200/55 group-hover:text-white/85'
-          )}
-        />
-
+      >
+        <item.icon size={collapsed ? 18 : 16} className="flex-shrink-0 text-blue-200/30" />
         {!collapsed && (
-          <span className="flex-1 truncate relative z-10 tracking-[-0.01em]">
-            {item.label}
-          </span>
+          <>
+            <span className="flex-1 truncate tracking-[-0.01em]">{item.label}</span>
+            <Lock size={11} className="flex-shrink-0 text-blue-200/30" />
+          </>
         )}
+      </div>
+    );
+  }
 
-        {/* Active indicator dot */}
-        {!collapsed && isActive && (
-          <span className="w-1.5 h-1.5 rounded-full bg-white/70 flex-shrink-0 relative z-10" />
-        )}
-      </>
-    )}
-  </NavLink>
-);
+  return (
+    <NavLink
+      to={item.path}
+      onClick={onMobileClose}
+      title={collapsed ? item.label : undefined}
+      end={item.path === '/production'}
+      className={({ isActive }) => clsx(
+        'group relative flex items-center rounded-xl transition-all duration-200 outline-none',
+        collapsed ? 'justify-center p-2.5' : 'gap-3 px-3 py-2.5',
+        'text-sm font-medium select-none',
+        isActive
+          ? [
+              'bg-white/[0.13] text-white font-semibold',
+              'shadow-[inset_0_1px_0_rgba(255,255,255,0.10),inset_0_-1px_0_rgba(0,0,0,0.08)]',
+              collapsed && 'ring-1 ring-inset ring-white/[0.18]',
+            ]
+          : 'text-blue-100/60 hover:bg-white/[0.07] hover:text-white/95'
+      )}
+    >
+      {({ isActive }) => (
+        <>
+          {isActive && (
+            <motion.span
+              layoutId="sidebar-active-pill"
+              className="absolute inset-0 rounded-xl"
+              transition={{ type: 'spring', bounce: 0.18, duration: 0.35 }}
+            />
+          )}
+          <item.icon
+            size={collapsed ? 18 : 16}
+            className={clsx(
+              'flex-shrink-0 relative z-10 transition-colors duration-150',
+              isActive ? 'text-white' : 'text-blue-200/55 group-hover:text-white/85'
+            )}
+          />
+          {!collapsed && (
+            <span className="flex-1 truncate relative z-10 tracking-[-0.01em]">{item.label}</span>
+          )}
+          {!collapsed && isActive && (
+            <span className="w-1.5 h-1.5 rounded-full bg-white/70 flex-shrink-0 relative z-10" />
+          )}
+        </>
+      )}
+    </NavLink>
+  );
+};
 
 /* ─── NavGroup (collapsible) ─────────────────────────── */
-const NavGroup = ({ group, collapsed, onMobileClose, defaultOpen = true }) => {
+const NavGroup = ({ group, collapsed, onMobileClose, defaultOpen = true, canAccess }) => {
   const location = useLocation();
   const hasActive = group.items.some(i =>
     location.pathname === i.path || location.pathname.startsWith(i.path + '/')
@@ -134,12 +163,12 @@ const NavGroup = ({ group, collapsed, onMobileClose, defaultOpen = true }) => {
     if (hasActive) setOpen(true);
   }, [hasActive]);
 
-  /* collapsed: just show icons, no group header */
   if (collapsed) {
     return (
       <div className="space-y-0.5">
         {group.items.map(item => (
-          <NavItem key={item.path} item={item} collapsed onMobileClose={onMobileClose} />
+          <NavItem key={item.path} item={item} collapsed onMobileClose={onMobileClose}
+            locked={item.moduleCode && canAccess ? !canAccess(item.moduleCode) : false} />
         ))}
       </div>
     );
@@ -173,7 +202,8 @@ const NavGroup = ({ group, collapsed, onMobileClose, defaultOpen = true }) => {
             className="overflow-hidden space-y-0.5"
           >
             {group.items.map(item => (
-              <NavItem key={item.path} item={item} collapsed={false} onMobileClose={onMobileClose} />
+              <NavItem key={item.path} item={item} collapsed={false} onMobileClose={onMobileClose}
+                locked={item.moduleCode && canAccess ? !canAccess(item.moduleCode) : false} />
             ))}
           </motion.div>
         )}
@@ -185,11 +215,15 @@ const NavGroup = ({ group, collapsed, onMobileClose, defaultOpen = true }) => {
 /* ─── SidebarBody ────────────────────────────────────── */
 const SidebarBody = ({ collapsed, onMobileClose, onToggleCollapse }) => {
   const { user, logout } = useAuthStore();
+  const { canAccess } = useModules();
+
+  const isSuperAdmin = user?.role === 'super_admin';
 
   const visibleGroups = navGroups.map(group => ({
     ...group,
     items: group.items.filter(item => {
-      if (item.superAdminOnly && user?.role !== 'super_admin') return false;
+      if (item.superAdminOnly && !isSuperAdmin) return false;
+      if (item.hideForSuperAdmin && isSuperAdmin) return false;
       if (item.adminOnly && !['super_admin', 'company_admin'].includes(user?.role)) return false;
       return true;
     }),
@@ -275,6 +309,7 @@ const SidebarBody = ({ collapsed, onMobileClose, onToggleCollapse }) => {
               collapsed={collapsed}
               onMobileClose={onMobileClose}
               defaultOpen={i === 0}
+              canAccess={canAccess}
             />
           ))}
         </div>

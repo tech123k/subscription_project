@@ -10,14 +10,16 @@ const getRedisClient = async () => {
   if (client && client.isReady) return client;
 
   const { createClient } = require('redis');
+  const useTLS = process.env.REDIS_TLS === 'true';
   client = createClient({
     socket: {
       host: process.env.REDIS_HOST || 'localhost',
       port: parseInt(process.env.REDIS_PORT) || 6379,
+      tls: useTLS,
       reconnectStrategy: (retries) => {
         if (retries > 3) {
           logger.warn('Redis max retries reached — disabling cache');
-          return false; // stop reconnecting
+          return false;
         }
         return Math.min(retries * 500, 3000);
       },
