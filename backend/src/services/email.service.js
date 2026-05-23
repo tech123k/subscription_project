@@ -17,6 +17,8 @@ class EmailService {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
+      // SMTP_FROM lets you use a separate verified sender address
+      // (needed for Mailjet/Brevo where SMTP_USER is an API key, not an email)
       connectionTimeout: 10000,
       greetingTimeout:   10000,
       socketTimeout:     15000,
@@ -25,8 +27,9 @@ class EmailService {
 
   // send() throws on failure — callers decide whether to swallow or propagate
   async send({ to, subject, html, text }) {
+    const fromEmail = process.env.SMTP_FROM || process.env.SMTP_USER;
     const sendMail = this.transporter.sendMail.bind(this.transporter, {
-      from: `"${process.env.APP_NAME || 'IndustrialERP'}" <${process.env.SMTP_USER}>`,
+      from: `"${process.env.APP_NAME || 'IndustrialERP'}" <${fromEmail}>`,
       to, subject, html, text,
     });
     const timeout = new Promise((_, reject) =>
