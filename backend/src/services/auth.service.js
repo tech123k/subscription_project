@@ -4,6 +4,7 @@ const { query, transaction } = require('../config/database');
 const { generateToken } = require('../utils/helpers');
 const { AppError } = require('../middleware/errorHandler');
 const emailService = require('./email.service');
+const logger = require('../utils/logger');
 
 // ── OTP Store — Redis (production) with in-memory fallback ──
 // Redis survives server restarts; in-memory is fallback for local dev
