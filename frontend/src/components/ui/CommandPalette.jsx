@@ -13,7 +13,7 @@ import { useQuery } from '@tanstack/react-query';
 import {
   Search, LayoutDashboard, Package, ClipboardList, Truck, Factory,
   ShoppingCart, FileText, Users, Warehouse, BarChart3, Settings,
-  BookOpen, CreditCard, Building2, User, Boxes, Clock,
+  BookOpen, CreditCard, Building2, User, Boxes,
   CornerDownLeft, ArrowUp, ArrowDown, Compass, Loader2,
 } from 'lucide-react';
 import { clsx } from 'clsx';
@@ -55,7 +55,7 @@ const ALL_ITEMS = [
   { group: 'Settings', label: 'Audit Logs',          icon: ClipboardList, path: '/audit',    keywords: 'history track changes activity audit log' },
 ];
 
-const STATIC_GROUP_ORDER = ['Recent', 'Navigate', 'Create New', 'Settings'];
+const STATIC_GROUP_ORDER = ['Navigate', 'Create New', 'Settings'];
 
 /* ─── Backend type → icon + group label ─── */
 const TYPE_META = {
@@ -231,9 +231,8 @@ const CommandPalette = () => {
   const { isOpen, close } = useCommandStore();
   const navigate = useNavigate();
 
-  const [query, setQuery]             = useState('');
-  const [activeIdx, setActiveIdx]     = useState(0);
-  const [recentPaths, setRecentPaths] = useState([]);
+  const [query, setQuery]         = useState('');
+  const [activeIdx, setActiveIdx] = useState(0);
 
   const inputRef  = useRef(null);
   const listRef   = useRef(null);
@@ -251,17 +250,13 @@ const CommandPalette = () => {
     return () => window.removeEventListener('keydown', handler);
   }, []);
 
-  /* ── On open: reset + focus + refresh recents ── */
+  /* ── On open: reset + focus ── */
   useEffect(() => {
     if (isOpen) {
       setQuery('');
       setActiveIdx(0);
-      setRecentPaths(getRecentPaths());
-      // Two rAFs ensure the portal has painted before we steal focus
-      const id = requestAnimationFrame(() =>
-        requestAnimationFrame(() => inputRef.current?.focus())
-      );
-      return () => cancelAnimationFrame(id);
+      const id = setTimeout(() => inputRef.current?.focus(), 60);
+      return () => clearTimeout(id);
     }
   }, [isOpen]);
 
@@ -298,14 +293,6 @@ const CommandPalette = () => {
     });
   }, [searchResponse]);
 
-  /* ── Recent items (resolved from ALL_ITEMS) ── */
-  const recentItems = useMemo(() =>
-    recentPaths
-      .map(p => ALL_ITEMS.find(i => i.path === p))
-      .filter(Boolean),
-    [recentPaths]
-  );
-
   /* ── Static filtered+scored items ── */
   const staticFiltered = useMemo(() => {
     if (!query.trim()) return [];
@@ -319,16 +306,12 @@ const CommandPalette = () => {
   /* ── When not searching: show static grouped items ── */
   const staticGrouped = useMemo(() => {
     if (query.trim()) return [];
-    const recentSet = new Set(recentItems.map(i => i.path));
-    const rest = ALL_ITEMS.filter(i => !recentSet.has(i.path));
-    const map = { Recent: recentItems };
-    STATIC_GROUP_ORDER.forEach(g => {
-      if (g !== 'Recent') map[g] = rest.filter(i => i.group === g);
-    });
+    const map = {};
+    STATIC_GROUP_ORDER.forEach(g => { map[g] = ALL_ITEMS.filter(i => i.group === g); });
     return STATIC_GROUP_ORDER
       .filter(g => map[g]?.length)
-      .map(g => ({ label: g, icon: g === 'Recent' ? Clock : undefined, items: map[g], isStatic: true }));
-  }, [query, recentItems]);
+      .map(g => ({ label: g, items: map[g], isStatic: true }));
+  }, [query]);
 
   /* ── Grouped structure when searching ── */
   const searchGrouped = useMemo(() => {
@@ -378,11 +361,8 @@ const CommandPalette = () => {
 
   /* ── Select an item ── */
   const selectItem = useCallback((item) => {
-    const path = item.path;
-    persistRecent(path);
-    setRecentPaths(getRecentPaths());
     forceClose();
-    navigate(path);
+    navigate(item.path);
   }, [forceClose, navigate]);
 
   /* ── Global Escape handler ── */
