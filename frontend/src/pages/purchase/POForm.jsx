@@ -70,26 +70,25 @@ const POForm = () => {
 
   const matList = materials?.data || [];
   const supList = suppliers?.data || [];
-  const whList = warehouses?.data || [];
+  const whList  = warehouses?.data || [];
 
   const setItem = (idx, key, val) => {
     setItems((prev) => {
       const next = [...prev];
       next[idx] = { ...next[idx], [key]: val };
-      // Auto-fill unit and rate when material is selected
       if (key === 'materialId') {
         const mat = matList.find((m) => m.id === val);
         if (mat) {
-          next[idx].unit = mat.unit || '';
-          next[idx].rate = mat.purchase_rate ? String(mat.purchase_rate) : '';
-          next[idx].gstPercent = mat.gst_percent ? String(mat.gst_percent) : '18';
+          next[idx].unit       = mat.unit || '';
+          next[idx].rate       = mat.purchase_rate ? String(mat.purchase_rate) : '';
+          next[idx].gstPercent = mat.gst_percent   ? String(mat.gst_percent)   : '18';
         }
       }
       return next;
     });
   };
 
-  const addItem = (afterIdx) => setItems((p) => {
+  const addItem    = (afterIdx) => setItems((p) => {
     if (afterIdx === undefined) return [...p, { ...emptyItem }];
     const next = [...p];
     next.splice(afterIdx + 1, 0, { ...emptyItem });
@@ -133,7 +132,7 @@ const POForm = () => {
       </div>
 
       {/* Header Details */}
-      <Card className="p-6 space-y-4">
+      <Card className="p-4 sm:p-6 space-y-4">
         <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Order Details</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -169,19 +168,111 @@ const POForm = () => {
         </div>
       </Card>
 
-      {/* Items Table */}
-      <Card className="p-6 space-y-4">
+      {/* Items */}
+      <Card className="p-4 sm:p-6 space-y-4">
         <div className="flex items-center justify-between">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Order Items</p>
           <button
-            onClick={addItem}
+            onClick={() => addItem()}
             className="flex items-center gap-1.5 text-sm text-primary-600 hover:text-primary-700 font-medium"
           >
             <Plus size={14} /> Add Item
           </button>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* ── Mobile: card per item ── */}
+        <div className="sm:hidden space-y-4">
+          {items.map((item, idx) => {
+            const amount = Number(item.quantity || 0) * Number(item.rate || 0);
+            return (
+              <div key={idx} className="border border-gray-200 rounded-xl p-4 space-y-3 bg-gray-50">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-gray-500 uppercase">Item {idx + 1}</span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => addItem(idx)}
+                      className="p-1.5 rounded-md border border-gray-200 bg-white text-gray-400 hover:text-primary-600"
+                    >
+                      <Plus size={13} />
+                    </button>
+                    {items.length > 1 && (
+                      <button
+                        onClick={() => removeItem(idx)}
+                        className="p-1.5 rounded-md border border-red-100 bg-white text-red-400 hover:text-red-600"
+                      >
+                        <Trash2 size={13} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="label">Material *</label>
+                  <select
+                    value={item.materialId}
+                    onChange={(e) => setItem(idx, 'materialId', e.target.value)}
+                    className="input-field text-sm"
+                  >
+                    <option value="">Select material...</option>
+                    {matList.map((m) => <option key={m.id} value={m.id}>{m.code} — {m.name}</option>)}
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="label">Qty *</label>
+                    <input
+                      type="number"
+                      value={item.quantity}
+                      onChange={(e) => setItem(idx, 'quantity', e.target.value)}
+                      className="input-field text-sm"
+                      min="0" step="0.01" placeholder="0"
+                    />
+                  </div>
+                  <div>
+                    <label className="label">Unit</label>
+                    <input
+                      value={item.unit}
+                      onChange={(e) => setItem(idx, 'unit', e.target.value)}
+                      className="input-field text-sm"
+                      placeholder="kg"
+                    />
+                  </div>
+                  <div>
+                    <label className="label">Rate (₹)</label>
+                    <input
+                      type="number"
+                      value={item.rate}
+                      onChange={(e) => setItem(idx, 'rate', e.target.value)}
+                      className="input-field text-sm"
+                      min="0" step="0.01" placeholder="0.00"
+                    />
+                  </div>
+                  <div>
+                    <label className="label">GST %</label>
+                    <select
+                      value={item.gstPercent}
+                      onChange={(e) => setItem(idx, 'gstPercent', e.target.value)}
+                      className="input-field text-sm"
+                    >
+                      {[0, 5, 12, 18, 28].map((r) => <option key={r} value={r}>{r}%</option>)}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex justify-end pt-1 border-t border-gray-200">
+                  <div className="text-right">
+                    <p className="text-xs text-gray-400">Amount</p>
+                    <p className="font-bold text-gray-900">₹{amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* ── Desktop: table ── */}
+        <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100">
@@ -212,48 +303,22 @@ const POForm = () => {
                         <button
                           onClick={() => addItem(idx)}
                           className="p-1.5 rounded-md border border-gray-200 text-gray-400 hover:text-primary-600 hover:border-primary-400 hover:bg-primary-50 transition-colors flex-shrink-0"
-                          title="Add row below"
                         >
                           <Plus size={13} />
                         </button>
                       </div>
                     </td>
                     <td className="py-2 pr-3">
-                      <input
-                        type="number"
-                        value={item.quantity}
-                        onChange={(e) => setItem(idx, 'quantity', e.target.value)}
-                        className="input-field text-xs"
-                        min="0"
-                        step="0.01"
-                        placeholder="0"
-                      />
+                      <input type="number" value={item.quantity} onChange={(e) => setItem(idx, 'quantity', e.target.value)} className="input-field text-xs" min="0" step="0.01" placeholder="0" />
                     </td>
                     <td className="py-2 pr-3">
-                      <input
-                        value={item.unit}
-                        onChange={(e) => setItem(idx, 'unit', e.target.value)}
-                        className="input-field text-xs"
-                        placeholder="kg"
-                      />
+                      <input value={item.unit} onChange={(e) => setItem(idx, 'unit', e.target.value)} className="input-field text-xs" placeholder="kg" />
                     </td>
                     <td className="py-2 pr-3">
-                      <input
-                        type="number"
-                        value={item.rate}
-                        onChange={(e) => setItem(idx, 'rate', e.target.value)}
-                        className="input-field text-xs"
-                        min="0"
-                        step="0.01"
-                        placeholder="0.00"
-                      />
+                      <input type="number" value={item.rate} onChange={(e) => setItem(idx, 'rate', e.target.value)} className="input-field text-xs" min="0" step="0.01" placeholder="0.00" />
                     </td>
                     <td className="py-2 pr-3">
-                      <select
-                        value={item.gstPercent}
-                        onChange={(e) => setItem(idx, 'gstPercent', e.target.value)}
-                        className="input-field text-xs"
-                      >
+                      <select value={item.gstPercent} onChange={(e) => setItem(idx, 'gstPercent', e.target.value)} className="input-field text-xs">
                         {[0, 5, 12, 18, 28].map((r) => <option key={r} value={r}>{r}%</option>)}
                       </select>
                     </td>
@@ -262,11 +327,7 @@ const POForm = () => {
                     </td>
                     <td className="py-2">
                       {items.length > 1 && (
-                        <button
-                          onClick={() => removeItem(idx)}
-                          className="p-1 text-gray-300 hover:text-red-500 transition-colors"
-                          title="Remove row"
-                        >
+                        <button onClick={() => removeItem(idx)} className="p-1 text-gray-300 hover:text-red-500 transition-colors">
                           <Trash2 size={13} />
                         </button>
                       )}

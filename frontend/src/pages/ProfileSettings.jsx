@@ -64,8 +64,8 @@ const ProfileSettings = () => {
       </div>
 
       {/* Avatar */}
-      <Card className="p-6">
-        <div className="flex items-center gap-5">
+      <Card className="p-4 sm:p-6">
+        <div className="flex items-center gap-4">
           <div className="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 text-2xl font-bold">
             {getInitials(user?.fullName || user?.full_name || '')}
           </div>
@@ -78,7 +78,7 @@ const ProfileSettings = () => {
       </Card>
 
       {/* Profile form */}
-      <Card className="p-6 space-y-4">
+      <Card className="p-4 sm:p-6 space-y-4">
         <h3 className="font-semibold text-gray-900 text-sm">Personal Information</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
@@ -97,7 +97,7 @@ const ProfileSettings = () => {
             <label className="label">Designation</label>
             <input value={form.designation} onChange={f('designation')} className="input-field" placeholder="e.g. Production Manager" />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-1 sm:col-span-2">
             <label className="label">Email</label>
             <input value={user?.email || ''} className="input-field bg-gray-50 text-gray-500" disabled />
             <p className="text-xs text-gray-400 mt-1">Contact admin to change your email address.</p>
@@ -111,7 +111,7 @@ const ProfileSettings = () => {
       </Card>
 
       {/* Change password */}
-      <Card className="p-6 space-y-4">
+      <Card className="p-4 sm:p-6 space-y-4">
         <h3 className="font-semibold text-gray-900 text-sm flex items-center gap-2"><Key size={16} />Change Password</h3>
         <div className="space-y-3">
           <div>

@@ -238,17 +238,6 @@ const CommandPalette = () => {
   const listRef   = useRef(null);
   const activeRef = useRef(null);
 
-  /* ── Global shortcut ── */
-  useEffect(() => {
-    const handler = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        useCommandStore.getState().open();
-      }
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, []);
 
   /* ── On open: reset + focus ── */
   useEffect(() => {
