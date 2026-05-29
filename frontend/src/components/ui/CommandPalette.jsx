@@ -8,7 +8,7 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import {
   Search, LayoutDashboard, Package, ClipboardList, Truck, Factory,
@@ -162,7 +162,7 @@ const ResultItem = ({ item, isActive, isRecent, isBackend, onClick, innerRef }) 
   return (
     <button
       ref={innerRef}
-      onClick={onClick}
+      onMouseDown={onClick}
       className={clsx(
         'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl',
         'transition-colors duration-100 text-left group outline-none',
@@ -388,16 +388,15 @@ const CommandPalette = () => {
   const isEmpty = !isFetching && allFlat.length === 0 && query.trim().length > 0;
 
   const overlay = (
-    <AnimatePresence>
+    <>
       {isOpen && (
         <motion.div
           key="cp-backdrop"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
           transition={{ duration: 0.12 }}
           className="fixed inset-0 bg-slate-900/60 z-[9998]"
-          onClick={forceClose}
+          onMouseDown={forceClose}
         />
       )}
       {isOpen && (
@@ -405,7 +404,6 @@ const CommandPalette = () => {
           key="cp-panel"
           initial={{ opacity: 0, scale: 0.96, y: -12 }}
           animate={{ opacity: 1, scale: 1,    y: 0 }}
-          exit={{ opacity: 0,  scale: 0.96, y: -12 }}
           transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
           className="fixed inset-x-3 top-[8vh] sm:inset-x-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-2xl z-[9999]"
         >
@@ -539,7 +537,7 @@ const CommandPalette = () => {
             </div>
           </motion.div>
       )}
-    </AnimatePresence>
+    </>
   );
 
   return createPortal(overlay, document.body);
