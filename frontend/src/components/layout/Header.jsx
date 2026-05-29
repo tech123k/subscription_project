@@ -148,7 +148,7 @@ const Header = ({ onMenuToggle }) => {
         {/* ── Quick Create ── */}
         <div className="relative hidden sm:block" ref={createRef}>
           <button
-            onClick={() => setShowCreate(v => !v)}
+            onMouseDown={() => setShowCreate(v => !v)}
             aria-label="Quick create"
             className={clsx(
               'flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-sm font-semibold transition-colors',
@@ -161,30 +161,22 @@ const Header = ({ onMenuToggle }) => {
             <span className="hidden lg:block">Create</span>
           </button>
 
-          <AnimatePresence>
-            {showCreate && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: -4 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: -4 }}
-                transition={{ duration: 0.12 }}
-                className="absolute right-0 top-full mt-2 w-52 bg-white border border-slate-100 rounded-2xl shadow-dropdown z-50 overflow-hidden p-1.5"
-              >
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 pt-2 pb-1.5">
-                  Quick Create
-                </p>
-                {QUICK_CREATE.map(({ label, icon: Icon, path }) => (
-                  <button
-                    key={path}
-                    onMouseDown={() => { setShowCreate(false); navigate(path); }}
-                    className="dropdown-item w-full"
-                  >
-                    <Icon size={14} className="text-primary-500" /> {label}
-                  </button>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {showCreate && (
+            <div className="absolute right-0 top-full mt-2 w-52 bg-white border border-slate-100 rounded-2xl shadow-dropdown z-50 overflow-hidden p-1.5">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 pt-2 pb-1.5">
+                Quick Create
+              </p>
+              {QUICK_CREATE.map(({ label, icon: Icon, path: itemPath }) => (
+                <button
+                  key={itemPath}
+                  onClick={() => { setShowCreate(false); navigate(itemPath); }}
+                  className="dropdown-item w-full"
+                >
+                  <Icon size={14} className="text-primary-500" /> {label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* ── Notifications ── */}
