@@ -79,9 +79,7 @@ const POForm = () => {
       if (key === 'materialId') {
         const mat = matList.find((m) => m.id === val);
         if (mat) {
-          next[idx].unit       = mat.unit || '';
-          next[idx].rate       = mat.purchase_rate ? String(mat.purchase_rate) : '';
-          next[idx].gstPercent = mat.gst_percent   ? String(mat.gst_percent)   : '18';
+          next[idx].unit = mat.unit || '';
         }
       }
       return next;
@@ -96,7 +94,11 @@ const POForm = () => {
   });
   const removeItem = (idx) => setItems((p) => p.filter((_, i) => i !== idx));
 
-  const totalAmount = items.reduce((sum, it) => sum + (Number(it.quantity || 0) * Number(it.rate || 0)), 0);
+  const calcAmount = (it) => {
+    const base = Number(it.quantity || 0) * Number(it.rate || 0);
+    return base + base * (Number(it.gstPercent || 0) / 100);
+  };
+  const totalAmount = items.reduce((sum, it) => sum + calcAmount(it), 0);
 
   const save = useMutation({
     mutationFn: (data) => isEdit ? poAPI.update(id, data) : poAPI.create(data),
@@ -183,7 +185,7 @@ const POForm = () => {
         {/* ── Mobile: card per item ── */}
         <div className="sm:hidden space-y-4">
           {items.map((item, idx) => {
-            const amount = Number(item.quantity || 0) * Number(item.rate || 0);
+            const amount = calcAmount(item);
             return (
               <div key={idx} className="border border-gray-200 rounded-xl p-4 space-y-3 bg-gray-50">
                 <div className="flex items-center justify-between">
@@ -255,14 +257,14 @@ const POForm = () => {
                       onChange={(e) => setItem(idx, 'gstPercent', e.target.value)}
                       className="input-field text-sm"
                     >
-                      {[0, 5, 12, 18, 28].map((r) => <option key={r} value={r}>{r}%</option>)}
+                      {[5, 18, 40].map((r) => <option key={r} value={r}>{r}%</option>)}
                     </select>
                   </div>
                 </div>
 
                 <div className="flex justify-end pt-1 border-t border-gray-200">
                   <div className="text-right">
-                    <p className="text-xs text-gray-400">Amount</p>
+                    <p className="text-xs text-gray-400">Amount (incl. GST)</p>
                     <p className="font-bold text-gray-900">₹{amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
                   </div>
                 </div>
@@ -281,13 +283,13 @@ const POForm = () => {
                 <th className="text-left py-2 pr-3 text-xs font-semibold text-gray-500 w-20">Unit</th>
                 <th className="text-left py-2 pr-3 text-xs font-semibold text-gray-500 w-28">Rate (₹)</th>
                 <th className="text-left py-2 pr-3 text-xs font-semibold text-gray-500 w-20">GST %</th>
-                <th className="text-right py-2 pr-3 text-xs font-semibold text-gray-500 w-28">Amount</th>
+                <th className="text-right py-2 pr-3 text-xs font-semibold text-gray-500 w-28">Amt (incl. GST)</th>
                 <th className="w-8" />
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {items.map((item, idx) => {
-                const amount = Number(item.quantity || 0) * Number(item.rate || 0);
+                const amount = calcAmount(item);
                 return (
                   <tr key={idx}>
                     <td className="py-2 pr-3">
@@ -319,7 +321,7 @@ const POForm = () => {
                     </td>
                     <td className="py-2 pr-3">
                       <select value={item.gstPercent} onChange={(e) => setItem(idx, 'gstPercent', e.target.value)} className="input-field text-xs">
-                        {[0, 5, 12, 18, 28].map((r) => <option key={r} value={r}>{r}%</option>)}
+                        {[5, 18, 40].map((r) => <option key={r} value={r}>{r}%</option>)}
                       </select>
                     </td>
                     <td className="py-2 pr-3 text-right font-medium text-gray-900">
@@ -341,7 +343,7 @@ const POForm = () => {
 
         <div className="flex justify-end pt-2 border-t border-gray-100">
           <div className="text-right">
-            <p className="text-xs text-gray-500">Total Order Value</p>
+            <p className="text-xs text-gray-500">Total Order Value (incl. GST)</p>
             <p className="text-xl font-bold text-primary-700">
               ₹{totalAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
             </p>

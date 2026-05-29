@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Bell, Menu, Search, User, LogOut, Settings,
   ChevronDown, Plus,
@@ -59,12 +59,18 @@ const MenuSection = ({ title, children }) => (
 );
 
 const Header = ({ onMenuToggle }) => {
-  const navigate = useNavigate();
+  const navigate  = useNavigate();
+  const location  = useLocation();
   const { user, logout } = useAuthStore();
   const { unreadCount, setUnreadCount, toggleOpen } = useNotificationStore();
   const { open: openCommand } = useCommandStore();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showCreate, setShowCreate]     = useState(false);
+
+  useEffect(() => {
+    setShowCreate(false);
+    setShowUserMenu(false);
+  }, [location.pathname]);
 
   useQuery({
     queryKey: ['notification-count'],
