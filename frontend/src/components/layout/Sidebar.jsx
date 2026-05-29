@@ -300,7 +300,7 @@ const SidebarBody = ({ collapsed, onMobileClose, onToggleCollapse }) => {
       )}
 
       {/* ── Navigation ── */}
-      <nav className="flex-1 overflow-y-auto py-4 scrollbar-hide">
+      <nav className="flex-1 overflow-y-auto py-4 overscroll-contain [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/20 hover:[&::-webkit-scrollbar-thumb]:bg-white/35">
         <div className={clsx('space-y-5', collapsed ? 'px-2' : 'px-3')}>
           {visibleGroups.map((group, i) => (
             <NavGroup
@@ -381,7 +381,7 @@ const Sidebar = ({ collapsed, onToggle, mobileOpen, onMobileClose }) => (
     </AnimatePresence>
 
     <aside className={clsx(
-      'fixed inset-y-0 left-0 z-40 flex flex-col',
+      'fixed inset-y-0 left-0 z-40 flex flex-col h-screen',
       /* ── THE BRAND GRADIENT ── */
       'bg-gradient-to-b from-[#1e3a8a] to-[#172554]',
       /* Right edge: subtle border + shadow for separation */
