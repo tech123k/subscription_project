@@ -202,9 +202,17 @@ const Header = ({ onMenuToggle }) => {
               showUserMenu ? 'bg-slate-100' : 'hover:bg-slate-100'
             )}
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-violet-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 shadow-sm select-none">
-              {initials}
-            </div>
+            {user?.companyLogo ? (
+              <img
+                src={user.companyLogo}
+                alt="logo"
+                className="w-8 h-8 rounded-lg object-contain border border-slate-200 bg-white flex-shrink-0"
+              />
+            ) : (
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-violet-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 shadow-sm select-none">
+                {initials}
+              </div>
+            )}
             <div className="text-left hidden sm:block">
               <p className="text-sm font-semibold text-slate-800 leading-tight">
                 {user?.firstName} {user?.lastName}
@@ -224,9 +232,17 @@ const Header = ({ onMenuToggle }) => {
                   {/* ── Profile card ── */}
                   <div className="px-4 pt-4 pb-3 bg-gradient-to-br from-slate-50 to-indigo-50/40 border-b border-slate-100">
                     <div className="flex items-start gap-3">
-                      <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary-500 to-violet-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-md select-none">
-                        {initials}
-                      </div>
+                      {user?.companyLogo ? (
+                        <img
+                          src={user.companyLogo}
+                          alt="logo"
+                          className="w-11 h-11 rounded-xl object-contain border border-slate-200 bg-white flex-shrink-0 shadow-sm"
+                        />
+                      ) : (
+                        <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-primary-500 to-violet-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-md select-none">
+                          {initials}
+                        </div>
+                      )}
                       <div className="min-w-0 flex-1">
                         <p className="font-bold text-[15px] text-slate-900 truncate leading-tight">
                           {user?.firstName} {user?.lastName}

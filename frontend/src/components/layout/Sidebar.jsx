@@ -240,9 +240,15 @@ const SidebarBody = ({ collapsed, onMobileClose, onToggleCollapse }) => {
         'border-b border-white/[0.07]',
         collapsed ? 'justify-center px-3 py-[18px]' : 'gap-3 px-4 py-[18px]'
       )}>
-        {/* Brand icon — frosted white on blue */}
-        <div className="w-9 h-9 rounded-xl bg-white/[0.15] ring-1 ring-white/[0.18] flex items-center justify-center flex-shrink-0 shadow-md shadow-black/20">
-          <Factory size={17} className="text-white" />
+        {/* Brand icon — company logo or frosted factory icon */}
+        <div className="w-9 h-9 rounded-xl flex-shrink-0 overflow-hidden">
+          {user?.companyLogo ? (
+            <img src={user.companyLogo} alt="logo" className="w-full h-full object-contain bg-white/90 rounded-xl" />
+          ) : (
+            <div className="w-full h-full bg-white/[0.15] ring-1 ring-white/[0.18] flex items-center justify-center rounded-xl shadow-md shadow-black/20">
+              <Factory size={17} className="text-white" />
+            </div>
+          )}
         </div>
 
         {!collapsed && (

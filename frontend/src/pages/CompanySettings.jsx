@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 const CompanySettings = () => {
   const queryClient = useQueryClient();
   const setAuth = useAuthStore((s) => s.setAuth);
+  const updateUser = useAuthStore((s) => s.updateUser);
   const user = useAuthStore((s) => s.user);
 
   const [form, setForm] = useState({
@@ -49,6 +50,9 @@ const CompanySettings = () => {
     onSuccess: (res) => {
       toast.success('Settings saved');
       queryClient.invalidateQueries({ queryKey: ['company-settings'] });
+      if (res?.data?.logo_url) {
+        updateUser({ companyLogo: res.data.logo_url });
+      }
     },
     onError: (err) => toast.error(err.response?.data?.message || 'Failed to save'),
   });

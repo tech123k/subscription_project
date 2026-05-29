@@ -64,8 +64,8 @@ class AuthService {
 
   async login(email, password, ipAddress, userAgent) {
     const result = await query(
-      `SELECT u.*, c.name AS company_name, c.is_active AS company_active,
-              c.subscription_expires_at
+      `SELECT u.*, c.name AS company_name, c.logo_url AS company_logo,
+              c.is_active AS company_active, c.subscription_expires_at
        FROM users u
        LEFT JOIN companies c ON u.company_id = c.id
        WHERE u.email = LOWER($1) AND u.deleted_at IS NULL`,
@@ -135,6 +135,7 @@ class AuthService {
         department: user.department,
         companyId: user.company_id,
         companyName: user.company_name,
+        companyLogo: user.company_logo || null,
         avatarUrl: user.avatar_url,
       },
     };
