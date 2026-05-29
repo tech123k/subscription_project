@@ -145,6 +145,12 @@ router.post('/', async (req, res) => {
           it.notes || null,
         ]
       );
+      if (it.rate) {
+        await client.query(
+          'UPDATE materials SET purchase_rate = $1, updated_at = NOW() WHERE id = $2 AND company_id = $3',
+          [it.rate, it.materialId, companyId]
+        );
+      }
     }
 
     await client.query('COMMIT');
@@ -203,6 +209,12 @@ router.put('/:id', async (req, res) => {
             it.notes || null,
           ]
         );
+        if (it.rate) {
+          await client.query(
+            'UPDATE materials SET purchase_rate = $1, updated_at = NOW() WHERE id = $2 AND company_id = $3',
+            [it.rate, it.materialId, companyId]
+          );
+        }
       }
     }
 

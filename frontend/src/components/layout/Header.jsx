@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Bell, Menu, Search, User, LogOut, Settings,
@@ -66,11 +66,35 @@ const Header = ({ onMenuToggle }) => {
   const { open: openCommand } = useCommandStore();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showCreate, setShowCreate]     = useState(false);
+  const createRef   = useRef(null);
+  const userMenuRef = useRef(null);
 
   useEffect(() => {
     setShowCreate(false);
     setShowUserMenu(false);
   }, [location.pathname]);
+
+  useEffect(() => {
+    if (!showCreate) return;
+    const handler = (e) => {
+      if (createRef.current && !createRef.current.contains(e.target)) {
+        setShowCreate(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [showCreate]);
+
+  useEffect(() => {
+    if (!showUserMenu) return;
+    const handler = (e) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setShowUserMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [showUserMenu]);
 
   useQuery({
     queryKey: ['notification-count'],
@@ -122,7 +146,7 @@ const Header = ({ onMenuToggle }) => {
         </button>
 
         {/* ── Quick Create ── */}
-        <div className="relative hidden sm:block">
+        <div className="relative hidden sm:block" ref={createRef}>
           <button
             onClick={() => setShowCreate(v => !v)}
             aria-label="Quick create"
@@ -139,29 +163,26 @@ const Header = ({ onMenuToggle }) => {
 
           <AnimatePresence>
             {showCreate && (
-              <>
-                <div className="fixed inset-0 z-10" onClick={() => setShowCreate(false)} />
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: -4 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -4 }}
-                  transition={{ duration: 0.12 }}
-                  className="absolute right-0 top-full mt-2 w-52 bg-white border border-slate-100 rounded-2xl shadow-dropdown z-20 overflow-hidden p-1.5"
-                >
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 pt-2 pb-1.5">
-                    Quick Create
-                  </p>
-                  {QUICK_CREATE.map(({ label, icon: Icon, path }) => (
-                    <button
-                      key={path}
-                      onClick={() => { navigate(path); setShowCreate(false); }}
-                      className="dropdown-item w-full"
-                    >
-                      <Icon size={14} className="text-primary-500" /> {label}
-                    </button>
-                  ))}
-                </motion.div>
-              </>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: -4 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -4 }}
+                transition={{ duration: 0.12 }}
+                className="absolute right-0 top-full mt-2 w-52 bg-white border border-slate-100 rounded-2xl shadow-dropdown z-50 overflow-hidden p-1.5"
+              >
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 pt-2 pb-1.5">
+                  Quick Create
+                </p>
+                {QUICK_CREATE.map(({ label, icon: Icon, path }) => (
+                  <button
+                    key={path}
+                    onMouseDown={() => { setShowCreate(false); navigate(path); }}
+                    className="dropdown-item w-full"
+                  >
+                    <Icon size={14} className="text-primary-500" /> {label}
+                  </button>
+                ))}
+              </motion.div>
             )}
           </AnimatePresence>
         </div>
@@ -181,7 +202,7 @@ const Header = ({ onMenuToggle }) => {
         </button>
 
         {/* ── User menu ── */}
-        <div className="relative">
+        <div className="relative" ref={userMenuRef}>
           <button
             onClick={() => setShowUserMenu(v => !v)}
             aria-label="User menu"
@@ -209,15 +230,12 @@ const Header = ({ onMenuToggle }) => {
 
           <AnimatePresence>
             {showUserMenu && (
-              <>
-                <div className="fixed inset-0 z-10" onClick={closeMenu} />
-
-                <motion.div
+              <motion.div
                   initial={{ opacity: 0, scale: 0.95, y: -6 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: -6 }}
                   transition={{ duration: 0.14, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute right-0 top-full mt-2 w-72 bg-white border border-slate-100 rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.14),0_0_0_1px_rgba(0,0,0,0.04)] z-20 overflow-hidden"
+                  className="absolute right-0 top-full mt-2 w-72 bg-white border border-slate-100 rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.14),0_0_0_1px_rgba(0,0,0,0.04)] z-50 overflow-hidden"
                 >
                   {/* ── Profile card ── */}
                   <div className="px-4 pt-4 pb-3 bg-gradient-to-br from-slate-50 to-indigo-50/40 border-b border-slate-100">
@@ -265,7 +283,6 @@ const Header = ({ onMenuToggle }) => {
                     <MenuItem icon={LogOut} label="Sign Out" danger onClick={logout} />
                   </MenuSection>
                 </motion.div>
-              </>
             )}
           </AnimatePresence>
         </div>
