@@ -7,7 +7,6 @@ import {
   Building2, BarChart3, Shield,
 } from 'lucide-react';
 import { clsx } from 'clsx';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useAuthStore } from '../../store/authStore';
 import { useNotificationStore } from '../../store/notificationStore';
 import { useCommandStore } from '../../store/commandStore';
@@ -196,7 +195,7 @@ const Header = ({ onMenuToggle }) => {
         {/* ── User menu ── */}
         <div className="relative" ref={userMenuRef}>
           <button
-            onClick={() => setShowUserMenu(v => !v)}
+            onMouseDown={() => setShowUserMenu(v => !v)}
             aria-label="User menu"
             className={clsx(
               'flex items-center gap-2 px-2 py-1.5 rounded-xl transition-colors',
@@ -220,15 +219,8 @@ const Header = ({ onMenuToggle }) => {
             />
           </button>
 
-          <AnimatePresence>
-            {showUserMenu && (
-              <motion.div
-                  initial={{ opacity: 0, scale: 0.95, y: -6 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95, y: -6 }}
-                  transition={{ duration: 0.14, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute right-0 top-full mt-2 w-72 bg-white border border-slate-100 rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.14),0_0_0_1px_rgba(0,0,0,0.04)] z-50 overflow-hidden"
-                >
+          {showUserMenu && (
+            <div className="absolute right-0 top-full mt-2 w-72 bg-white border border-slate-100 rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.14),0_0_0_1px_rgba(0,0,0,0.04)] z-50 overflow-hidden">
                   {/* ── Profile card ── */}
                   <div className="px-4 pt-4 pb-3 bg-gradient-to-br from-slate-50 to-indigo-50/40 border-b border-slate-100">
                     <div className="flex items-start gap-3">
@@ -274,9 +266,8 @@ const Header = ({ onMenuToggle }) => {
                   <MenuSection>
                     <MenuItem icon={LogOut} label="Sign Out" danger onClick={logout} />
                   </MenuSection>
-                </motion.div>
-            )}
-          </AnimatePresence>
+            </div>
+          )}
         </div>
       </div>
     </header>
