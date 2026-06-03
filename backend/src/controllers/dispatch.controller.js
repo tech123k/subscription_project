@@ -96,6 +96,10 @@ const create = async (req, res, next) => {
       totalPackages, totalWeight, weightUnit, freightAmount, notes, items,
     } = req.body;
 
+    if (!invoiceId && !salesOrderId) {
+      return ApiResponse.error(res, 'Dispatch must be linked to an Invoice or Sales Order', 400);
+    }
+
     const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     const countRes = await query(
       'SELECT COUNT(*) FROM dispatches WHERE company_id = $1 AND DATE(created_at) = CURRENT_DATE',
@@ -136,9 +140,18 @@ const create = async (req, res, next) => {
           );
 
           if (item.materialId) {
+            const { rows: [matStock] } = await client.query(
+              'SELECT current_stock, name FROM materials WHERE id = $1 AND company_id = $2',
+              [item.materialId, companyId]
+            );
+            if (!matStock) throw new Error(`Material not found`);
+            if (Number(matStock.current_stock) < Number(item.quantity)) {
+              throw new Error(`Insufficient stock for "${matStock.name}". Available: ${matStock.current_stock}, Requested: ${item.quantity}`);
+            }
+
             const { rows: [matUpdated] } = await client.query(
               `UPDATE materials SET in_transit_stock = in_transit_stock + $1,
-               current_stock = GREATEST(0, current_stock - $1)
+               current_stock = current_stock - $1
                WHERE id = $2 AND company_id = $3 RETURNING current_stock`,
               [item.quantity, item.materialId, companyId]
             );

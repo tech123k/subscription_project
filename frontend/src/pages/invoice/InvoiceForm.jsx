@@ -61,13 +61,22 @@ const InvoiceForm = () => {
   }, { subtotal: 0, tax: 0, total: 0 });
 
   const handleSubmit = () => {
-    if (!form.customerId || form.items.every((i) => !i.unitPrice)) {
-      toast.error('Customer and at least one item with price are required');
-      return;
-    }
+    const validItems = form.items.filter((i) => i.unitPrice && Number(i.unitPrice) > 0);
+    if (!form.customerId) { toast.error('Please select a customer'); return; }
+    if (!validItems.length) { toast.error('At least one item with a rate is required'); return; }
+    if (validItems.some((i) => !i.description)) { toast.error('Every item needs a description'); return; }
+
     create.mutate({
       ...form,
-      items: form.items.filter((i) => i.description && i.unitPrice),
+      items: validItems.map((i) => ({
+        description: i.description,
+        hsnCode: i.hsnCode || '',
+        quantity: Number(i.quantity) || 1,
+        unit: i.unit || 'piece',
+        rate: Number(i.unitPrice),
+        gstPercent: Number(i.gstRate) || 0,
+        discountAmount: Number(i.unitPrice) * (Number(i.quantity) || 1) * (Number(i.discountPercent) || 0) / 100,
+      })),
     });
   };
 

@@ -47,6 +47,10 @@ const DispatchForm = () => {
   };
 
   const handleSubmit = () => {
+    if (!form.invoiceId) {
+      toast.error('Please select an invoice — dispatch must be linked to an invoice');
+      return;
+    }
     if (!form.customerId) {
       toast.error('Customer is required');
       return;
