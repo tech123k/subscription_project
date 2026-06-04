@@ -6,11 +6,6 @@
     "auditLog": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\.384290665dc077d4c7af8178234da2e68d9ddd88-audit.json",
     "files": [
         {
-            "date": 1778841951368,
-            "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-05-15.log",
-            "hash": "224d6e9c29dbcb2dcd0a2ff05f3c86245729c8faae2e2e54aa9ed47324c851c0"
-        },
-        {
             "date": 1779360501473,
             "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-05-21.log",
             "hash": "d08fcdde749853726514c24ead3aa7f3b4d2c3868e616e1720a051393eb2df7d"
@@ -34,6 +29,11 @@
             "date": 1780037591986,
             "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-05-29.log",
             "hash": "926b86183e19813a693d4dda2c7aeaec7bee9fa523fff7598bf38c555cb250bd"
+        },
+        {
+            "date": 1780351887145,
+            "name": "C:\\Users\\kajal\\OneDrive\\Desktop\\subscription\\backend\\logs\\combined-2026-06-02.log",
+            "hash": "d6340992faba7aabbd1582c88d6e8ad6d059303554034cb1bbdd483482331ea8"
         }
     ],
     "hashType": "sha256"

@@ -1,0 +1,8 @@
+2026-06-02 03:43:07 [ERROR]: Transaction failed:
+2026-06-02 03:43:07 [ERROR]: Error: null value in column "rate" of relation "invoice_items" violates not-null constraint {"url":"/api/invoices","method":"POST","userId":"cfc2c2df-0ca8-4f06-a42e-d98f24e0e562","companyId":"8cf84328-5d58-432e-b0c8-3c661d0344e7"}
+error: null value in column "rate" of relation "invoice_items" violates not-null constraint
+    at C:\Users\kajal\OneDrive\Desktop\subscription\backend\node_modules\pg\lib\client.js:631:17
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\invoice.controller.js:148:9
+    at async transaction (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\config\database.js:152:20)
+    at async create (C:\Users\kajal\OneDrive\Desktop\subscription\backend\src\controllers\invoice.controller.js:125:20)
