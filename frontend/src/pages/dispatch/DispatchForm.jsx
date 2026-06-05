@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ArrowLeft, Truck, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
-import { dispatchAPI, customerAPI, invoiceAPI, materialAPI } from '../../services/api';
+import { dispatchAPI, customerAPI, invoiceAPI, salesOrderAPI, materialAPI } from '../../services/api';
 import Button from '../../components/ui/Button';
 import Card from '../../components/ui/Card';
 import { INDIAN_STATES } from '../../utils/constants';
@@ -30,8 +30,11 @@ const StockBadge = ({ current, required }) => {
 
 const DispatchForm = () => {
   const navigate = useNavigate();
+  const [refType,   setRefType]   = useState('invoice'); // 'invoice' | 'salesOrder'
+  const [invoiceId,   setInvoiceId]   = useState('');
+  const [salesOrderId, setSalesOrderId] = useState('');
   const [form, setForm] = useState({
-    invoiceId: '', customerId: '',
+    customerId: '',
     vehicleNumber: '', vehicleType: '', transportName: '', driverName: '', driverPhone: '',
     lrNumber: '', lrDate: '',
     dispatchDate: new Date().toISOString().split('T')[0],
@@ -42,19 +45,20 @@ const DispatchForm = () => {
   });
   const [dispatchItems, setDispatchItems] = useState([]);
 
-  const { data: customersData } = useQuery({ queryKey: ['customers-simple'], queryFn: () => customerAPI.getAll({ limit: 500 }) });
-  const { data: invoicesData }  = useQuery({ queryKey: ['invoices-dispatch'], queryFn: () => invoiceAPI.getAll({ limit: 500 }) });
-  const { data: materialsData } = useQuery({ queryKey: ['materials-simple'],  queryFn: () => materialAPI.getAll({ limit: 500 }) });
+  const { data: customersData,    isLoading: custLoading }    = useQuery({ queryKey: ['customers-simple'],    queryFn: () => customerAPI.getAll({ limit: 500 }) });
+  const { data: invoicesData,     isLoading: invLoading }     = useQuery({ queryKey: ['invoices-dispatch'],   queryFn: () => invoiceAPI.getAll({ limit: 500 }) });
+  const { data: salesOrdersData,  isLoading: soLoading }      = useQuery({ queryKey: ['salesorders-dispatch'], queryFn: () => salesOrderAPI.getAll({ limit: 500 }) });
+  const { data: materialsData }   = useQuery({ queryKey: ['materials-simple'],    queryFn: () => materialAPI.getAll({ limit: 500 }) });
 
   const { data: invoiceDetail } = useQuery({
-    queryKey: ['invoice-detail', form.invoiceId],
-    queryFn: () => invoiceAPI.getOne(form.invoiceId),
-    enabled: !!form.invoiceId,
+    queryKey: ['invoice-detail', invoiceId],
+    queryFn: () => invoiceAPI.getOne(invoiceId),
+    enabled: !!invoiceId,
   });
 
   // Auto-populate items when invoice is selected
   useEffect(() => {
-    if (!form.invoiceId || !invoiceDetail?.data) { setDispatchItems([]); return; }
+    if (!invoiceId || !invoiceDetail?.data) { setDispatchItems([]); return; }
     const mats = materialsData?.data || [];
     const items = (invoiceDetail.data.items || []).map((item) => {
       const mat = mats.find((m) => m.id === item.material_id);
@@ -73,15 +77,23 @@ const DispatchForm = () => {
       };
     });
     setDispatchItems(items);
-  }, [invoiceDetail, materialsData, form.invoiceId]);
+  }, [invoiceDetail, materialsData, invoiceId]);
 
   const f = (k) => (e) => setForm((p) => ({ ...p, [k]: e.target.value }));
 
   const handleInvoiceChange = (e) => {
-    const invoiceId = e.target.value;
-    const inv = (invoicesData?.data || []).find((i) => i.id === invoiceId);
-    setForm((p) => ({ ...p, invoiceId, customerId: inv?.customer_id || '' }));
+    const id = e.target.value;
+    setInvoiceId(id);
+    const inv = (invoicesData?.data || []).find((i) => i.id === id);
+    if (inv?.customer_id) setForm((p) => ({ ...p, customerId: inv.customer_id }));
     setDispatchItems([]);
+  };
+
+  const handleSalesOrderChange = (e) => {
+    const id = e.target.value;
+    setSalesOrderId(id);
+    const so = (salesOrdersData?.data || []).find((s) => s.id === id);
+    if (so?.customer_id) setForm((p) => ({ ...p, customerId: so.customer_id }));
   };
 
   const setItemQty = (idx, val) => {
@@ -104,7 +116,7 @@ const DispatchForm = () => {
   });
 
   const handleSubmit = () => {
-    if (!form.invoiceId) { toast.error('Please select an invoice'); return; }
+    if (!invoiceId && !salesOrderId) { toast.error('Please select an Invoice or Sales Order'); return; }
     if (!form.customerId) { toast.error('Customer is required'); return; }
 
     const toDispatch = dispatchItems.filter((i) => Number(i.dispatchQty) > 0);
@@ -120,6 +132,8 @@ const DispatchForm = () => {
 
     create.mutate({
       ...form,
+      invoiceId: invoiceId || null,
+      salesOrderId: salesOrderId || null,
       items: toDispatch.map((i) => ({
         materialId: i.materialId || null,
         description: i.description,
@@ -131,7 +145,6 @@ const DispatchForm = () => {
   };
 
   const custList = customersData?.data || [];
-  const invList  = invoicesData?.data  || [];
   const hasItems = dispatchItems.length > 0;
   const allBlocked = hasItems && dispatchItems.every((i) => !i.canDispatch);
 
@@ -147,19 +160,62 @@ const DispatchForm = () => {
         </div>
       </div>
 
-      {/* Invoice + Customer */}
+      {/* Order Reference */}
       <Card className="p-4 sm:p-6 space-y-4">
-        <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Order Reference</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="label">Invoice * <span className="text-red-400 text-[10px]">(required)</span></label>
-            <select value={form.invoiceId} onChange={handleInvoiceChange} className="input-field">
-              <option value="">Select invoice...</option>
-              {invList.map((i) => (
-                <option key={i.id} value={i.id}>{i.invoice_number} — {i.customer_name}</option>
-              ))}
-            </select>
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Order Reference *</p>
+          <div className="flex rounded-lg border border-gray-200 overflow-hidden text-xs font-medium">
+            <button
+              onClick={() => { setRefType('invoice'); setSalesOrderId(''); }}
+              className={`px-3 py-1.5 transition-colors ${refType === 'invoice' ? 'bg-primary-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+            >Invoice</button>
+            <button
+              onClick={() => { setRefType('salesOrder'); setInvoiceId(''); setDispatchItems([]); }}
+              className={`px-3 py-1.5 transition-colors ${refType === 'salesOrder' ? 'bg-primary-600 text-white' : 'text-gray-600 hover:bg-gray-50'}`}
+            >Sales Order</button>
           </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {refType === 'invoice' ? (
+            <div>
+              <label className="label">Invoice</label>
+              {invLoading ? (
+                <div className="input-field text-gray-400 text-sm">Loading invoices...</div>
+              ) : (invoicesData?.data || []).length === 0 ? (
+                <div className="input-field bg-yellow-50 border-yellow-200 text-sm text-yellow-700 flex items-center justify-between">
+                  <span>No invoices yet</span>
+                  <button onClick={() => navigate('/invoices/create')} className="text-primary-600 font-semibold hover:underline text-xs">+ Create Invoice</button>
+                </div>
+              ) : (
+                <select value={invoiceId} onChange={handleInvoiceChange} className="input-field">
+                  <option value="">Select invoice...</option>
+                  {(invoicesData?.data || []).map((i) => (
+                    <option key={i.id} value={i.id}>{i.invoice_number} — {i.customer_name}</option>
+                  ))}
+                </select>
+              )}
+            </div>
+          ) : (
+            <div>
+              <label className="label">Sales Order</label>
+              {soLoading ? (
+                <div className="input-field text-gray-400 text-sm">Loading orders...</div>
+              ) : (salesOrdersData?.data || []).length === 0 ? (
+                <div className="input-field bg-yellow-50 border-yellow-200 text-sm text-yellow-700 flex items-center justify-between">
+                  <span>No sales orders yet</span>
+                  <button onClick={() => navigate('/sales-orders/create')} className="text-primary-600 font-semibold hover:underline text-xs">+ Create Order</button>
+                </div>
+              ) : (
+                <select value={salesOrderId} onChange={handleSalesOrderChange} className="input-field">
+                  <option value="">Select sales order...</option>
+                  {(salesOrdersData?.data || []).map((s) => (
+                    <option key={s.id} value={s.id}>{s.order_number} — {s.customer_name}</option>
+                  ))}
+                </select>
+              )}
+            </div>
+          )}
           <div>
             <label className="label">Customer *</label>
             <select value={form.customerId} onChange={f('customerId')} className="input-field">
