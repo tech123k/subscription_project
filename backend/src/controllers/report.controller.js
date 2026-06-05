@@ -243,27 +243,26 @@ const fulfillmentReport = async (req, res, next) => {
     const result = await query(
       `SELECT
          so.order_number,
-         so.status        AS order_status,
-         so.created_at    AS order_date,
-         c.name           AS customer_name,
-         soi.description,
-         m.code           AS item_code,
-         m.name           AS item_name,
-         soi.quantity     AS ordered_qty,
-         COALESCE(soi.dispatched_quantity, 0) AS dispatched_qty,
-         (soi.quantity - COALESCE(soi.dispatched_quantity, 0)) AS pending_qty,
+         so.status                                               AS order_status,
+         so.created_at                                           AS order_date,
+         c.name                                                  AS customer_name,
+         m.code                                                  AS item_code,
+         m.name                                                  AS item_name,
+         soi.quantity                                            AS ordered_qty,
+         COALESCE(soi.dispatched_quantity, 0)                   AS dispatched_qty,
+         (soi.quantity - COALESCE(soi.dispatched_quantity, 0))  AS pending_qty,
          soi.unit,
-         m.current_stock  AS available_stock,
+         m.current_stock                                         AS available_stock,
          CASE
            WHEN m.current_stock >= (soi.quantity - COALESCE(soi.dispatched_quantity, 0)) THEN 'sufficient'
-           WHEN m.current_stock > 0 THEN 'partial'
+           WHEN m.current_stock > 0                                                       THEN 'partial'
            ELSE 'out_of_stock'
-         END              AS stock_status,
-         'material'       AS item_type
+         END                                                     AS stock_status,
+         'material'                                              AS item_type
        FROM sales_orders so
-       JOIN customers c ON so.customer_id = c.id
-       JOIN sales_order_items soi ON so.id = soi.sales_order_id
-       JOIN materials m ON soi.material_id = m.id
+       JOIN customers c              ON so.customer_id  = c.id
+       JOIN sales_order_items soi    ON so.id           = soi.sales_order_id
+       JOIN materials m              ON soi.material_id = m.id
        WHERE so.company_id = $1
          AND so.status NOT IN ('delivered','cancelled')
          AND soi.material_id IS NOT NULL
@@ -275,7 +274,6 @@ const fulfillmentReport = async (req, res, next) => {
          so.status,
          so.created_at,
          c.name,
-         soi.description,
          p.code,
          p.name,
          soi.quantity,
@@ -285,14 +283,14 @@ const fulfillmentReport = async (req, res, next) => {
          GREATEST(0, p.current_stock - p.reserved_stock),
          CASE
            WHEN GREATEST(0, p.current_stock - p.reserved_stock) >= (soi.quantity - COALESCE(soi.dispatched_quantity, 0)) THEN 'sufficient'
-           WHEN GREATEST(0, p.current_stock - p.reserved_stock) > 0 THEN 'partial'
+           WHEN GREATEST(0, p.current_stock - p.reserved_stock) > 0                                                      THEN 'partial'
            ELSE 'out_of_stock'
          END,
          'product'
        FROM sales_orders so
-       JOIN customers c ON so.customer_id = c.id
-       JOIN sales_order_items soi ON so.id = soi.sales_order_id
-       JOIN products p ON soi.product_id = p.id
+       JOIN customers c              ON so.customer_id  = c.id
+       JOIN sales_order_items soi    ON so.id           = soi.sales_order_id
+       JOIN products p               ON soi.product_id  = p.id
        WHERE so.company_id = $1
          AND so.status NOT IN ('delivered','cancelled')
          AND soi.product_id IS NOT NULL
