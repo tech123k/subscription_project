@@ -349,6 +349,7 @@ export const reportAPI = {
   dispatch:          (params) => api.get('/reports/dispatch',           { params }),
   stockTransactions: (params) => api.get('/reports/stock-transactions', { params }),
   audit:             (params) => api.get('/reports/audit',              { params }),
+  fulfillment:       (params) => api.get('/reports/fulfillment',        { params }),
 
   // Blob downloads — auth headers sent via axios interceptor
   exportStock:      (params) => api.get('/reports/stock',      { params: { ...params, format: 'excel' }, responseType: 'blob' }),

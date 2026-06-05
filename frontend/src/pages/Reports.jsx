@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Package, Factory, Truck, FileText, Download, Filter } from 'lucide-react';
+import { Package, Factory, Truck, FileText, Download, Filter, ClipboardCheck } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { reportAPI } from '../services/api';
 import Card from '../components/ui/Card';
@@ -10,10 +10,11 @@ import { StatusBadge } from '../components/ui/Badge';
 import { format } from 'date-fns';
 
 const REPORT_TYPES = [
-  { id: 'stock',      label: 'Stock Report',      icon: Package,  color: 'text-blue-600 bg-blue-50',    exportFn: 'exportStock' },
-  { id: 'production', label: 'Production Report',  icon: Factory,  color: 'text-purple-600 bg-purple-50', exportFn: 'exportProduction' },
-  { id: 'financial',  label: 'Financial Report',   icon: FileText, color: 'text-green-600 bg-green-50',  exportFn: 'exportFinancial' },
-  { id: 'dispatch',   label: 'Dispatch Report',    icon: Truck,    color: 'text-amber-600 bg-amber-50',  exportFn: 'exportDispatch' },
+  { id: 'stock',       label: 'Stock Report',       icon: Package,        color: 'text-blue-600 bg-blue-50',    exportFn: 'exportStock' },
+  { id: 'fulfillment', label: 'Order Fulfillment',  icon: ClipboardCheck, color: 'text-teal-600 bg-teal-50',   exportFn: null },
+  { id: 'production',  label: 'Production Report',  icon: Factory,        color: 'text-purple-600 bg-purple-50', exportFn: 'exportProduction' },
+  { id: 'financial',   label: 'Financial Report',   icon: FileText,       color: 'text-green-600 bg-green-50',  exportFn: 'exportFinancial' },
+  { id: 'dispatch',    label: 'Dispatch Report',    icon: Truck,          color: 'text-amber-600 bg-amber-50',  exportFn: 'exportDispatch' },
 ];
 
 /* ── blob download helper ── */
@@ -44,6 +45,7 @@ const Reports = () => {
   const activeType = REPORT_TYPES.find(r => r.id === activeReport);
 
   const handleExport = async () => {
+    if (!activeType?.exportFn) { toast.error('Export not available for this report'); return; }
     setExporting(true);
     const tid = toast.loading('Preparing Excel…');
     try {
@@ -60,6 +62,42 @@ const Reports = () => {
   };
 
   const getColumns = () => {
+    if (activeReport === 'fulfillment') return [
+      { header: 'Order No',    accessor: 'order_number' },
+      { header: 'Customer',    accessor: 'customer_name' },
+      { header: 'Item',        cell: (r) => (
+          <div>
+            <p className="font-medium text-sm text-gray-900">{r.item_name}</p>
+            <p className="text-xs text-gray-400">{r.item_code} · {r.item_type}</p>
+          </div>
+        )
+      },
+      { header: 'Ordered',     cell: (r) => `${Number(r.ordered_qty).toFixed(2)} ${r.unit}` },
+      { header: 'Pending',     cell: (r) => (
+          <span className={Number(r.pending_qty) > 0 ? 'font-semibold text-orange-600' : 'text-gray-400'}>
+            {Number(r.pending_qty).toFixed(2)} {r.unit}
+          </span>
+        )
+      },
+      { header: 'Available Stock', cell: (r) => (
+          <span className={
+            r.stock_status === 'out_of_stock' ? 'font-bold text-red-600' :
+            r.stock_status === 'partial'      ? 'font-semibold text-orange-600' :
+            'text-green-600 font-medium'
+          }>
+            {Number(r.available_stock).toFixed(2)} {r.unit}
+          </span>
+        )
+      },
+      { header: 'Status', cell: (r) => {
+          const map = { sufficient: ['In Stock', 'text-green-700 bg-green-50'], partial: ['Partial', 'text-orange-700 bg-orange-50'], out_of_stock: ['Out of Stock', 'text-red-700 bg-red-50'] };
+          const [label, cls] = map[r.stock_status] || ['Unknown', 'text-gray-500 bg-gray-50'];
+          return <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${cls}`}>{label}</span>;
+        }
+      },
+      { header: 'Order Status', cell: (r) => <StatusBadge status={r.order_status} /> },
+    ];
+
     if (activeReport === 'stock') return [
       { header: 'Code',         accessor: 'code' },
       { header: 'Material',     accessor: 'name' },
